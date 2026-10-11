@@ -9,7 +9,8 @@
 3. Keep the initial implementation single-publisher. Treat multiwriter telepresence as a separate design stream.
 4. Select existing encoding and signature building blocks explicitly. The narrow experiment selects JCS (RFC 8785). The schema kit uses deterministic CBOR (RFC 8949 §4.2.1) with COSE_Sign1 and Ed25519 for bindings, delegations, evidence, attestations, approvals and receipts. One of the two must be chosen for the next profile; transparency (SCITT) integration remains a proposal.
 5. Recruit an independent implementer or partner for the second endpoint. No contact or outreach has been performed.
-6. **Remove the extra round trip before payload.** The speed review models v0.1 as slower than HTTP with RFC 9842 compression dictionaries in the common case, because OFFER/ACCEPT waits a round trip that dictionaries don't need. The push profile ([speed review §8](analysis/ARFP-internet-speed-review.md#8-how-the-transfer-set-would-work-end-to-end-the-push-profile)) is the proposed fix, and parity with pub/sub plus dictionary deltas (H1) is the first test.
+6. **Lead with machine-to-machine state handoff.** The project is positioned around moving worktrees, KV caches and model working state between AI systems, which is where the model shows a per-receiver gain (see the [README](../README.md)). Web and consumer delivery are documented boundaries, not the target. The first network test is the [AI-state handoff](proposals/ARFP-ai-state-handoff-network-test.md).
+7. **Remove the extra round trip before payload where it matters.** The speed review models v0.1 as slower than HTTP with RFC 9842 compression dictionaries in the common web case, because OFFER/ACCEPT waits a round trip that dictionaries don't need. The push profile ([speed review §8](analysis/ARFP-internet-speed-review.md#8-how-the-transfer-set-would-work-end-to-end-the-push-profile)) is the proposed fix, with parity with pub/sub plus dictionary deltas (H1) as its test. For multi-gigabyte AI state on fast links the round trip is a small cost, so this is no longer first in line.
 
 ## Stages and gates
 
@@ -35,13 +36,14 @@ Do not use a Stage 1 success as evidence of superiority to HTTP, shared dictiona
 
 ### Next work, in order
 
-From the [working analysis §11](analysis/ARFP-analysis-2026-10-11.md#11-next-work-in-order), reordered after the speed review:
+From the [working analysis §11](analysis/ARFP-analysis-2026-10-11.md#11-next-work-in-order), reordered after the speed review and again when the project was positioned around machine-to-machine state handoff:
 
-1. **Push profile in the kit:** a standing DEMAND as the subscription; binding reference, plan-template reference and payload in one flight; REPAIR only on a miss; a chunked tree hash so verification scales with the change. First test: H1.
-2. **Stage 4 demo** with one strong and one weak receiver over a predictability × churn grid, counting every link's bytes. Tests H2–H5.
-3. **Second CDDL tool, then a second implementation** given only the schema and the vectors.
-4. **Stage 5 measurement** against HTTP/3 + RFC 9842, glTF/Draco and 3D Tiles, and LMCache-style transfer for AI state, with cold and warm caches.
-5. **Harden the journal:** power-loss testing, directory fsync on file creation, disk write caches, group commit.
+1. **AI-state handoff over real links:** KV-cache handoff against LMCache/CacheGen-style transfer, with pre-registered pass and kill criteria ([proposal](proposals/ARFP-ai-state-handoff-network-test.md)). Tests the per-receiver gain that is currently only modeled.
+2. **Push profile in the kit:** a standing DEMAND as the subscription; binding reference, plan-template reference and payload in one flight; REPAIR only on a miss; a chunked tree hash so verification scales with the change. First test: H1.
+3. **Stage 4 demo** with one strong and one weak receiver over a predictability × churn grid, counting every link's bytes. Tests H2–H5.
+4. **Second CDDL tool, then a second implementation** given only the schema and the vectors.
+5. **Stage 5 measurement** against HTTP/3 + RFC 9842, glTF/Draco and 3D Tiles, and LMCache-style transfer for AI state, with cold and warm caches.
+6. **Harden the journal:** power-loss testing, directory fsync on file creation, disk write caches, group commit.
 
 The contract split, previously next on this list, is built (T1–T14; see the [implementation notes](handoffs/ARFP-contract-split-implementation.md)).
 

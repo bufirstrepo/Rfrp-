@@ -157,7 +157,8 @@
     "docs/STANDARDS_REUSE.md",
     "docs/IMPORT_VERIFICATION.md",
     "docs/research/speed-review/README.md",
-    ".gitignore"
+    ".gitignore",
+    "docs/proposals/ARFP-ai-state-handoff-network-test.md"
   ],
   "referenced_but_not_supplied": [
     "External X pitch",
