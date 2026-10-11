@@ -158,7 +158,9 @@
     "docs/IMPORT_VERIFICATION.md",
     "docs/research/speed-review/README.md",
     ".gitignore",
-    "docs/proposals/ARFP-ai-state-handoff-network-test.md"
+    "docs/proposals/ARFP-ai-state-handoff-network-test.md",
+    "docs/proposals/ARFP-data-center-use-cases.md",
+    "docs/research/use-cases/data_center_use_case_sources.md"
   ],
   "referenced_but_not_supplied": [
     "External X pitch",

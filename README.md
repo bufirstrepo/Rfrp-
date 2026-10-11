@@ -30,6 +30,18 @@ Real links sit on both sides of these numbers: 400 Gb/s per GPU in DGX H100-clas
 
 **Next step:** run the KV-cache handoff over real links against LMCache/CacheGen-style transfer ([proposal](docs/proposals/ARFP-ai-state-handoff-network-test.md)).
 
+## Candidate data-center use cases
+
+Reviewed in [Candidate data-center use cases](docs/proposals/ARFP-data-center-use-cases.md). None is demonstrated. Each is checked against three conditions: the state is big, the link is the bottleneck, and the receiver may accept rebuilt state under a contract.
+
+| Candidate | Fit | Note |
+|---|---|---|
+| Prefill-to-decode KV-cache handoff | Partial | Solved inside clusters (Splitwise, DistServe, Mooncake). ARFP would add per-receiver choice and contract-checked compression where links between pools are slower |
+| Cross-request cache reuse | Best fit, and the most crowded | LMCache, CacheGen and CacheBlend already do it. ARFP would add binding to model and software stack, per-consumer acceptance, and scoping of who may reuse whose cache |
+| Failover and migration | Check, not speed | Llumnix, DéjàVu, SpotServe and vLLM already move or recompute state. ARFP's value would be verifying rebuilt state before it is trusted |
+| Checkpoint and model-delta sync | Weak | Mostly exact bytes that compression and exact deltas already handle |
+| Small state or compute-bound work | Does not fit | The negotiation costs more than it saves |
+
 ## Current status (2026-10-11)
 
 **What exists:**
@@ -67,6 +79,7 @@ These are documented boundaries, not footnotes. Each is in the [speed review](do
 | [Working analysis](docs/analysis/ARFP-analysis-2026-10-11.md) | Engineering record: schema map, identity and encoding rules, design choices and what each forces, Stage-1 results, contract split, next work, full CDDL | Checked: the kit-derived numbers (§§6, 8, 10, 15) reproduce from `kit/` |
 | [Speed review](docs/analysis/ARFP-internet-speed-review.md) | Where the transfer set can and cannot make transfers faster: AI-state send versus recompute (§6), the push-profile design, ranked domains, pre-registered negative cases, Stage 4/5 hypotheses | Measured, modeled and sourced; checked twice by a separate agent |
 | [AI-state network test](docs/proposals/ARFP-ai-state-handoff-network-test.md) | Proposed next step: KV-cache handoff over real links against LMCache/CacheGen-style transfer, with pre-registered pass and kill criteria | Proposal; not run |
+| [Data-center use cases](docs/proposals/ARFP-data-center-use-cases.md) and [their sources](docs/research/use-cases/data_center_use_case_sources.md) | Three strong and two weaker candidate uses, each checked against the fit test and against what existing systems already do | Candidates; not demonstrated |
 | [Schema kit](kit/README.md) | `arfp-v0.1.cddl`, the reference checker, 95 cases, mutation check, benchmark and model | Runs: `python3 run_checks.py` |
 | [Contract split](docs/handoffs/ARFP-contract-split-handoff.md) and [implementation notes](docs/handoffs/ARFP-contract-split-implementation.md) | Session contract template plus per-revision binding; what was built, measured, and changed from the proposal | Built and tested (T1–T14) |
 | [Complete concept handoff](docs/architecture/ARFP_Concept_Handoff_v0.1_2026-10-11.md) | Full architecture, mathematical model, authority and evidence rules, repeater fabric, six-stage plan, C01–C28 | Original, preserved byte for byte |
