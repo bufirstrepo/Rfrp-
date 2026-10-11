@@ -1,0 +1,172 @@
+{
+  "manifest_version": 2,
+  "prepared_date": "2026-10-11",
+  "project": "Adaptive Reconstruction Fabric Protocol (ARFP)",
+  "repository_category": "research architecture, experimental protocol specification, and executable object-level conformance kit",
+  "imports": [
+    {
+      "import": 1,
+      "date": "2026-10-11",
+      "contents": "Concept handoff, experimental draft, external review, concept notes, editorial guides"
+    },
+    {
+      "import": 2,
+      "date": "2026-10-11",
+      "contents": "Schema kit, working analysis, speed review and research notes, contract-split handoff and implementation notes; editorial guides updated"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "docs/architecture/ARFP_Concept_Handoff_v0.1_2026-10-11.md",
+      "purpose": "Complete architectural handoff, including mathematical model, fabric, and C01-C28",
+      "source": "Handoff generated in the project owner's design session",
+      "import_treatment": "byte-for-byte copy",
+      "bytes": 92647,
+      "sha256": "173a84c87bf9c5a688ffc062d6b2872075fa7379d564e796c00908e90b304341",
+      "import": 1
+    },
+    {
+      "path": "docs/specification/Adaptive_Reconstruction_Protocol_v0.1.md",
+      "purpose": "Narrow assembly-component experimental profile and worked transcripts",
+      "source": "Project owner attachment: Adaptive_Reconstruction_Protocol_v0.1.md",
+      "import_treatment": "byte-for-byte copy",
+      "bytes": 43952,
+      "sha256": "ec124d22517e8149cf07ee6a9de0650d2af3c23c9e1cca03230892938a7ac617",
+      "import": 1
+    },
+    {
+      "path": "docs/reviews/2026-10-11_external_review.md",
+      "purpose": "External critique and suggested next work",
+      "source": "Text pasted by the project owner on 2026-10-11",
+      "import_treatment": "review text transcribed with provenance wrapper",
+      "bytes": 5904,
+      "sha256": "aedc8c9df95a911a7edf612e8607f93d2099aa1de1fb0c7846a95066875d353f",
+      "import": 1
+    },
+    {
+      "path": "docs/sources/conversation_concept_notes.md",
+      "purpose": "Originating concept, repeater extension, and protocol/application distinction",
+      "source": "Project owner messages from the design session",
+      "import_treatment": "normalized compilation; duplicate and malformed paste text consolidated",
+      "bytes": 14939,
+      "sha256": "e1cd34162cc5ccadc0dcd85697d213618d476c812223fe14e9c12d1a11496e68",
+      "import": 1
+    },
+    {
+      "path": "docs/handoffs/ARFP-contract-split-handoff.md",
+      "purpose": "Proposal to split the contract into a session template and a per-revision binding",
+      "source": "Project owner attachment: ARFP-contract-split-handoff.md",
+      "import_treatment": "byte-for-byte copy",
+      "bytes": 5575,
+      "sha256": "6394323f9b2b178a5491b1c2e4bdfdb9ff6f95b0e6e5ff5d75e698ba75ed6edd",
+      "import": 2
+    }
+  ],
+  "generated_files": [
+    {
+      "path": "docs/analysis/ARFP-analysis-2026-10-11.md",
+      "purpose": "Working analysis and engineering record: schema map, identity and encoding rules, design choices, Stage-1 results, contract split, next work, full CDDL",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "working record; edited to point at repository paths and to correct claims found by the pre-publication check",
+      "bytes": 75209,
+      "sha256": "f87b6c7769cba216e3db2949f5829cc4ce23f8693b0d772a0c64dbecaa40c1f3",
+      "import": 2
+    },
+    {
+      "path": "docs/analysis/ARFP-internet-speed-review.md",
+      "purpose": "Where the transfer set can and cannot make transfers faster; push-profile design; pre-registered negative cases; Stage 4/5 hypotheses",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "renamed without spaces; edited to point at repository paths, remove a conversational phrase, and label one hand estimate",
+      "bytes": 59045,
+      "sha256": "3ed190d56ef9be7ba470b4e1fa78d5b1200b73e033f63ad7caf15e9d8527eb04",
+      "import": 2
+    },
+    {
+      "path": "docs/handoffs/ARFP-contract-split-implementation.md",
+      "purpose": "What was built from the contract-split proposal, what was measured, and where it departs",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "new",
+      "bytes": 5530,
+      "sha256": "46eb3b3fcebc91f6b2ff78f28171ea54200458de1fa0463e52da14d79972263a",
+      "import": 2
+    },
+    {
+      "path": "docs/research/speed-review/internet_time_and_web_protocols.md",
+      "purpose": "Quote-backed source notes: where time and bytes go on today's internet; receiver-state web features",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "research notes; access notes reworded as neutral provenance",
+      "bytes": 58631,
+      "sha256": "5361106d4230af20a46bcd152857993832f0cb425d0e81cc0111889009a7d6a2",
+      "import": 2
+    },
+    {
+      "path": "docs/research/speed-review/receiver_state_protocols.md",
+      "purpose": "Quote-backed source notes: compact blocks, set reconciliation, state summaries, rsync, Git negotiation",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "research notes; access notes reworded as neutral provenance",
+      "bytes": 71439,
+      "sha256": "67583bb3c1962411a2ed9d6c42bd9e420b96f5622d9d99932bac364688f4aecb",
+      "import": 2
+    },
+    {
+      "path": "docs/research/speed-review/ai_infrastructure_state_transfer.md",
+      "purpose": "Quote-backed source notes: KV-cache transfer, disaggregated serving, send versus recompute, nondeterminism",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "research notes; access notes reworded as neutral provenance",
+      "bytes": 54142,
+      "sha256": "04df3196c1ce7f905c1d3450a195291aa570c058310a4dc3cba050f6dd0ffb2c",
+      "import": 2
+    },
+    {
+      "path": "docs/research/speed-review/generative_reconstruction_precedents.md",
+      "purpose": "Quote-backed source notes: generative and model-based reconstruction precedents",
+      "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+      "import_treatment": "research notes; access notes reworded as neutral provenance",
+      "bytes": 61949,
+      "sha256": "fd34fa689c2a158c40c51b49bec61740ff65a5a080a4e5ec1e5d991d32e5f979",
+      "import": 2
+    }
+  ],
+  "kit": {
+    "path": "kit/",
+    "purpose": "Executable object-level conformance kit: CDDL schema, reference checker, 95 cases, 38 CBOR vectors, mutation check, delta benchmark and speed model",
+    "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
+    "import": 2,
+    "files": 62,
+    "checksums": "kit/SHA256SUMS",
+    "checksums_sha256": "e1aff9a191b533405e015fe04bf80d74b607a8e0531481936ad7ecc6e4c0303a",
+    "deterministic_outputs": [
+      "kit/report.json",
+      "kit/report.md",
+      "kit/vectors/*.cbor",
+      "kit/bench/speed_model.md",
+      "kit/bench/speed_model.json"
+    ],
+    "machine_dependent_outputs": [
+      "kit/bench/delta_results.json (timings vary by machine; sizes are deterministic)"
+    ],
+    "excluded": [
+      "kit/bench/.cache/ (npm release tarballs, third-party code, downloaded on first run)",
+      "__pycache__/"
+    ]
+  },
+  "editorial_files": [
+    "README.md",
+    "docs/PROFILE_COMPATIBILITY.md",
+    "docs/ROADMAP.md",
+    "docs/STANDARDS_REUSE.md",
+    "docs/IMPORT_VERIFICATION.md",
+    "docs/research/speed-review/README.md",
+    ".gitignore"
+  ],
+  "referenced_but_not_supplied": [
+    "External X pitch",
+    "Grok pitch reply",
+    "Earlier external reviewer replies"
+  ],
+  "not_imported": [
+    "Spatial Telepresence Architecture Handoff, supplied in the working session and probably the telepresence document the external review refers to; not imported, per the repository boundary on telepresence",
+    "Earlier ARFP drafts and vector sets from other tools, superseded by the consolidated handoff and the kit"
+  ],
+  "claim_boundary": "The kit executes object-level cases and reproduces its own outputs; it is one implementation, with a library (cbor2) as the second encoder. No runtime protocol, transport, network benchmark, or independent interoperability result is supplied. Speed figures are compression measurements and a first-order model, not network measurements."
+}

@@ -1,0 +1,1001 @@
+{
+ "inputs": {
+  "kit_control_bytes": {
+   "offer": 1633,
+   "envelope": 195,
+   "fast": 1079,
+   "negotiated_total": 3421,
+   "negotiated_critical": 1828
+  },
+  "push_frame_bytes_assumed": 128,
+  "dcz_header_bytes": 40,
+  "mfu_assumed": 0.5,
+  "h100_bf16_dense": 989500000000000.0,
+  "deterministic_cost_assumed": 1.6153846153846154,
+  "rtt_s": 0.056
+ },
+ "delta_summary": [
+  {
+   "package": "react-dom",
+   "from": "18.0.0",
+   "to": "18.1.0",
+   "raw": 131555,
+   "brotli": 36750,
+   "delta": 8834,
+   "factor": 4.160063391442155,
+   "fast": 11340,
+   "content_aware": 8853,
+   "overlap": {
+    "verbatim": 0.0067,
+    "ignoring_whitespace": 0.0067
+   },
+   "brotli_dec": 0.0005600000000000001,
+   "delta_dec": 0.00013000000000000002,
+   "delta_enc": 0.0634,
+   "fast_enc": 0.0007,
+   "fast_dec": 0.00011,
+   "sha256": 8e-05
+  },
+  {
+   "package": "react-dom",
+   "from": "18.1.0",
+   "to": "18.2.0",
+   "raw": 131737,
+   "brotli": 36891,
+   "delta": 8112,
+   "factor": 4.547707100591716,
+   "fast": 10348,
+   "content_aware": 8131,
+   "overlap": {
+    "verbatim": 0.0188,
+    "ignoring_whitespace": 0.0188
+   },
+   "brotli_dec": 0.00044,
+   "delta_dec": 0.0001,
+   "delta_enc": 0.053200000000000004,
+   "fast_enc": 0.0005,
+   "fast_dec": 0.0001,
+   "sha256": 0.0001
+  },
+  {
+   "package": "react-dom",
+   "from": "18.2.0",
+   "to": "18.3.0",
+   "raw": 131685,
+   "brotli": 36862,
+   "delta": 2677,
+   "factor": 13.769891669779604,
+   "fast": 3432,
+   "content_aware": 2696,
+   "overlap": {
+    "verbatim": 0.4332,
+    "ignoring_whitespace": 0.4332
+   },
+   "brotli_dec": 0.00044,
+   "delta_dec": 5e-05,
+   "delta_enc": 0.0335,
+   "fast_enc": 0.0003,
+   "fast_dec": 4e-05,
+   "sha256": 8e-05
+  },
+  {
+   "package": "react-dom",
+   "from": "18.3.0",
+   "to": "18.3.1",
+   "raw": 131685,
+   "brotli": 36808,
+   "delta": 63,
+   "factor": 584.2539682539683,
+   "fast": 69,
+   "content_aware": 82,
+   "overlap": {
+    "verbatim": 0.9941,
+    "ignoring_whitespace": 0.9941
+   },
+   "brotli_dec": 0.00054,
+   "delta_dec": 2e-05,
+   "delta_enc": 0.0154,
+   "fast_enc": 0.0003,
+   "fast_dec": 2e-05,
+   "sha256": 8e-05
+  },
+  {
+   "package": "three",
+   "from": "0.150.0",
+   "to": "0.151.0",
+   "raw": 1198641,
+   "brotli": 190163,
+   "delta": 10707,
+   "factor": 17.760623890912488,
+   "fast": 20868,
+   "content_aware": 7762,
+   "overlap": {
+    "verbatim": 0.8687,
+    "ignoring_whitespace": 0.9124
+   },
+   "brotli_dec": 0.00226,
+   "delta_dec": 0.00019,
+   "delta_enc": 0.2626,
+   "fast_enc": 0.0035,
+   "fast_dec": 0.00031,
+   "sha256": 0.0009
+  },
+  {
+   "package": "three",
+   "from": "0.151.0",
+   "to": "0.152.0",
+   "raw": 1208641,
+   "brotli": 191211,
+   "delta": 5609,
+   "factor": 34.09003387413086,
+   "fast": 8961,
+   "content_aware": 5726,
+   "overlap": {
+    "verbatim": 0.9556,
+    "ignoring_whitespace": 0.9562
+   },
+   "brotli_dec": 0.00299,
+   "delta_dec": 0.00014000000000000001,
+   "delta_enc": 0.2934,
+   "fast_enc": 0.003,
+   "fast_dec": 0.00017,
+   "sha256": 0.00083
+  },
+  {
+   "package": "three",
+   "from": "0.152.0",
+   "to": "0.153.0",
+   "raw": 1223960,
+   "brotli": 193220,
+   "delta": 4071,
+   "factor": 47.462539916482434,
+   "fast": 6284,
+   "content_aware": 4421,
+   "overlap": {
+    "verbatim": 0.9458,
+    "ignoring_whitespace": 0.9468
+   },
+   "brotli_dec": 0.0023799999999999997,
+   "delta_dec": 0.00015,
+   "delta_enc": 0.26039999999999996,
+   "fast_enc": 0.0029,
+   "fast_dec": 0.00015,
+   "sha256": 0.0008100000000000001
+  },
+  {
+   "package": "three",
+   "from": "0.153.0",
+   "to": "0.154.0",
+   "raw": 1220196,
+   "brotli": 193024,
+   "delta": 1617,
+   "factor": 119.37167594310452,
+   "fast": 2419,
+   "content_aware": 1726,
+   "overlap": {
+    "verbatim": 0.9646,
+    "ignoring_whitespace": 0.9648
+   },
+   "brotli_dec": 0.0024700000000000004,
+   "delta_dec": 0.00011999999999999999,
+   "delta_enc": 0.2176,
+   "fast_enc": 0.0025,
+   "fast_dec": 0.00011,
+   "sha256": 0.00086
+  },
+  {
+   "package": "three",
+   "from": "0.154.0",
+   "to": "0.155.0",
+   "raw": 1225243,
+   "brotli": 193532,
+   "delta": 1160,
+   "factor": 166.83793103448275,
+   "fast": 1940,
+   "content_aware": 1258,
+   "overlap": {
+    "verbatim": 0.9863,
+    "ignoring_whitespace": 0.9867
+   },
+   "brotli_dec": 0.0024,
+   "delta_dec": 0.00014000000000000001,
+   "delta_enc": 0.2186,
+   "fast_enc": 0.0026,
+   "fast_dec": 0.00013000000000000002,
+   "sha256": 0.00082
+  },
+  {
+   "package": "three",
+   "from": "0.155.0",
+   "to": "0.156.0",
+   "raw": 1226067,
+   "brotli": 193723,
+   "delta": 1022,
+   "factor": 189.55283757338552,
+   "fast": 1501,
+   "content_aware": 1104,
+   "overlap": {
+    "verbatim": 0.9886,
+    "ignoring_whitespace": 0.9888
+   },
+   "brotli_dec": 0.0023599999999999997,
+   "delta_dec": 0.00011,
+   "delta_enc": 0.202,
+   "fast_enc": 0.0025,
+   "fast_dec": 0.00011,
+   "sha256": 0.0008
+  },
+  {
+   "package": "three",
+   "from": "0.156.0",
+   "to": "0.157.0",
+   "raw": 1229486,
+   "brotli": 194172,
+   "delta": 2559,
+   "factor": 75.87807737397421,
+   "fast": 4419,
+   "content_aware": 2753,
+   "overlap": {
+    "verbatim": 0.9487,
+    "ignoring_whitespace": 0.9487
+   },
+   "brotli_dec": 0.00234,
+   "delta_dec": 0.00013000000000000002,
+   "delta_enc": 0.2298,
+   "fast_enc": 0.0028,
+   "fast_dec": 0.00015,
+   "sha256": 0.00079
+  },
+  {
+   "package": "three",
+   "from": "0.157.0",
+   "to": "0.158.0",
+   "raw": 1237216,
+   "brotli": 195422,
+   "delta": 2634,
+   "factor": 74.1921032649962,
+   "fast": 4115,
+   "content_aware": 2598,
+   "overlap": {
+    "verbatim": 0.9631,
+    "ignoring_whitespace": 0.9652
+   },
+   "brotli_dec": 0.0030600000000000002,
+   "delta_dec": 0.00014000000000000001,
+   "delta_enc": 0.256,
+   "fast_enc": 0.0027,
+   "fast_dec": 0.00014000000000000001,
+   "sha256": 0.00098
+  },
+  {
+   "package": "three",
+   "from": "0.158.0",
+   "to": "0.159.0",
+   "raw": 1270105,
+   "brotli": 200224,
+   "delta": 6577,
+   "factor": 30.44305914550707,
+   "fast": 9710,
+   "content_aware": 6829,
+   "overlap": {
+    "verbatim": 0.9535,
+    "ignoring_whitespace": 0.9537
+   },
+   "brotli_dec": 0.00256,
+   "delta_dec": 0.00016,
+   "delta_enc": 0.2746,
+   "fast_enc": 0.003,
+   "fast_dec": 0.00019,
+   "sha256": 0.00094
+  },
+  {
+   "package": "three",
+   "from": "0.159.0",
+   "to": "0.160.0",
+   "raw": 1272972,
+   "brotli": 200866,
+   "delta": 1919,
+   "factor": 104.67222511724857,
+   "fast": 2789,
+   "content_aware": 1994,
+   "overlap": {
+    "verbatim": 0.9841,
+    "ignoring_whitespace": 0.9852
+   },
+   "brotli_dec": 0.00249,
+   "delta_dec": 0.00014000000000000001,
+   "delta_enc": 0.22669999999999998,
+   "fast_enc": 0.0026,
+   "fast_dec": 0.00016,
+   "sha256": 0.00085
+  },
+  {
+   "package": "typescript",
+   "from": "5.4.2",
+   "to": "5.4.3",
+   "raw": 9138326,
+   "brotli": 1081231,
+   "delta": 1220,
+   "factor": 886.2549180327869,
+   "fast": 1960,
+   "content_aware": 1135,
+   "overlap": {
+    "verbatim": 0.9995,
+    "ignoring_whitespace": 0.9998
+   },
+   "brotli_dec": 0.015099999999999999,
+   "delta_dec": 0.00079,
+   "delta_enc": 2.9528000000000003,
+   "fast_enc": 0.013800000000000002,
+   "fast_dec": 0.00075,
+   "sha256": 0.00833
+  },
+  {
+   "package": "typescript",
+   "from": "5.4.3",
+   "to": "5.4.4",
+   "raw": 9140945,
+   "brotli": 1081659,
+   "delta": 1932,
+   "factor": 559.8649068322982,
+   "fast": 2829,
+   "content_aware": 1891,
+   "overlap": {
+    "verbatim": 0.9994,
+    "ignoring_whitespace": 0.9994
+   },
+   "brotli_dec": 0.013640000000000001,
+   "delta_dec": 0.00078,
+   "delta_enc": 2.744,
+   "fast_enc": 0.0141,
+   "fast_dec": 0.00078,
+   "sha256": 0.00713
+  },
+  {
+   "package": "typescript",
+   "from": "5.4.4",
+   "to": "5.4.5",
+   "raw": 9141067,
+   "brotli": 1081641,
+   "delta": 968,
+   "factor": 1117.3977272727273,
+   "fast": 1302,
+   "content_aware": 942,
+   "overlap": {
+    "verbatim": 0.9999,
+    "ignoring_whitespace": 0.9999
+   },
+   "brotli_dec": 0.01458,
+   "delta_dec": 0.0009,
+   "delta_enc": 2.8156999999999996,
+   "fast_enc": 0.0141,
+   "fast_dec": 0.00079,
+   "sha256": 0.00697
+  },
+  {
+   "package": "typescript",
+   "from": "5.4.5",
+   "to": "5.5.2",
+   "raw": 8869429,
+   "brotli": 1119164,
+   "delta": 652773,
+   "factor": 1.7144765485092062,
+   "fast": 1383610,
+   "content_aware": 137695,
+   "overlap": {
+    "verbatim": 0.1159,
+    "ignoring_whitespace": 0.9061
+   },
+   "brotli_dec": 0.01416,
+   "delta_dec": 0.00537,
+   "delta_enc": 9.1324,
+   "fast_enc": 0.0619,
+   "fast_dec": 0.00728,
+   "sha256": 0.007690000000000001
+  },
+  {
+   "package": "typescript",
+   "from": "5.5.2",
+   "to": "5.6.2",
+   "raw": 8928146,
+   "brotli": 1126216,
+   "delta": 35049,
+   "factor": 32.1326143399241,
+   "fast": 62865,
+   "content_aware": 33915,
+   "overlap": {
+    "verbatim": 0.9736,
+    "ignoring_whitespace": 0.9756
+   },
+   "brotli_dec": 0.016210000000000002,
+   "delta_dec": 0.0013,
+   "delta_enc": 3.4886999999999997,
+   "fast_enc": 0.0201,
+   "fast_dec": 0.00122,
+   "sha256": 0.0072
+  }
+ ],
+ "bdp_bytes": {
+  "10": {
+   "0.02": 25000.0,
+   "0.056": 70000.0,
+   "0.1": 125000.0,
+   "0.16": 200000.0
+  },
+  "50": {
+   "0.02": 125000.0,
+   "0.056": 350000.0,
+   "0.1": 625000.0,
+   "0.16": 1000000.0
+  },
+  "100": {
+   "0.02": 250000.0,
+   "0.056": 700000.0,
+   "0.1": 1250000.0,
+   "0.16": 2000000.0
+  },
+  "1000": {
+   "0.02": 2500000.0,
+   "0.056": 7000000.0,
+   "0.1": 12500000.0,
+   "0.16": 20000000.0
+  }
+ },
+ "flows": [
+  {
+   "update": "three 0.156.0->0.157.0",
+   "pull": {
+    "10Mbps_cold": {
+     "HTTP, whole file (brotli)": 0.2999176,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.058209199999999996,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11642960000000001,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.0598304
+    },
+    "100Mbps_cold": {
+     "HTTP, whole file (brotli)": 0.23369776,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05633792,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11327096,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.05721104
+    },
+    "100Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.07387376,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05633792,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11327096,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.05721104
+    },
+    "1000Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.059893376000000005,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.056150792,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.112955096,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.056949104
+    }
+   },
+   "push": {
+    "10Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 0.32791760000000003,
+     "Notify, then HTTP fetch with dictionary": 0.0862092,
+     "Push whole file": 0.27191760000000004,
+     "Push delta over any pub/sub channel (dcz)": 0.030209200000000002,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.031069600000000003
+    },
+    "100Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 0.26169776,
+     "Notify, then HTTP fetch with dictionary": 0.08433792000000001,
+     "Push whole file": 0.20569776,
+     "Push delta over any pub/sub channel (dcz)": 0.028337920000000003,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.02913496
+    },
+    "100Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.10187376,
+     "Notify, then HTTP fetch with dictionary": 0.08433792000000001,
+     "Push whole file": 0.045873760000000006,
+     "Push delta over any pub/sub channel (dcz)": 0.028337920000000003,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.02913496
+    },
+    "1000Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.087893376,
+     "Notify, then HTTP fetch with dictionary": 0.084150792,
+     "Push whole file": 0.031893376,
+     "Push delta over any pub/sub channel (dcz)": 0.028150792,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.028941496
+    }
+   },
+   "event_time": {
+    "10Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08771720000000001,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.0345172,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.035377599999999995,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.26000920000000005,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.2600092,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.26086960000000003
+    },
+    "100Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08450672,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.03130672,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.03210376,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.2581379200000001,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.25813792,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.25893496000000005
+    },
+    "100Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08450672,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.03130672,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.03210376,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.2581379200000001,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.25813792,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.25893496000000005
+    },
+    "1000Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.084185672,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.030985672000000002,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.031776376,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.25795079200000004,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.25795079200000004,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.258741496
+    }
+   }
+  },
+  {
+   "update": "typescript 5.4.4->5.4.5",
+   "pull": {
+    "10Mbps_cold": {
+     "HTTP, whole file (brotli)": 1.0221328,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.0577064,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.1221068,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.0655076
+    },
+    "100Mbps_cold": {
+     "HTTP, whole file (brotli)": 0.41952728,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05698064,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.12009368000000001,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.06403376
+    },
+    "100Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.15711128000000002,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05698064,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.12009368000000001,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.06403376
+    },
+    "1000Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.079233128,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.056908064,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11989236800000001,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.063886376
+    }
+   },
+   "push": {
+    "10Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 1.0501328,
+     "Notify, then HTTP fetch with dictionary": 0.0857064,
+     "Push whole file": 0.9941328,
+     "Push delta over any pub/sub channel (dcz)": 0.0297064,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.0367468
+    },
+    "100Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 0.44752728,
+     "Notify, then HTTP fetch with dictionary": 0.08498064,
+     "Push whole file": 0.39152728000000003,
+     "Push delta over any pub/sub channel (dcz)": 0.028980640000000002,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.03595768
+    },
+    "100Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.18511128000000002,
+     "Notify, then HTTP fetch with dictionary": 0.08498064,
+     "Push whole file": 0.12911128,
+     "Push delta over any pub/sub channel (dcz)": 0.028980640000000002,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.03595768
+    },
+    "1000Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.107233128,
+     "Notify, then HTTP fetch with dictionary": 0.084908064,
+     "Push whole file": 0.051233128,
+     "Push delta over any pub/sub channel (dcz)": 0.028908064,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.035878768
+    }
+   },
+   "event_time": {
+    "10Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.0858636,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.0439636,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.051003999999999994,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 2.8454064,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 2.8454064,
+     "ARFP push profile (zstd -19 at the event, hash check)": 2.8524467999999996
+    },
+    "100Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08489736,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.04299736,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.049974399999999995,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 2.8446806399999995,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 2.84468064,
+     "ARFP push profile (zstd -19 at the event, hash check)": 2.8516576799999998
+    },
+    "100Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08489736,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.04299736,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.049974399999999995,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 2.8446806399999995,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 2.84468064,
+     "ARFP push profile (zstd -19 at the event, hash check)": 2.8516576799999998
+    },
+    "1000Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.084800736,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.042900736,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.049871439999999996,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 2.8446080639999995,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 2.8446080639999995,
+     "ARFP push profile (zstd -19 at the event, hash check)": 2.8515787679999995
+    }
+   }
+  },
+  {
+   "update": "react-dom 18.2.0->18.3.0",
+   "pull": {
+    "10Mbps_cold": {
+     "HTTP, whole file (brotli)": 0.1302496,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.0582236,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11573399999999999,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.0591348
+    },
+    "100Mbps_cold": {
+     "HTTP, whole file (brotli)": 0.11422096,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05626736,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11249039999999999,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.05643048
+    },
+    "100Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.059388960000000005,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.05626736,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11249039999999999,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.05643048
+    },
+    "1000Mbps_warm": {
+     "HTTP, whole file (brotli)": 0.05673489600000001,
+     "HTTP + RFC 9842 dictionary (dcz)": 0.056071736000000004,
+     "ARFP v0.1 negotiated (DEMAND, OFFER, ACCEPT, payload)": 0.11216604,
+     "ARFP v0.1 fast path (OFFER with payload)": 0.056160048
+    }
+   },
+   "push": {
+    "10Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 0.1582496,
+     "Notify, then HTTP fetch with dictionary": 0.0862236,
+     "Push whole file": 0.1022496,
+     "Push delta over any pub/sub channel (dcz)": 0.030223600000000003,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.030374
+    },
+    "100Mbps_cold": {
+     "Notify, then HTTP fetch of whole file": 0.14222096,
+     "Notify, then HTTP fetch with dictionary": 0.08426736,
+     "Push whole file": 0.08622096,
+     "Push delta over any pub/sub channel (dcz)": 0.028267360000000002,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.028354400000000002
+    },
+    "100Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.08738896,
+     "Notify, then HTTP fetch with dictionary": 0.08426736,
+     "Push whole file": 0.03138896,
+     "Push delta over any pub/sub channel (dcz)": 0.028267360000000002,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.028354400000000002
+    },
+    "1000Mbps_warm": {
+     "Notify, then HTTP fetch of whole file": 0.084734896,
+     "Notify, then HTTP fetch with dictionary": 0.084071736,
+     "Push whole file": 0.028734896,
+     "Push delta over any pub/sub channel (dcz)": 0.028071736000000003,
+     "ARFP push profile (128 B frame + delta + SHA-256 check)": 0.02815244
+    }
+   },
+   "event_time": {
+    "10Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08681760000000001,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.031117600000000002,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.031268,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.0862236,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.06372359999999999,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.06387399999999999
+    },
+    "100Mbps_cold": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08431776,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.02861776,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.0287048,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.08426736,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.06176736,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.0618544
+    },
+    "100Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.08431776,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.02861776,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.0287048,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.08426736,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.06176736,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.0618544
+    },
+    "1000Mbps_warm": {
+     "Notify, then fetch with dictionary (zstd -3 at the event)": 0.084067776,
+     "Push delta over any pub/sub channel (zstd -3 at the event)": 0.028367776,
+     "ARFP push profile (zstd -3 at the event, hash check)": 0.02844848,
+     "Notify, then fetch with dictionary (zstd -19 at the event)": 0.08407173600000001,
+     "Push delta over any pub/sub channel (zstd -19 at the event)": 0.06157173600000001,
+     "ARFP push profile (zstd -19 at the event, hash check)": 0.061652439999999996
+    }
+   }
+  }
+ ],
+ "state": {
+  "membership": [
+   {
+    "held_objects": 1000,
+    "sha256_list": 32000,
+    "short_ids_6B": 6000,
+    "bloom_1pct": 1199,
+    "bloom_0.1pct": 1798,
+    "gcs_1pct": 1014
+   },
+   {
+    "held_objects": 10000,
+    "sha256_list": 320000,
+    "short_ids_6B": 60000,
+    "bloom_1pct": 11982,
+    "bloom_0.1pct": 17972,
+    "gcs_1pct": 10138
+   },
+   {
+    "held_objects": 100000,
+    "sha256_list": 3200000,
+    "short_ids_6B": 600000,
+    "bloom_1pct": 119814,
+    "bloom_0.1pct": 179720,
+    "gcs_1pct": 101375
+   },
+   {
+    "held_objects": 1000000,
+    "sha256_list": 32000000,
+    "short_ids_6B": 6000000,
+    "bloom_1pct": 1198133,
+    "bloom_0.1pct": 1797199,
+    "gcs_1pct": 1013750
+   }
+  ],
+  "difference": [
+   {
+    "sketch_capacity": 10,
+    "minisketch_32bit_ids": 40,
+    "iblt_eppstein": 240
+   },
+   {
+    "sketch_capacity": 100,
+    "minisketch_32bit_ids": 400,
+    "iblt_eppstein": 2400
+   },
+   {
+    "sketch_capacity": 1000,
+    "minisketch_32bit_ids": 4000,
+    "iblt_eppstein": 24000
+   }
+  ]
+ },
+ "kv": [
+  {
+   "model": "Llama 3.1 8B",
+   "context": 8192,
+   "kv_bytes_bf16": 1073741824,
+   "recompute_s_per_h100": 0.301485571160481,
+   "send_s": {
+    "400": 0.02147483648,
+    "100": 0.08589934592,
+    "25": 0.34359738368,
+    "1": 8.589934592,
+    "0.1": 85.89934592
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 28.49202553520404,
+    "FP8": 14.24601276760202,
+    "~4x codec (CacheGen-class)": 7.12300638380101
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 227.9362042816323
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "context": 32768,
+   "kv_bytes_bf16": 4294967296,
+   "recompute_s_per_h100": 1.6326350234655564,
+   "send_s": {
+    "400": 0.08589934592,
+    "100": 0.34359738368,
+    "25": 1.37438953472,
+    "1": 34.359738368,
+    "0.1": 343.59738368
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 21.045572264562463,
+    "FP8": 10.522786132281231,
+    "~4x codec (CacheGen-class)": 5.261393066140616
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 168.3645781164997
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "context": 131072,
+   "kv_bytes_bf16": 17179869184,
+   "recompute_s_per_h100": 13.357623915040339,
+   "send_s": {
+    "400": 0.34359738368,
+    "100": 1.37438953472,
+    "25": 5.49755813888,
+    "1": 137.438953472,
+    "0.1": 1374.38953472
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 10.289176753752386,
+    "FP8": 5.144588376876193,
+    "~4x codec (CacheGen-class)": 2.5722941884380965
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 82.31341403001909
+  },
+  {
+   "model": "Llama 3.1 70B",
+   "context": 8192,
+   "kv_bytes_bf16": 2684354560,
+   "recompute_s_per_h100": 2.514225078226466,
+   "send_s": {
+    "400": 0.0536870912,
+    "100": 0.2147483648,
+    "25": 0.8589934592,
+    "1": 21.47483648,
+    "0.1": 214.7483648
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 8.541334133516935,
+    "FP8": 4.270667066758468,
+    "~4x codec (CacheGen-class)": 2.135333533379234
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 68.33067306813548
+  },
+  {
+   "model": "Llama 3.1 70B",
+   "context": 32768,
+   "kv_bytes_bf16": 10737418240,
+   "recompute_s_per_h100": 12.190364007024025,
+   "send_s": {
+    "400": 0.2147483648,
+    "100": 0.8589934592,
+    "25": 3.4359738368,
+    "1": 85.89934592,
+    "0.1": 858.9934592
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 7.046495565719386,
+    "FP8": 3.523247782859693,
+    "~4x codec (CacheGen-class)": 1.7616238914298465
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 56.37196452575509
+  },
+  {
+   "model": "Llama 3.1 70B",
+   "context": 131072,
+   "kv_bytes_bf16": 42949672960,
+   "recompute_s_per_h100": 82.89687513398667,
+   "send_s": {
+    "400": 0.8589934592,
+    "100": 3.4359738368,
+    "25": 13.7438953472,
+    "1": 343.59738368,
+    "0.1": 3435.9738368
+   },
+   "breakeven_gbps_per_h100": {
+    "BF16": 4.144877392840703,
+    "FP8": 2.0724386964203516,
+    "~4x codec (CacheGen-class)": 1.0362193482101758
+   },
+   "breakeven_gbps_8_gpus_one_link_bf16": 33.159019142725626
+  }
+ ],
+ "kv_adaptive_vs_fixed": {
+  "model": "Llama 3.1 8B",
+  "context": 32768,
+  "links_gbps": [
+   400,
+   10,
+   1
+  ],
+  "rows": {
+   "always: send KV, BF16 (E)": {
+    "400": 0.08589934592,
+    "10": 3.4359738368,
+    "1": 34.359738368
+   },
+   "always: send KV, ~4x codec (T)": {
+    "400": 0.02147483648,
+    "10": 0.8589934592,
+    "1": 8.589934592
+   },
+   "always: send text, recompute, default kernels (N)": {
+    "400": 1.6326376449055564,
+    "10": 1.6327398810655565,
+    "1": 1.6336835994655565
+   },
+   "always: send text, recompute, batch-invariant kernels (E only on the sender's exact stack)": {
+    "400": 2.6373361208843606,
+    "10": 2.6374383570443602,
+    "1": 2.6383820754443605
+   },
+   "adaptive, contract: exact, receivers on different stacks": {
+    "400": 0.08589934592,
+    "10": 3.4359738368,
+    "1": 34.359738368,
+    "choices": {
+     "400": "send KV, BF16 (E)",
+     "10": "send KV, BF16 (E)",
+     "1": "send KV, BF16 (E)"
+    }
+   },
+   "adaptive, contract: exact, every receiver on the sender's pinned stack": {
+    "400": 0.08589934592,
+    "10": 2.6374383570443602,
+    "1": 2.6383820754443605,
+    "choices": {
+     "400": "send KV, BF16 (E)",
+     "10": "send text, recompute, batch-invariant kernels (E only on the sender's exact stack)",
+     "1": "send text, recompute, batch-invariant kernels (E only on the sender's exact stack)"
+    }
+   },
+   "adaptive, contract: bounded (E or T)": {
+    "400": 0.02147483648,
+    "10": 0.8589934592,
+    "1": 2.6383820754443605,
+    "choices": {
+     "400": "send KV, ~4x codec (T)",
+     "10": "send KV, ~4x codec (T)",
+     "1": "send text, recompute, batch-invariant kernels (E only on the sender's exact stack)"
+    }
+   },
+   "adaptive, contract: any class (E, T or N)": {
+    "400": 0.02147483648,
+    "10": 0.8589934592,
+    "1": 1.6336835994655565,
+    "choices": {
+     "400": "send KV, ~4x codec (T)",
+     "10": "send KV, ~4x codec (T)",
+     "1": "send text, recompute, default kernels (N)"
+    }
+   }
+  }
+ },
+ "amdahl": {
+  "0.1": [
+   1.0526315789473684,
+   1.0989010989010988,
+   1.1098779134295227,
+   1.1111111111111112
+  ],
+  "0.3": [
+   1.1764705882352942,
+   1.36986301369863,
+   1.4224751066856332,
+   1.4285714285714286
+  ],
+  "0.5": [
+   1.3333333333333333,
+   1.8181818181818181,
+   1.9801980198019802,
+   2.0
+  ],
+  "0.9": [
+   1.8181818181818181,
+   5.2631578947368425,
+   9.174311926605506,
+   10.000000000000002
+  ],
+  "0.99": [
+   1.9801980198019802,
+   9.174311926605503,
+   50.25125628140702,
+   99.99999999999991
+  ]
+ },
+ "google_search_implied_html_byte_share": {
+  "overall": 0.07391304347826087,
+  "high_latency": 0.3913043478260869
+ }
+}

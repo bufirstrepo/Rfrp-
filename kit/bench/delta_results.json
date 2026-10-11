@@ -1,0 +1,860 @@
+{
+ "tool": {
+  "python": "3.13.16",
+  "zstd": "1.5.6",
+  "brotli": "1.1.0",
+  "machine": "x86_64",
+  "repeats": 5,
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+ },
+ "series": [
+  {
+   "package": "react-dom",
+   "file": "cjs/react-dom.production.min.js",
+   "sha256": {
+    "18.0.0": "fc0cbf5ce0b10d591a7d5ba2b859502274d0f9036b9ad692140b7f2b47fce5b2",
+    "18.1.0": "db70122e66c434e360539319ef318959f303a8792417e3cbb14abb6e56294191",
+    "18.2.0": "1404cd9fd1e2ee3ce79fba01957b01c83f88ccd86a3e55e6a51a871d9fe05552",
+    "18.3.0": "7647763dd2028dfe40319d5c35ab97ebd74905a0b85c8207d3943d3726823ee4",
+    "18.3.1": "cbf7fe6b9726ee65f8bcd5715289cc5161c8dacf74d0b8aaa0d29412516f5f47"
+   },
+   "pairs": [
+    {
+     "from": "18.0.0",
+     "to": "18.1.0",
+     "raw": 131555,
+     "gzip9": 42113,
+     "brotli11": 36750,
+     "zstd19": 38991,
+     "brotli_decode_ms": 0.56,
+     "zstd_decode_ms": 0.25,
+     "delta": {
+      "bytes": 8834,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 63.4,
+      "decode_ms": 0.13
+     },
+     "delta_fast": {
+      "bytes": 11340,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 0.7,
+      "decode_ms": 0.11
+     },
+     "content_aware": {
+      "bytes": 8853,
+      "indent_bytes": 19,
+      "text_bytes": 8834,
+      "decode_ms": 0.12
+     },
+     "line_overlap": {
+      "verbatim": 0.0067,
+      "ignoring_whitespace": 0.0067
+     },
+     "sha256_ms": 0.08,
+     "delta_over_brotli": 0.2404
+    },
+    {
+     "from": "18.1.0",
+     "to": "18.2.0",
+     "raw": 131737,
+     "gzip9": 42301,
+     "brotli11": 36891,
+     "zstd19": 39097,
+     "brotli_decode_ms": 0.44,
+     "zstd_decode_ms": 0.14,
+     "delta": {
+      "bytes": 8112,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 53.2,
+      "decode_ms": 0.1
+     },
+     "delta_fast": {
+      "bytes": 10348,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 0.5,
+      "decode_ms": 0.1
+     },
+     "content_aware": {
+      "bytes": 8131,
+      "indent_bytes": 19,
+      "text_bytes": 8112,
+      "decode_ms": 0.11
+     },
+     "line_overlap": {
+      "verbatim": 0.0188,
+      "ignoring_whitespace": 0.0188
+     },
+     "sha256_ms": 0.1,
+     "delta_over_brotli": 0.2199
+    },
+    {
+     "from": "18.2.0",
+     "to": "18.3.0",
+     "raw": 131685,
+     "gzip9": 42274,
+     "brotli11": 36862,
+     "zstd19": 39057,
+     "brotli_decode_ms": 0.44,
+     "zstd_decode_ms": 0.14,
+     "delta": {
+      "bytes": 2677,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 33.5,
+      "decode_ms": 0.05
+     },
+     "delta_fast": {
+      "bytes": 3432,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 0.3,
+      "decode_ms": 0.04
+     },
+     "content_aware": {
+      "bytes": 2696,
+      "indent_bytes": 19,
+      "text_bytes": 2677,
+      "decode_ms": 0.07
+     },
+     "line_overlap": {
+      "verbatim": 0.4332,
+      "ignoring_whitespace": 0.4332
+     },
+     "sha256_ms": 0.08,
+     "delta_over_brotli": 0.0726
+    },
+    {
+     "from": "18.3.0",
+     "to": "18.3.1",
+     "raw": 131685,
+     "gzip9": 42275,
+     "brotli11": 36808,
+     "zstd19": 39055,
+     "brotli_decode_ms": 0.54,
+     "zstd_decode_ms": 0.22,
+     "delta": {
+      "bytes": 63,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 15.4,
+      "decode_ms": 0.02
+     },
+     "delta_fast": {
+      "bytes": 69,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 0.3,
+      "decode_ms": 0.02
+     },
+     "content_aware": {
+      "bytes": 82,
+      "indent_bytes": 19,
+      "text_bytes": 63,
+      "decode_ms": 0.04
+     },
+     "line_overlap": {
+      "verbatim": 0.9941,
+      "ignoring_whitespace": 0.9941
+     },
+     "sha256_ms": 0.08,
+     "delta_over_brotli": 0.0017
+    }
+   ],
+   "stale": [
+    {
+     "from": "18.0.0",
+     "to": "18.2.0",
+     "delta_bytes": 9724,
+     "brotli11": 36891,
+     "delta_over_brotli": 0.2636
+    },
+    {
+     "from": "18.0.0",
+     "to": "18.3.0",
+     "delta_bytes": 9454,
+     "brotli11": 36862,
+     "delta_over_brotli": 0.2565
+    },
+    {
+     "from": "18.0.0",
+     "to": "18.3.1",
+     "delta_bytes": 9457,
+     "brotli11": 36808,
+     "delta_over_brotli": 0.2569
+    }
+   ]
+  },
+  {
+   "package": "three",
+   "file": "build/three.module.js",
+   "sha256": {
+    "0.150.0": "ffd2b4f8c3ba7f95731c552c2d15635d780e464639edf5ef5b0bd803d48e4ba0",
+    "0.151.0": "7a98efe8dca64edb19eb70cf1019320950a1ed994689cb234cf90152f490f46e",
+    "0.152.0": "9709904fbf9a3b5fdb6e26ba79c9294831c1f3d028646b5ab2dd4aacbe959b11",
+    "0.153.0": "5a9cbb6650f46be6f761ad09184e6659b7b77f85e495d6177fd4507e8782d2df",
+    "0.154.0": "282dbc163858205a9397867ef078ad66b81597001c7f8cf8193b0e3a72aa738c",
+    "0.155.0": "6c3a6299b7ae2eb8f3a9ae83f05cf50d6b3ba58931c34033a8abfac6bcf4acba",
+    "0.156.0": "6aad71d62afec602387899c50ea2e7a4bb55587b283ecf86385a087849b625ed",
+    "0.157.0": "ef5c33eb93a1e3638bd53a2c84224486578ed3c8479976a8985447e7d734fb99",
+    "0.158.0": "313203957197800a1dfa954cfde84103be12bcd8e33aeee07be04216002b2e6d",
+    "0.159.0": "5898fd8f4ec3688073967ad95967338a415790d6bbf31d4841bc56389ed7374a",
+    "0.160.0": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495"
+   },
+   "pairs": [
+    {
+     "from": "0.150.0",
+     "to": "0.151.0",
+     "raw": 1198641,
+     "gzip9": 241187,
+     "brotli11": 190163,
+     "zstd19": 198559,
+     "brotli_decode_ms": 2.26,
+     "zstd_decode_ms": 0.83,
+     "delta": {
+      "bytes": 10707,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 262.6,
+      "decode_ms": 0.19
+     },
+     "delta_fast": {
+      "bytes": 20868,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 3.5,
+      "decode_ms": 0.31
+     },
+     "content_aware": {
+      "bytes": 7762,
+      "indent_bytes": 910,
+      "text_bytes": 6852,
+      "decode_ms": 0.29
+     },
+     "line_overlap": {
+      "verbatim": 0.8687,
+      "ignoring_whitespace": 0.9124
+     },
+     "sha256_ms": 0.9,
+     "delta_over_brotli": 0.0563
+    },
+    {
+     "from": "0.151.0",
+     "to": "0.152.0",
+     "raw": 1208641,
+     "gzip9": 242550,
+     "brotli11": 191211,
+     "zstd19": 199444,
+     "brotli_decode_ms": 2.99,
+     "zstd_decode_ms": 1.02,
+     "delta": {
+      "bytes": 5609,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 293.4,
+      "decode_ms": 0.14
+     },
+     "delta_fast": {
+      "bytes": 8961,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 3.0,
+      "decode_ms": 0.17
+     },
+     "content_aware": {
+      "bytes": 5726,
+      "indent_bytes": 249,
+      "text_bytes": 5477,
+      "decode_ms": 0.17
+     },
+     "line_overlap": {
+      "verbatim": 0.9556,
+      "ignoring_whitespace": 0.9562
+     },
+     "sha256_ms": 0.83,
+     "delta_over_brotli": 0.0293
+    },
+    {
+     "from": "0.152.0",
+     "to": "0.153.0",
+     "raw": 1223960,
+     "gzip9": 245515,
+     "brotli11": 193220,
+     "zstd19": 201507,
+     "brotli_decode_ms": 2.38,
+     "zstd_decode_ms": 0.87,
+     "delta": {
+      "bytes": 4071,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 260.4,
+      "decode_ms": 0.15
+     },
+     "delta_fast": {
+      "bytes": 6284,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.9,
+      "decode_ms": 0.15
+     },
+     "content_aware": {
+      "bytes": 4421,
+      "indent_bytes": 478,
+      "text_bytes": 3943,
+      "decode_ms": 0.14
+     },
+     "line_overlap": {
+      "verbatim": 0.9458,
+      "ignoring_whitespace": 0.9468
+     },
+     "sha256_ms": 0.81,
+     "delta_over_brotli": 0.0211
+    },
+    {
+     "from": "0.153.0",
+     "to": "0.154.0",
+     "raw": 1220196,
+     "gzip9": 245199,
+     "brotli11": 193024,
+     "zstd19": 201367,
+     "brotli_decode_ms": 2.47,
+     "zstd_decode_ms": 0.97,
+     "delta": {
+      "bytes": 1617,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 217.6,
+      "decode_ms": 0.12
+     },
+     "delta_fast": {
+      "bytes": 2419,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.5,
+      "decode_ms": 0.11
+     },
+     "content_aware": {
+      "bytes": 1726,
+      "indent_bytes": 152,
+      "text_bytes": 1574,
+      "decode_ms": 0.15
+     },
+     "line_overlap": {
+      "verbatim": 0.9646,
+      "ignoring_whitespace": 0.9648
+     },
+     "sha256_ms": 0.86,
+     "delta_over_brotli": 0.0084
+    },
+    {
+     "from": "0.154.0",
+     "to": "0.155.0",
+     "raw": 1225243,
+     "gzip9": 245882,
+     "brotli11": 193532,
+     "zstd19": 201955,
+     "brotli_decode_ms": 2.4,
+     "zstd_decode_ms": 0.89,
+     "delta": {
+      "bytes": 1160,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 218.6,
+      "decode_ms": 0.14
+     },
+     "delta_fast": {
+      "bytes": 1940,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.6,
+      "decode_ms": 0.13
+     },
+     "content_aware": {
+      "bytes": 1258,
+      "indent_bytes": 165,
+      "text_bytes": 1093,
+      "decode_ms": 0.12
+     },
+     "line_overlap": {
+      "verbatim": 0.9863,
+      "ignoring_whitespace": 0.9867
+     },
+     "sha256_ms": 0.82,
+     "delta_over_brotli": 0.006
+    },
+    {
+     "from": "0.155.0",
+     "to": "0.156.0",
+     "raw": 1226067,
+     "gzip9": 246202,
+     "brotli11": 193723,
+     "zstd19": 202108,
+     "brotli_decode_ms": 2.36,
+     "zstd_decode_ms": 0.88,
+     "delta": {
+      "bytes": 1022,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 202.0,
+      "decode_ms": 0.11
+     },
+     "delta_fast": {
+      "bytes": 1501,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.5,
+      "decode_ms": 0.11
+     },
+     "content_aware": {
+      "bytes": 1104,
+      "indent_bytes": 113,
+      "text_bytes": 991,
+      "decode_ms": 0.12
+     },
+     "line_overlap": {
+      "verbatim": 0.9886,
+      "ignoring_whitespace": 0.9888
+     },
+     "sha256_ms": 0.8,
+     "delta_over_brotli": 0.0053
+    },
+    {
+     "from": "0.156.0",
+     "to": "0.157.0",
+     "raw": 1229486,
+     "gzip9": 246779,
+     "brotli11": 194172,
+     "zstd19": 202459,
+     "brotli_decode_ms": 2.34,
+     "zstd_decode_ms": 0.87,
+     "delta": {
+      "bytes": 2559,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 229.8,
+      "decode_ms": 0.13
+     },
+     "delta_fast": {
+      "bytes": 4419,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.8,
+      "decode_ms": 0.15
+     },
+     "content_aware": {
+      "bytes": 2753,
+      "indent_bytes": 208,
+      "text_bytes": 2545,
+      "decode_ms": 0.14
+     },
+     "line_overlap": {
+      "verbatim": 0.9487,
+      "ignoring_whitespace": 0.9487
+     },
+     "sha256_ms": 0.79,
+     "delta_over_brotli": 0.0132
+    },
+    {
+     "from": "0.157.0",
+     "to": "0.158.0",
+     "raw": 1237216,
+     "gzip9": 248662,
+     "brotli11": 195422,
+     "zstd19": 203778,
+     "brotli_decode_ms": 3.06,
+     "zstd_decode_ms": 1.3,
+     "delta": {
+      "bytes": 2634,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 256.0,
+      "decode_ms": 0.14
+     },
+     "delta_fast": {
+      "bytes": 4115,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.7,
+      "decode_ms": 0.14
+     },
+     "content_aware": {
+      "bytes": 2598,
+      "indent_bytes": 249,
+      "text_bytes": 2349,
+      "decode_ms": 0.15
+     },
+     "line_overlap": {
+      "verbatim": 0.9631,
+      "ignoring_whitespace": 0.9652
+     },
+     "sha256_ms": 0.98,
+     "delta_over_brotli": 0.0135
+    },
+    {
+     "from": "0.158.0",
+     "to": "0.159.0",
+     "raw": 1270105,
+     "gzip9": 255485,
+     "brotli11": 200224,
+     "zstd19": 208632,
+     "brotli_decode_ms": 2.56,
+     "zstd_decode_ms": 0.91,
+     "delta": {
+      "bytes": 6577,
+      "ldm": false,
+      "window_log": 23,
+      "encode_ms": 274.6,
+      "decode_ms": 0.16
+     },
+     "delta_fast": {
+      "bytes": 9710,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 3.0,
+      "decode_ms": 0.19
+     },
+     "content_aware": {
+      "bytes": 6829,
+      "indent_bytes": 492,
+      "text_bytes": 6337,
+      "decode_ms": 0.24
+     },
+     "line_overlap": {
+      "verbatim": 0.9535,
+      "ignoring_whitespace": 0.9537
+     },
+     "sha256_ms": 0.94,
+     "delta_over_brotli": 0.0328
+    },
+    {
+     "from": "0.159.0",
+     "to": "0.160.0",
+     "raw": 1272972,
+     "gzip9": 256378,
+     "brotli11": 200866,
+     "zstd19": 209333,
+     "brotli_decode_ms": 2.49,
+     "zstd_decode_ms": 0.92,
+     "delta": {
+      "bytes": 1919,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 226.7,
+      "decode_ms": 0.14
+     },
+     "delta_fast": {
+      "bytes": 2789,
+      "ldm": true,
+      "window_log": 23,
+      "encode_ms": 2.6,
+      "decode_ms": 0.16
+     },
+     "content_aware": {
+      "bytes": 1994,
+      "indent_bytes": 202,
+      "text_bytes": 1792,
+      "decode_ms": 0.15
+     },
+     "line_overlap": {
+      "verbatim": 0.9841,
+      "ignoring_whitespace": 0.9852
+     },
+     "sha256_ms": 0.85,
+     "delta_over_brotli": 0.0096
+    }
+   ],
+   "stale": [
+    {
+     "from": "0.150.0",
+     "to": "0.152.0",
+     "delta_bytes": 15548,
+     "brotli11": 191211,
+     "delta_over_brotli": 0.0813
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.153.0",
+     "delta_bytes": 18867,
+     "brotli11": 193220,
+     "delta_over_brotli": 0.0976
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.154.0",
+     "delta_bytes": 19670,
+     "brotli11": 193024,
+     "delta_over_brotli": 0.1019
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.155.0",
+     "delta_bytes": 20485,
+     "brotli11": 193532,
+     "delta_over_brotli": 0.1058
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.156.0",
+     "delta_bytes": 20757,
+     "brotli11": 193723,
+     "delta_over_brotli": 0.1071
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.157.0",
+     "delta_bytes": 22583,
+     "brotli11": 194172,
+     "delta_over_brotli": 0.1163
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.158.0",
+     "delta_bytes": 24557,
+     "brotli11": 195422,
+     "delta_over_brotli": 0.1257
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.159.0",
+     "delta_bytes": 30182,
+     "brotli11": 200224,
+     "delta_over_brotli": 0.1507
+    },
+    {
+     "from": "0.150.0",
+     "to": "0.160.0",
+     "delta_bytes": 31778,
+     "brotli11": 200866,
+     "delta_over_brotli": 0.1582
+    }
+   ]
+  },
+  {
+   "package": "typescript",
+   "file": "lib/typescript.js",
+   "sha256": {
+    "5.4.2": "7a174debaefc976b08f28451348b4dd7147c7a84930f3bd2788c9878b0374a7e",
+    "5.4.3": "d11c5c5a6f68774af19d1fc9d2c9aa3bb179d0bb2a78458a1ccf16638614443e",
+    "5.4.4": "1b31cabc32e6466d1131de6c8d4375101abd4c483bb92526f4897eae7f69c86e",
+    "5.4.5": "d4eeb6e18a598a21aa0a5c09a52270856e4b23bd31d9c7c60ab80a22b275b07b",
+    "5.5.2": "99443f51ec16c0744880ee28b500544b88479a95b14d996f7e874a2ac54ca201",
+    "5.6.2": "91a020fd612f83f8b6107ad5252f35a5c724f95bc274915048aa091e90d4bde5"
+   },
+   "pairs": [
+    {
+     "from": "5.4.2",
+     "to": "5.4.3",
+     "raw": 9138326,
+     "gzip9": 1553647,
+     "brotli11": 1081231,
+     "zstd19": 1087113,
+     "brotli_decode_ms": 15.1,
+     "zstd_decode_ms": 7.24,
+     "delta": {
+      "bytes": 1220,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 2952.8,
+      "decode_ms": 0.79
+     },
+     "delta_fast": {
+      "bytes": 1960,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 13.8,
+      "decode_ms": 0.75
+     },
+     "content_aware": {
+      "bytes": 1135,
+      "indent_bytes": 232,
+      "text_bytes": 903,
+      "decode_ms": 0.87
+     },
+     "line_overlap": {
+      "verbatim": 0.9995,
+      "ignoring_whitespace": 0.9998
+     },
+     "sha256_ms": 8.33,
+     "delta_over_brotli": 0.0011
+    },
+    {
+     "from": "5.4.3",
+     "to": "5.4.4",
+     "raw": 9140945,
+     "gzip9": 1554053,
+     "brotli11": 1081659,
+     "zstd19": 1087521,
+     "brotli_decode_ms": 13.64,
+     "zstd_decode_ms": 7.63,
+     "delta": {
+      "bytes": 1932,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 2744.0,
+      "decode_ms": 0.78
+     },
+     "delta_fast": {
+      "bytes": 2829,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 14.1,
+      "decode_ms": 0.78
+     },
+     "content_aware": {
+      "bytes": 1891,
+      "indent_bytes": 290,
+      "text_bytes": 1601,
+      "decode_ms": 1.03
+     },
+     "line_overlap": {
+      "verbatim": 0.9994,
+      "ignoring_whitespace": 0.9994
+     },
+     "sha256_ms": 7.13,
+     "delta_over_brotli": 0.0018
+    },
+    {
+     "from": "5.4.4",
+     "to": "5.4.5",
+     "raw": 9141067,
+     "gzip9": 1554067,
+     "brotli11": 1081641,
+     "zstd19": 1087252,
+     "brotli_decode_ms": 14.58,
+     "zstd_decode_ms": 6.58,
+     "delta": {
+      "bytes": 968,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 2815.7,
+      "decode_ms": 0.9
+     },
+     "delta_fast": {
+      "bytes": 1302,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 14.1,
+      "decode_ms": 0.79
+     },
+     "content_aware": {
+      "bytes": 942,
+      "indent_bytes": 182,
+      "text_bytes": 760,
+      "decode_ms": 0.87
+     },
+     "line_overlap": {
+      "verbatim": 0.9999,
+      "ignoring_whitespace": 0.9999
+     },
+     "sha256_ms": 6.97,
+     "delta_over_brotli": 0.0009
+    },
+    {
+     "from": "5.4.5",
+     "to": "5.5.2",
+     "raw": 8869429,
+     "gzip9": 1585113,
+     "brotli11": 1119164,
+     "zstd19": 1114079,
+     "brotli_decode_ms": 14.16,
+     "zstd_decode_ms": 6.55,
+     "delta": {
+      "bytes": 652773,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 9132.4,
+      "decode_ms": 5.37
+     },
+     "delta_fast": {
+      "bytes": 1383610,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 61.9,
+      "decode_ms": 7.28
+     },
+     "content_aware": {
+      "bytes": 137695,
+      "indent_bytes": 42689,
+      "text_bytes": 95006,
+      "decode_ms": 1.89
+     },
+     "line_overlap": {
+      "verbatim": 0.1159,
+      "ignoring_whitespace": 0.9061
+     },
+     "sha256_ms": 7.69,
+     "delta_over_brotli": 0.5833
+    },
+    {
+     "from": "5.5.2",
+     "to": "5.6.2",
+     "raw": 8928146,
+     "gzip9": 1595944,
+     "brotli11": 1126216,
+     "zstd19": 1120722,
+     "brotli_decode_ms": 16.21,
+     "zstd_decode_ms": 10.2,
+     "delta": {
+      "bytes": 35049,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 3488.7,
+      "decode_ms": 1.3
+     },
+     "delta_fast": {
+      "bytes": 62865,
+      "ldm": true,
+      "window_log": 25,
+      "encode_ms": 20.1,
+      "decode_ms": 1.22
+     },
+     "content_aware": {
+      "bytes": 33915,
+      "indent_bytes": 3546,
+      "text_bytes": 30369,
+      "decode_ms": 1.2
+     },
+     "line_overlap": {
+      "verbatim": 0.9736,
+      "ignoring_whitespace": 0.9756
+     },
+     "sha256_ms": 7.2,
+     "delta_over_brotli": 0.0311
+    }
+   ],
+   "stale": [
+    {
+     "from": "5.4.2",
+     "to": "5.4.4",
+     "delta_bytes": 2308,
+     "brotli11": 1081659,
+     "delta_over_brotli": 0.0021
+    },
+    {
+     "from": "5.4.2",
+     "to": "5.4.5",
+     "delta_bytes": 2429,
+     "brotli11": 1081641,
+     "delta_over_brotli": 0.0022
+    },
+    {
+     "from": "5.4.2",
+     "to": "5.5.2",
+     "delta_bytes": 653211,
+     "brotli11": 1119164,
+     "delta_over_brotli": 0.5837
+    },
+    {
+     "from": "5.4.2",
+     "to": "5.6.2",
+     "delta_bytes": 667818,
+     "brotli11": 1126216,
+     "delta_over_brotli": 0.593
+    }
+   ]
+  }
+ ]
+}

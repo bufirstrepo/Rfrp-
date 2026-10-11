@@ -1,0 +1,3 @@
+pycddl==0.6.4
+cbor2==5.9.0
+cryptography>=42

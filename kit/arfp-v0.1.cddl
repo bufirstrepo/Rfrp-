@@ -1,0 +1,384 @@
+; ARFP v0.1 core schema -- design draft, not a registered wire format.
+; Encoding: deterministic CBOR (RFC 8949 section 4.2.1). Schema language: CDDL (RFC 8610).
+;
+; Identity rules
+;   object id    id(o)  = H(canon(["arfp/0", o.kind, o]))         domain-separated per kind
+;   artifact id  H(bytes)                                          raw bytes, no wrapper
+;   work key     wk(v)  = H(canon(["arfp/0", "work", class, op, runtime, params,
+;                                  payload, artifact, base, [* wk(dep)]]))
+;   head id      id(head record)                                   compare-and-swap key for commits
+;   binding hash H(COSE_Sign1 bytes of the binding)                approvals and audit logs name it
+;   contract id  under a split binding: id(materialize(template, binding)), the same id the
+;                equivalent whole contract has, so plans, evidence, approvals and heads don't change
+; Signed objects: binding (publisher), delegation (issuer), evidence (checker), attestation
+;   (attester), approval and receipt (consumer) travel as COSE_Sign1 with the object as payload.
+;   A contract template is not signed: every binding that names it is, over its digest.
+;   The payload's "kind" field types the signature, so one key's binding can't pass as a receipt.
+; Numbers: protocol objects carry no binary floats. Integral values are ints; others are decimal
+;   fractions (tag 4) with a negative exponent and a mantissa not divisible by 10.
+; Map keys: every ARFP map uses text keys, so RFC 8949 and RFC 7049 canonical orders agree.
+; Hop-varying envelope fields (ttl, via) are excluded from dedup keys and signatures.
+; Tool note: three spellings here are equivalent rewrites for the Rust cddl crate (pycddl 0.6.4):
+;   "null / x" instead of "x / null"; a quoted "bytes" key; and choices written inline inside
+;   array types (node-classes, det-classes, evidence-modes, rights), because that crate only tries
+;   the first alternative of a named choice used as an array element. That crate also skips tag
+;   contents inside a type choice (exact-num), so decimals are re-checked by the number rule.
+
+arfp-object = target / scope / contract / contract-template / binding / capabilities / state /
+              demand / plan / evidence / attestation / approval / receipt / head / delegation /
+              rewrite / repair / message
+
+; ---------- primitives ----------
+digest = [alg: int, value: bstr]        ; alg = COSE hash algorithm id (RFC 9054); -16 = SHA-256
+name = tstr                             ; versioned identifier, e.g. "geom.clearance.v1"
+party = tstr                            ; participant key id
+ms = uint                               ; milliseconds
+exact-num = int / decimal
+decimal = #6.4([exponent: int .lt 0, mantissa: int])   ; mantissa not divisible by 10 (checked on decode)
+det-class = "E" / "T" / "N"             ; bit-exact / bounded divergence / non-reproducible
+node-class = "reference" / "delta" / "procedural" / "latent" / "residual" / "literal"
+node-classes = [+ ("reference" / "delta" / "procedural" / "latent" / "residual" / "literal")]
+det-classes = [+ ("E" / "T" / "N")]
+cose-sign1 = #6.18([protected: bstr, unprotected: {* any => any}, payload: null / bstr, signature: bstr])
+
+resources = {
+  ? "bytes": uint,
+  ? cpu: ms,
+  ? memory: uint,
+  ? wall: ms,
+  ? repairs: uint,
+}
+
+; ---------- identity plane ----------
+target = {
+  kind: "target",
+  object: tstr,
+  revision: uint,
+  publisher: party,
+  profile: name,
+}
+
+scope = {
+  kind: "scope",
+  target: digest,
+  select: "all" / [+ tstr],             ; "all" is the only scope that can authorize full-target use
+  ? milestone: tstr,
+}
+
+; ---------- agreement plane ----------
+contract = {
+  kind: "contract",
+  target: digest,
+  profile: name,
+  classes: node-classes,
+  acceptance: [+ predicate],
+  ? invariants: [+ predicate],
+  ? free: [+ tstr],                     ; regions where plausible generation is allowed and labeled
+  determinism: {
+    baseline-eligible: det-classes,     ; whose outputs may serve as delta/residual bases
+    evidence-transfer: det-classes,     ; whose sender-side evidence may cover a receiver's output
+  },
+  evidence: {
+    modes: evidence-modes,
+    ? checkers: [+ party],
+    ? max-age: ms,
+  },
+  authority: {
+    publisher: party,
+    local-commit: bool,
+    ? delegation-root: digest,
+  },
+  updates: [+ stream-rule],
+  limits: resources,
+  ? milestones: [+ milestone],
+}
+
+; Session contract template: every rule that does not change with a target revision. Cached by
+; digest; amending any field makes a new template. Predicates may leave out per-revision values
+; (expected digests, designated references), which each binding then supplies.
+contract-template = {
+  kind: "contract-template",
+  profile: name,
+  classes: node-classes,
+  acceptance: [+ predicate],
+  ? invariants: [+ predicate],
+  ? free: [+ tstr],
+  determinism: {
+    baseline-eligible: det-classes,
+    evidence-transfer: det-classes,
+  },
+  evidence: {
+    modes: evidence-modes,
+    ? checkers: [+ party],
+    ? max-age: ms,
+  },
+  authority: {
+    publisher: party,
+    local-commit: bool,
+    ? delegation-root: digest,
+  },
+  updates: [+ stream-rule],
+  limits: resources,
+  ? milestones: [+ milestone],
+}
+
+binding = {                             ; signed by the publisher; checked before any planning
+  kind: "binding",
+  target: digest,                       ; id(target)
+  ( contract: digest //                 ; whole form: id(contract) for this one revision
+    template: digest,                   ; split form: id(contract-template), plus this revision's
+    ? expected: {* name => digest},     ;   expected digests,
+    ? references: {* name => digest},   ;   designated references,
+    ? params: {* name => exact-num} ),  ;   and threshold overrides, each keyed by predicate id
+  publisher: party,                     ; must equal target.publisher and the contract's or template's
+  issued: uint,                         ;   authority.publisher; epoch ms
+  ? expires: uint,                      ; epoch ms
+}
+
+predicate = {
+  id: name,
+  kind: "digest-match" / "metric-bound" / "invariant" / "schema",
+  ? covers: "all" / [+ tstr],
+  ? reference: digest,                  ; designated reference (reference-bound predicate)
+  ? expected: digest,                   ; authenticated expected digest or feature digest
+  ? metric: name,
+  ? threshold: exact-num,
+  ? units: tstr,
+  ? composition: "end-to-end" / "additive",   ; additive only for true metrics
+  ? mode: evidence-mode,
+  validator: name,
+}
+
+evidence-mode = "digest-match" / "feature-digest" / "reference-metric" /
+                "checker-attestation" / "spot-reexecution"
+evidence-modes = [+ ("digest-match" / "feature-digest" / "reference-metric" /
+                     "checker-attestation" / "spot-reexecution")]
+
+stream-rule = {
+  stream: tstr,
+  mode: "replaceable" / "required-transition",
+  ? fast-path: "shape-equal",           ; same plan shape: execute without waiting for ACCEPT
+}
+
+milestone = {
+  name: tstr,
+  roots: [+ tstr],                      ; region names, not plan node ids
+  acceptance: [+ name],
+  uses: [+ tstr],
+}
+
+delegation = {
+  kind: "delegation",
+  issuer: party,
+  grantee: party,
+  target: digest,
+  contract: digest,
+  scope: digest,
+  rights: rights,
+  recipients: [+ party],
+  expires: uint,
+  subdelegate: bool,
+  budget: resources,                    ; children partition the parent's budget, never copy it
+  ? parent: digest,
+}
+
+rights = [+ ("cache" / "forward" / "execute" / "rewrite" / "check" / "checkpoint" / "attest")]
+
+; ---------- plan plane ----------
+capabilities = {
+  kind: "capabilities",
+  endpoint: party,
+  protocols: [+ tstr],
+  profiles: [+ name],
+  classes: node-classes,
+  runtimes: [* runtime],
+  limits: resources,
+}
+
+runtime = {
+  id: name,
+  digest: digest,
+  ( det: "E", vectors: digest //                              ; bit-exact: conformance vectors
+    det: "T", vectors: digest, bound: divergence-bound //     ; bounded: vectors plus a declared bound
+    det: "N" ),                                               ; non-reproducible
+}
+divergence-bound = { metric: name, value: exact-num, units: tstr }
+
+state = {
+  kind: "state",
+  endpoint: party,
+  snapshot: uint,
+  heads: [* head],
+  ? have: [* digest],                   ; answers to a scoped have-query, not a full inventory
+}
+
+demand = {
+  kind: "demand",
+  consumer: party,
+  stream: tstr,
+  seq: uint,                            ; interest revision, separate from target revision
+  target: digest,
+  scope: digest,
+  ? milestone: tstr,
+}
+
+plan = {
+  kind: "plan",
+  target: digest,
+  contract: digest,
+  scope: digest,
+  snapshot: uint,                       ; receiver state this plan assumes
+  nodes: [+ node],
+  roots: [+ tstr],
+  ? parent: digest,                     ; plan this one repairs, rewrites or fast-paths from
+  ? fallbacks: {* tstr => [+ tstr]},    ; node id -> pre-authorized alternatives
+}
+
+node = {
+  id: tstr,
+  class: node-class,
+  deps: [* tstr],
+  ? op: name,
+  ? runtime: digest,
+  ? payload: digest,
+  ? artifact: digest,                   ; referenced content
+  ? base: digest,                       ; exact baseline output (delta, residual)
+  ? params: bstr,                       ; canonical CBOR, opaque to the envelope
+  ? emits: [+ tstr],                    ; regions of the output this node writes
+  ? at: placement,
+  ? checks: [* name],
+  ? bounds: resources,
+  ? claim: claim,                       ; planning estimate, never evidence
+}
+
+placement = "publisher" / "receiver" / party
+
+claim = {
+  ? "bytes": uint,
+  ? cpu: ms,
+  ? error: exact-num,
+}
+
+rewrite = {
+  kind: "rewrite",
+  from: digest,
+  to: digest,
+  repeater: party,
+  delegation: digest,
+  changed: [+ tstr],
+  reused: [* digest],                   ; validated artifacts carried over with their evidence
+  pending: [* tstr],                    ; nodes still awaiting execution or validation
+}
+
+; ---------- outcome plane ----------
+evidence = {
+  kind: "evidence",
+  contract: digest,
+  scope: digest,
+  output: digest,
+  ? work: digest,                       ; work key that produced the output; required for transfer
+  predicate: name,
+  pass: bool,
+  ? reference: digest,                  ; designated reference, or the hop input under additive composition
+  ? measured: exact-num,
+  ? bound: exact-num,                   ; a declared bound (a runtime's delta), not a measurement
+  ? units: tstr,
+  validator: name,
+  checker: party,
+  at: uint,
+}
+
+attestation = {                         ; a repeater's statement about evidence it forwards
+  kind: "attestation",
+  evidence: digest,                     ; H(COSE_Sign1 bytes of the evidence); that evidence must be delivered too
+  attester: party,
+  delegation: digest,                   ; id(delegation) granting "attest"
+  meaning: "signature-verified" / "recomputed",
+  at: uint,
+}
+
+approval = {
+  kind: "approval",
+  binding: digest,                      ; H(binding COSE_Sign1 bytes) the consumer verified
+  target: digest,
+  contract: digest,
+  scope: digest,
+  plan: digest,
+  output: digest,
+  evidence: [+ digest],
+  txn: tstr,
+  expected-head: null / digest,
+  authority: party / digest,
+  ? relayed-by: [* digest],             ; delegations of the repeaters the inputs passed through
+}
+
+head = {                                ; a consumer's committed state for one object
+  kind: "head",
+  object: tstr,
+  target: digest,
+  contract: digest,
+  scope: digest,
+  output: digest,
+}
+
+receipt = {
+  kind: "receipt",
+  txn: tstr,
+  approval: digest,
+  prior-head: null / digest,
+  head: null / digest,
+  status: "committed" / "conflict" / "aborted",
+}
+
+repair = {
+  kind: "repair",
+  attempt: tstr,
+  failed: tstr,
+  reason: error-code,
+  affected: [+ tstr],
+  ? alternative: tstr / digest,
+}
+
+error-code = "unsupported-profile" / "unsupported-op" / "missing-dependency" /
+             "baseline-mismatch" / "integrity-failure" / "permission-denied" /
+             "resource-limit" / "validation-failure" / "stale-state" /
+             "expired-authority" / "commit-conflict" / "canceled" / "repair-exhausted" /
+             "ineligible-plan" / "invalid-contract"
+
+; ---------- messages ----------
+message = {
+  kind: "message",
+  v: 0,
+  session: tstr,
+  ? attempt: tstr,
+  ? ttl: uint,                          ; hop-varying: remaining forwards
+  ? via: [* party],                     ; hop-varying: path so far, for loop detection
+  body: body,
+}
+
+; receivers send DEMAND; only the publisher or its delegate sends OFFER, so offers never collide
+body = { type: "CAPABILITIES", caps: capabilities } /
+       { type: "STATE", state: state } /
+       { type: "DEMAND", demand: demand } /
+       { type: "OFFER", binding: cose-sign1, target: target / digest,
+         ? contract: contract / digest,             ; whole form
+         ? template: contract-template / digest,    ; split form: inline only when not yet cached
+         scope: scope / digest, plan: plan / digest } /
+       { type: "ACCEPT", plan: digest } /
+       { type: "REJECT", plan: digest, reason: error-code } /
+       { type: "WORKTREE_PAYLOAD", plan: digest, chunks: [+ chunk] } /
+       { type: "RESULT", stage: "materialized" / "validated" / "failed",
+         ? output: digest, ? evidence: [* digest], ? missing: [* digest] } /
+       { type: "REPAIR", repair: repair } /
+       { type: "EVIDENCE", signed: [+ cose-sign1] } /        ; signed evidence, attestations, delegations
+       { type: "SUPERSEDE", stream: tstr, old-seq: uint, new: demand } /
+       { type: "CANCEL", stream: tstr, seq: uint } /
+       { type: "VALIDATION_APPROVAL", signed: cose-sign1 } /
+       { type: "COMMIT_RECEIPT", signed: cose-sign1 }
+
+chunk = {
+  node: tstr,
+  digest: digest,
+  data: bstr,
+  ? offset: uint,
+}

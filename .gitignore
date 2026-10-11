@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.venv/
+# npm release tarballs downloaded by kit/bench/delta_bench.py (third-party code, about 115 MB)
+kit/bench/.cache/

@@ -1,0 +1,1071 @@
+{
+  "schema_fixtures": [
+    {
+      "fixture": "target",
+      "valid": true,
+      "bytes": 101,
+      "error": ""
+    },
+    {
+      "fixture": "scope (full)",
+      "valid": true,
+      "bytes": 66,
+      "error": ""
+    },
+    {
+      "fixture": "scope (milestone)",
+      "valid": true,
+      "bytes": 86,
+      "error": ""
+    },
+    {
+      "fixture": "contract",
+      "valid": true,
+      "bytes": 1648,
+      "error": ""
+    },
+    {
+      "fixture": "capabilities (workstation)",
+      "valid": true,
+      "bytes": 759,
+      "error": ""
+    },
+    {
+      "fixture": "capabilities (phone)",
+      "valid": true,
+      "bytes": 577,
+      "error": ""
+    },
+    {
+      "fixture": "state",
+      "valid": true,
+      "bytes": 344,
+      "error": ""
+    },
+    {
+      "fixture": "demand",
+      "valid": true,
+      "bytes": 134,
+      "error": ""
+    },
+    {
+      "fixture": "plan (workstation, 7 nodes)",
+      "valid": true,
+      "bytes": 1167,
+      "error": ""
+    },
+    {
+      "fixture": "plan (phone, rewritten)",
+      "valid": true,
+      "bytes": 1184,
+      "error": ""
+    },
+    {
+      "fixture": "delegation",
+      "valid": true,
+      "bytes": 321,
+      "error": ""
+    },
+    {
+      "fixture": "rewrite",
+      "valid": true,
+      "bytes": 243,
+      "error": ""
+    },
+    {
+      "fixture": "evidence",
+      "valid": true,
+      "bytes": 355,
+      "error": ""
+    },
+    {
+      "fixture": "approval",
+      "valid": true,
+      "bytes": 587,
+      "error": ""
+    },
+    {
+      "fixture": "receipt",
+      "valid": true,
+      "bytes": 176,
+      "error": ""
+    },
+    {
+      "fixture": "head",
+      "valid": true,
+      "bytes": 211,
+      "error": ""
+    },
+    {
+      "fixture": "repair",
+      "valid": true,
+      "bytes": 121,
+      "error": ""
+    },
+    {
+      "fixture": "msg CAPABILITIES",
+      "valid": true,
+      "bytes": 841,
+      "error": ""
+    },
+    {
+      "fixture": "msg STATE",
+      "valid": true,
+      "bytes": 420,
+      "error": ""
+    },
+    {
+      "fixture": "msg DEMAND",
+      "valid": true,
+      "bytes": 212,
+      "error": ""
+    },
+    {
+      "fixture": "msg OFFER",
+      "valid": true,
+      "bytes": 3310,
+      "error": ""
+    },
+    {
+      "fixture": "msg OFFER (split, template inline)",
+      "valid": true,
+      "bytes": 3325,
+      "error": ""
+    },
+    {
+      "fixture": "msg OFFER (split, template cached)",
+      "valid": true,
+      "bytes": 1838,
+      "error": ""
+    },
+    {
+      "fixture": "msg ACCEPT",
+      "valid": true,
+      "bytes": 112,
+      "error": ""
+    },
+    {
+      "fixture": "msg REJECT",
+      "valid": true,
+      "bytes": 135,
+      "error": ""
+    },
+    {
+      "fixture": "msg WORKTREE_PAYLOAD",
+      "valid": true,
+      "bytes": 848,
+      "error": ""
+    },
+    {
+      "fixture": "msg RESULT",
+      "valid": true,
+      "bytes": 356,
+      "error": ""
+    },
+    {
+      "fixture": "msg REPAIR",
+      "valid": true,
+      "bytes": 199,
+      "error": ""
+    },
+    {
+      "fixture": "msg SUPERSEDE",
+      "valid": true,
+      "bytes": 233,
+      "error": ""
+    },
+    {
+      "fixture": "msg CANCEL",
+      "valid": true,
+      "bytes": 88,
+      "error": ""
+    },
+    {
+      "fixture": "msg VALIDATION_APPROVAL",
+      "valid": true,
+      "bytes": 771,
+      "error": ""
+    },
+    {
+      "fixture": "binding",
+      "valid": true,
+      "bytes": 142,
+      "error": ""
+    },
+    {
+      "fixture": "contract-template",
+      "valid": true,
+      "bytes": 1478,
+      "error": ""
+    },
+    {
+      "fixture": "binding (split form)",
+      "valid": true,
+      "bytes": 326,
+      "error": ""
+    },
+    {
+      "fixture": "binding (split form, threshold override)",
+      "valid": true,
+      "bytes": 359,
+      "error": ""
+    },
+    {
+      "fixture": "attestation",
+      "valid": true,
+      "bytes": 173,
+      "error": ""
+    },
+    {
+      "fixture": "msg EVIDENCE",
+      "valid": true,
+      "bytes": 1204,
+      "error": ""
+    },
+    {
+      "fixture": "msg COMMIT_RECEIPT",
+      "valid": true,
+      "bytes": 354,
+      "error": ""
+    }
+  ],
+  "schema_negative": [
+    {
+      "id": "C05",
+      "case": "Unknown node class \"hologram\"",
+      "observed": "rejected by the plan rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Contract without a determinism declaration",
+      "observed": "rejected by the contract rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "T-class runtime with no divergence bound",
+      "observed": "rejected by the capabilities rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Digest algorithm given as text",
+      "observed": "rejected by the evidence rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "OFFER with no plan",
+      "observed": "rejected by the message rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Receipt status \"probably-committed\"",
+      "observed": "rejected by the receipt rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Unknown message type \"TELEPORT\"",
+      "observed": "rejected by the message rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Scope selecting an empty list",
+      "observed": "rejected by the scope rule",
+      "pass": true
+    },
+    {
+      "id": "C28",
+      "case": "Threshold as a binary float (0.5)",
+      "observed": "refused by the encoder; rejected by the contract rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Binding naming both a whole contract and a template",
+      "observed": "rejected by the binding rule",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Split binding with expected digests as a list instead of a map",
+      "observed": "rejected by the binding rule (the arfp-object union accepted it)",
+      "pass": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "C01",
+      "case": "Different eligible plans target the same exact output",
+      "expected": "same authenticated digest",
+      "observed": "delta plan, literal plan and phone plan all give sha256:7357a6a44563 for the exact parts",
+      "pass": true
+    },
+    {
+      "id": "C02",
+      "case": "Two approximate outputs satisfy the same contract",
+      "expected": "both accepted, distinct output digests",
+      "observed": "workstation sha256:24a7cec15050 and phone sha256:09c4a2aea47a both accepted",
+      "pass": true
+    },
+    {
+      "id": "C03",
+      "case": "Patch targets a receiver's approximate (T-class) baseline",
+      "expected": "reject baseline-mismatch",
+      "observed": "rejected baseline-mismatch: fairing-patch: base is T-class; contract allows ['E']",
+      "pass": true
+    },
+    {
+      "id": "C05",
+      "case": "Unknown required profile",
+      "expected": "reject unsupported-profile",
+      "observed": "rejected unsupported-profile: scene.assembly.v1",
+      "pass": true
+    },
+    {
+      "id": "C06",
+      "case": "Wrong decoder binding (runtime digest not held)",
+      "expected": "reject unsupported-op",
+      "observed": "rejected unsupported-op: fairing: runtime not available to this executor",
+      "pass": true
+    },
+    {
+      "id": "C09",
+      "case": "Region checks pass but a global invariant fails",
+      "expected": "reject the full output",
+      "observed": "fairing bound 0.425 mm passes; clearance 1.829 mm on the decoded surface vs 2.1 mm on the reference: output rejected",
+      "pass": true
+    },
+    {
+      "id": "C11",
+      "case": "Exact-only contract, fallback uses an approximate class",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: fairing: the contract does not permit latent nodes",
+      "pass": true
+    },
+    {
+      "id": "C12",
+      "case": "Accepted plan is rewritten by a repeater",
+      "expected": "identified replacement that is itself eligible",
+      "observed": "original phone plan: rejected unsupported-op: fairing: runtime not available to this executor; rewrite sha256:5fd3bad24de1 moves the decode to the repeater; rewritten plan eligible",
+      "pass": true
+    },
+    {
+      "id": "C13",
+      "case": "Scoped result is accepted",
+      "expected": "cannot authorize full-target use",
+      "observed": "bay-A scope may 'sign-off': False",
+      "pass": true
+    },
+    {
+      "id": "C14",
+      "case": "Milestone passes while full result is incomplete",
+      "expected": "only declared milestone uses",
+      "observed": "navigable milestone: navigate=True, measure=False",
+      "pass": true
+    },
+    {
+      "id": "C15",
+      "case": "Receiver cancels a demand whose work another receiver needs",
+      "expected": "shared work stays live",
+      "observed": "geo-A has one work key in both plans: True; geo-A canceled: False",
+      "pass": true
+    },
+    {
+      "id": "C16",
+      "case": "Replaceable view demand superseded (camera jump)",
+      "expected": "retire only the phone-only unfinished work",
+      "observed": "cancel set = ['lod-A', 'view(ph_old)']",
+      "pass": true
+    },
+    {
+      "id": "C17",
+      "case": "Planner marks a required-transition stream obsolete",
+      "expected": "reject; profile wins",
+      "observed": "rejected permission-denied: stream 'edits' is required-transition; supersession cannot erase it",
+      "pass": true
+    },
+    {
+      "id": "C18",
+      "case": "Old canceled result arrives late",
+      "expected": "not committed as the new demand's result",
+      "observed": "rejected canceled: approval is for a superseded demand",
+      "pass": true
+    },
+    {
+      "id": "C19",
+      "case": "Local head changed before commit",
+      "expected": "conflict; newer head untouched",
+      "observed": "status conflict; head still sha256:7148c1fb73cb",
+      "pass": true
+    },
+    {
+      "id": "C20",
+      "case": "Commit acknowledgment lost, request retried",
+      "expected": "same durable outcome",
+      "observed": "retry returned byte-identical receipt: True",
+      "pass": true
+    },
+    {
+      "id": "C22",
+      "case": "Cached artifact carries evidence for a different contract",
+      "expected": "evidence not reused",
+      "observed": "applies under rev-28 contract: True; under rev-29 contract: False",
+      "pass": true
+    },
+    {
+      "id": "C23",
+      "case": "Repeater without execute right asked to transform",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: fairing: key:edge-1 holds no execute right",
+      "pass": true
+    },
+    {
+      "id": "C24",
+      "case": "Two child grants each copy the parent's full budget",
+      "expected": "reject resource-limit",
+      "observed": "rejected resource-limit: children allocate 40000 cpu of a parent budget of 20000",
+      "pass": true
+    },
+    {
+      "id": "C24b",
+      "case": "Child grant adds a right the parent lacks",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: child adds rights ['rewrite']",
+      "pass": true
+    },
+    {
+      "id": "C24c",
+      "case": "Children that partition the budget and narrow the scope",
+      "expected": "accepted",
+      "observed": "accepted; 8 000 + 12 000 ms of a 20 000 ms parent",
+      "pass": true
+    },
+    {
+      "id": "C25",
+      "case": "Two repeaters each pass 0.5 mm locally",
+      "expected": "end-to-end bound enforced",
+      "observed": "per-hop 0.3 + 0.3 mm each pass locally (naive accept: True); additive bound 0.6 mm rejects; true end-to-end 0.6 mm",
+      "pass": true
+    },
+    {
+      "id": "C26",
+      "case": "Repeaters forward a request around a loop",
+      "expected": "bounded; no unbounded work",
+      "observed": "3 forwards, then drop-duplicate",
+      "pass": true
+    },
+    {
+      "id": "C28",
+      "case": "Canonical encoding across independent implementations",
+      "expected": "identical bytes; deviations detected",
+      "observed": "38/38 fixtures byte-identical in both encoders; unsorted map canonical: False; non-shortest int canonical: False; num('0.50') == num('0.5'): True",
+      "pass": true
+    },
+    {
+      "id": "C28b",
+      "case": "Map mixing integer and text keys",
+      "expected": "orders differ; no ARFP map mixes key types",
+      "observed": "RFC 8949 and RFC 7049 orders agree on the mixed map: False; fixtures with uniform key types: 38/38",
+      "pass": true
+    },
+    {
+      "id": "C28c",
+      "case": "Decimals 4([-2, 50]) (0.5) and 4([1, 1]) (10)",
+      "expected": "both rejected; all fixtures normalized",
+      "observed": "flagged: ['$.measured', '$.measured']; fixtures clean: 38/38",
+      "pass": true
+    },
+    {
+      "id": "R1",
+      "case": "Evidence moves by bound: sender eps + runtime divergence fits the threshold",
+      "expected": "accepted",
+      "observed": "0.275 + 0.15 = 0.425 mm <= 0.5; true distance 0.271 mm (inside the bound)",
+      "pass": true
+    },
+    {
+      "id": "R1b",
+      "case": "Sender evidence measured on a different decode (other runtime)",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: sender evidence was measured on different work; it cannot transfer",
+      "pass": true
+    },
+    {
+      "id": "R2",
+      "case": "Non-reproducible (N) decoder on a reference-bound region at the receiver",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: fairing: fairing.hausdorff.v1 cannot be checked at the receiver and N-class evidence does not transfer",
+      "pass": true
+    },
+    {
+      "id": "R3",
+      "case": "Same N decoder placed at a checker repeater (placement converts determinism)",
+      "expected": "accepted",
+      "observed": "accepted; receiver gets checked, hash-verified bytes",
+      "pass": true
+    },
+    {
+      "id": "R4",
+      "case": "T decoder whose bound uses a different metric (Chamfer vs Hausdorff)",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: fairing: fairing.hausdorff.v1 cannot be checked at the receiver and T-class evidence does not transfer",
+      "pass": true
+    },
+    {
+      "id": "R5",
+      "case": "Faster T decoder: eligible, but its bound does not fit",
+      "expected": "acceptance fails; repair",
+      "observed": "0.318 + 0.25 = 0.568 mm > 0.5: repair",
+      "pass": true
+    },
+    {
+      "id": "R6",
+      "case": "Repair by residual on the T-class decode",
+      "expected": "reject baseline-mismatch",
+      "observed": "rejected baseline-mismatch: fairing-fix: base is T-class; contract allows ['E']",
+      "pass": true
+    },
+    {
+      "id": "R7",
+      "case": "Repair by literal reference geometry",
+      "expected": "accepted",
+      "observed": "accepted; costs 1026 bytes vs 653 latent",
+      "pass": true
+    },
+    {
+      "id": "R8",
+      "case": "Generated content in a region that is neither free nor reference-bound",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: cables: N-class output in 'cable-run' is neither labeled free nor reference-bound",
+      "pass": true
+    },
+    {
+      "id": "R8b",
+      "case": "Generated content with no declared region, feeding the result",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: cables: N-class output reaches the result without a declared region",
+      "pass": true
+    },
+    {
+      "id": "R9",
+      "case": "Contract marks a reference-bound region as free",
+      "expected": "reject invalid-contract",
+      "observed": "rejected invalid-contract: fairing.hausdorff.v1: a free region cannot also be reference-bound",
+      "pass": true
+    },
+    {
+      "id": "R10",
+      "case": "Fast path: same plan shape, current snapshot",
+      "expected": "executes without waiting for ACCEPT",
+      "observed": "accepted",
+      "pass": true
+    },
+    {
+      "id": "R11",
+      "case": "Fast path replayed after the receiver moved on",
+      "expected": "reject stale-state before execution",
+      "observed": "rejected stale-state: fast-path plan assumes snapshot 42; receiver is at 43",
+      "pass": true
+    },
+    {
+      "id": "R12",
+      "case": "Fast path with a changed plan shape",
+      "expected": "reject; full negotiation required",
+      "observed": "rejected ineligible-plan: plan shape changed; full OFFER/ACCEPT required",
+      "pass": true
+    },
+    {
+      "id": "R13",
+      "case": "Fast path on a required-transition stream",
+      "expected": "reject",
+      "observed": "rejected ineligible-plan: stream edits has no fast path; full OFFER/ACCEPT required",
+      "pass": true
+    },
+    {
+      "id": "G1",
+      "case": "Valid publisher binding, checked before planning",
+      "expected": "accepted; matches the published vector",
+      "observed": "trace ['binding', 'eligibility']; envelope matches section 9 vector: True",
+      "pass": true
+    },
+    {
+      "id": "G2",
+      "case": "Binding signed by a key not on the allow-list",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: signing key is not on the allow-list",
+      "pass": true
+    },
+    {
+      "id": "G3",
+      "case": "Binding signature with one bit flipped",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: signature does not verify",
+      "pass": true
+    },
+    {
+      "id": "G4",
+      "case": "Offer carries a different contract than the one signed",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: binding names a different contract",
+      "pass": true
+    },
+    {
+      "id": "G5",
+      "case": "Offer carries a different target revision than the one signed",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: binding names a different target",
+      "pass": true
+    },
+    {
+      "id": "G6",
+      "case": "Publisher's valid signature on a delegation, presented as the binding",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: signed payload is a delegation, not a binding",
+      "pass": true
+    },
+    {
+      "id": "G7",
+      "case": "Allow-listed repeater key signs a binding in the publisher's name",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: binding names a publisher other than its signer",
+      "pass": true
+    },
+    {
+      "id": "G8",
+      "case": "Expired binding",
+      "expected": "reject expired-authority",
+      "observed": "rejected expired-authority: binding has expired",
+      "pass": true
+    },
+    {
+      "id": "G9",
+      "case": "Forged binding and an ineligible plan together",
+      "expected": "binding error first; planning never runs",
+      "observed": "rejected integrity-failure: signature does not verify; eligibility calls: 0",
+      "pass": true
+    },
+    {
+      "id": "G10",
+      "case": "Offer with no binding",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: offer carries no signed binding",
+      "pass": true
+    },
+    {
+      "id": "C04a",
+      "case": "Dependency evicted after ACCEPT, no fallback",
+      "expected": "abort; no approval, receipt or head change",
+      "observed": "status aborted (missing-dependency); RESULT missing ['sha256:34b5b2732b11']; journal {'genesis': 1}; head unchanged: True; staged files: 0",
+      "pass": true
+    },
+    {
+      "id": "C04b",
+      "case": "Dependency evicted, prebound literal fallback",
+      "expected": "REPAIR names the cone; commit equals control",
+      "observed": "REPAIR failed=base affected=['base', 'root', 'upd'] alt=base-lit; receipt committed; output equals no-fault control: True",
+      "pass": true
+    },
+    {
+      "id": "C04c",
+      "case": "New offer after the aborted attempt, re-supplying the artifact",
+      "expected": "processed and committed",
+      "observed": "receipt committed",
+      "pass": true
+    },
+    {
+      "id": "C04d",
+      "case": "Audit trail of the aborted attempt",
+      "expected": "accept bound to the binding, then the abort",
+      "observed": "events: ['accept', 'abort']",
+      "pass": true
+    },
+    {
+      "id": "C07a",
+      "case": "Procedural generator diverges, no fallback",
+      "expected": "rejected at emission; dependent never runs",
+      "observed": "status aborted; executed ['gen']; audit names node gen, runtime sha256:52167141903c, observed sha256:0566964aa92b",
+      "pass": true
+    },
+    {
+      "id": "C07b",
+      "case": "Generator diverges, prebound literal fallback",
+      "expected": "repaired and committed",
+      "observed": "repairs ['gen']; receipt committed",
+      "pass": true
+    },
+    {
+      "id": "C08a",
+      "case": "Residual on the exact R1 base misses its bound",
+      "expected": "no approval; R1 stays the head",
+      "observed": "status aborted (validation-failure); head still R1: True; journal {'genesis': 1}",
+      "pass": true
+    },
+    {
+      "id": "C08b",
+      "case": "Well-formed residual against the same baseline",
+      "expected": "accepted; the baseline isn't blacklisted",
+      "observed": "receipt committed",
+      "pass": true
+    },
+    {
+      "id": "C10a",
+      "case": "Branch c fails late; a is independent; cross-branch x reads a and b",
+      "expected": "cone excludes a; a's evidence reused; x re-run on the new b",
+      "observed": "REPAIR failed=c affected=['b', 'c', 'root']; evaluations p-a=1 x-len=2 p-b=2; final x covers new b: True; receipt committed",
+      "pass": true
+    },
+    {
+      "id": "C10b",
+      "case": "Cross-branch x passed on the divergent b before repair",
+      "expected": "stale x evidence not reused",
+      "observed": "first x pass=True on the divergent b: True; final x on the repaired b: True",
+      "pass": true
+    },
+    {
+      "id": "C10c",
+      "case": "Repair cannot restore the cone",
+      "expected": "abort; a's staged output never committed",
+      "observed": "status aborted; journal {'genesis': 1}; head unchanged True",
+      "pass": true
+    },
+    {
+      "id": "C21-A",
+      "case": "Killed after the approval is journaled, before the head swap",
+      "expected": "recovery applies the swap; receipt identical to an uncrashed run",
+      "observed": "killed by SIGKILL; recovery [('resolved-pending-approval', 'tx-c21-990')]; head is rev 3: True; receipt committed, byte-identical to control: True; journal {'genesis': 1, 'approval': 1, 'head': 1, 'receipt': 1}",
+      "pass": true
+    },
+    {
+      "id": "C21-C",
+      "case": "Retry with the same transaction after recovery",
+      "expected": "same receipt; no new journal entries",
+      "observed": "byte-identical: True; journal before {'genesis': 1, 'approval': 1, 'head': 1, 'receipt': 1} after {'genesis': 1, 'approval': 1, 'head': 1, 'receipt': 1}",
+      "pass": true
+    },
+    {
+      "id": "C21-E",
+      "case": "Offer arriving while the receiver is recovering",
+      "expected": "refused until recovery ends; then stale",
+      "observed": "state recovering: stale-state; after recovery, a plan built on snapshot 0: rejected stale-state: plan assumes snapshot 0; receiver is at 1",
+      "pass": true
+    },
+    {
+      "id": "C21-T",
+      "case": "Killed halfway through writing the head record",
+      "expected": "torn tail dropped; same outcome as C21-A",
+      "observed": "killed by SIGKILL; recovery ['truncated-torn-tail', ('resolved-pending-approval', 'tx-c21-990')]; receipt byte-identical: True",
+      "pass": true
+    },
+    {
+      "id": "C21-H",
+      "case": "Killed after the head swap, before the receipt is durable",
+      "expected": "receipt rebuilt from the journal",
+      "observed": "killed by SIGKILL; recovery [('receipt-from-commit', 'tx-c21-990')]; byte-identical: True",
+      "pass": true
+    },
+    {
+      "id": "C21-R",
+      "case": "Killed after the receipt is durable",
+      "expected": "nothing to redo; retry returns the stored receipt",
+      "observed": "killed by SIGKILL; recovery actions []; retry byte-identical: True",
+      "pass": true
+    },
+    {
+      "id": "C21-B",
+      "case": "Another commit moved the head before recovery",
+      "expected": "conflict; moved head untouched; output kept",
+      "observed": "receipt conflict, head None, prior-head is the moved head: True; head still concurrent: True; staged output kept: True",
+      "pass": true
+    },
+    {
+      "id": "C21-D",
+      "case": "Staged output corrupted while the receiver was down",
+      "expected": "aborted; never commit other bytes",
+      "observed": "receipt aborted; head unchanged: True",
+      "pass": true
+    },
+    {
+      "id": "C21-I",
+      "case": "Invariants across all seven journals",
+      "expected": "every head swap follows a durable approval; one receipt per txn",
+      "observed": "7/7 journals clean",
+      "pass": true
+    },
+    {
+      "id": "C27a",
+      "case": "Repeater forwards the origin's signed evidence unchanged",
+      "expected": "commit; receipt chain rebuilds from the receipt alone",
+      "observed": "receipt committed; audit triple ['sha256:dc7c2d06f848', 'sha256:b29449620ad1', 'sha256:2928b6ea8cc0']; chain rebuilt from the receipt: 3 links, relay delegation verified; approval cites exactly the audited evidence",
+      "pass": true
+    },
+    {
+      "id": "C27b",
+      "case": "Repeater adds a signed attestation naming the origin evidence",
+      "expected": "commit; receipt chain rebuilds from the receipt alone",
+      "observed": "receipt committed; audit triple ['sha256:dc7c2d06f848', 'sha256:b29449620ad1', 'sha256:32fd123d34a0']; chain rebuilt from the receipt: 4 links, relay delegation verified; approval cites exactly the audited evidence",
+      "pass": true
+    },
+    {
+      "id": "C27c",
+      "case": "Repeater re-signs the evidence as its own, origin copy dropped",
+      "expected": "reject validation-failure; no receipt",
+      "observed": "rejected validation-failure: evidence for p1 is signed by key:repeater-2, who is not an accepted checker",
+      "pass": true
+    },
+    {
+      "id": "C27d",
+      "case": "Repeater edits the evidence and keeps the origin signature",
+      "expected": "reject integrity-failure; no receipt",
+      "observed": "rejected integrity-failure: signature does not verify",
+      "pass": true
+    },
+    {
+      "id": "C27e",
+      "case": "Attestation names origin evidence that was not delivered",
+      "expected": "reject validation-failure; no receipt",
+      "observed": "rejected validation-failure: attestation names evidence that was not delivered",
+      "pass": true
+    },
+    {
+      "id": "C27f",
+      "case": "Required predicate's evidence dropped entirely",
+      "expected": "reject validation-failure; no receipt",
+      "observed": "rejected validation-failure: no evidence for required predicate p1",
+      "pass": true
+    },
+    {
+      "id": "C27g",
+      "case": "Repeater attests without the attest right",
+      "expected": "reject permission-denied; no receipt",
+      "observed": "rejected permission-denied: key:repeater-2 holds no attest right",
+      "pass": true
+    },
+    {
+      "id": "C27h",
+      "case": "Repeater substitutes the payload bytes",
+      "expected": "reject validation-failure; no receipt",
+      "observed": "rejected validation-failure: evidence was measured on different bytes or another contract",
+      "pass": true
+    },
+    {
+      "id": "C27i",
+      "case": "Repeater rewrites the plan without the rewrite right",
+      "expected": "reject permission-denied; no receipt",
+      "observed": "rejected permission-denied: key:repeater-2 holds no rewrite right",
+      "pass": true
+    },
+    {
+      "id": "C27j",
+      "case": "Forged origin binding, valid repeater signatures",
+      "expected": "reject integrity-failure; no receipt",
+      "observed": "rejected integrity-failure: signature does not verify",
+      "pass": true
+    },
+    {
+      "id": "T1",
+      "case": "First offer of a session carries the template inline",
+      "expected": "accepted; template cached; plan bound to the materialized contract",
+      "observed": "trace ['binding', 'eligibility']; cached ['sha256:0d75d2d04ed3']; materialized id equals the whole contract's: True",
+      "pass": true
+    },
+    {
+      "id": "T2",
+      "case": "Next revision names the cached template; the offer omits it",
+      "expected": "accepted; smaller than the same offer with the whole contract",
+      "observed": "trace ['binding', 'eligibility']; offer 998 B vs 1505 B with the whole contract inline",
+      "pass": true
+    },
+    {
+      "id": "T3",
+      "case": "Template neither cached nor offered",
+      "expected": "reject missing-dependency; planning never runs",
+      "observed": "rejected missing-dependency: template sha256:0d75d2d04ed3 is neither cached nor offered; trace ['binding']; eligibility calls 0",
+      "pass": true
+    },
+    {
+      "id": "T4",
+      "case": "Inline template differs from the one the binding names",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: offered template is not the one the binding names",
+      "pass": true
+    },
+    {
+      "id": "T5",
+      "case": "An amended template in the cache never applies to bindings that name the original",
+      "expected": "missing-dependency, or the original rules",
+      "observed": "amended id differs: True; with only the amended one cached: rejected missing-dependency: template sha256:0d75d2d04ed3 is neither cached nor offered; with both cached the binding resolves to the original rules (repairs=1)",
+      "pass": true
+    },
+    {
+      "id": "T14",
+      "case": "Offer names a template digest that disagrees with the binding",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: offer names a different template than the binding",
+      "pass": true
+    },
+    {
+      "id": "T6",
+      "case": "Binding sets a value for a predicate the template lacks",
+      "expected": "reject invalid-contract",
+      "observed": "rejected invalid-contract: binding sets expected for p-ghost, which the template lacks",
+      "pass": true
+    },
+    {
+      "id": "T7",
+      "case": "Digest-match predicate left without an expected digest",
+      "expected": "reject invalid-contract",
+      "observed": "rejected invalid-contract: p-doc: no expected digest in the template or the binding",
+      "pass": true
+    },
+    {
+      "id": "T13",
+      "case": "Publisher signs a binding for a template whose authority names someone else",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: signer is not the template's publisher",
+      "pass": true
+    },
+    {
+      "id": "T8",
+      "case": "Evidence from revision 1 offered for revision 2 under the same template",
+      "expected": "not reused; the template digest alone could not tell the revisions apart",
+      "observed": "applies under rev 2: False; contract ids differ: True; template ids equal: True",
+      "pass": true
+    },
+    {
+      "id": "T9",
+      "case": "Threshold override in one revision's binding",
+      "expected": "that revision fails; the others keep the default",
+      "observed": "rev 2 (default): validated; rev 3 (override 81): aborted (validation-failure)",
+      "pass": true
+    },
+    {
+      "id": "T10",
+      "case": "Forged split binding and an ineligible plan together",
+      "expected": "binding error first; planning never runs",
+      "observed": "rejected integrity-failure: signature does not verify; eligibility calls 0",
+      "pass": true
+    },
+    {
+      "id": "T11",
+      "case": "Split-form update commits; the receipt alone rebuilds binding, template and evidence",
+      "expected": "committed; the chain names the template",
+      "observed": "receipt committed; chain ['sha256:28d720e6ffa5', 'sha256:0d75d2d04ed3', 'sha256:058119b581ec']; template in chain: True",
+      "pass": true
+    },
+    {
+      "id": "T12",
+      "case": "Template plus binding reproduce the whole assembly contract",
+      "expected": "identical object and id",
+      "observed": "identical: True; same id: True; moved to the binding: 2 expected digests, 1 reference",
+      "pass": true
+    }
+  ],
+  "sizes": {
+    "objects": {
+      "target": 101,
+      "scope (full)": 66,
+      "scope (milestone)": 86,
+      "contract": 1648,
+      "capabilities (workstation)": 759,
+      "capabilities (phone)": 577,
+      "state": 344,
+      "demand": 134,
+      "plan (workstation, 7 nodes)": 1167,
+      "plan (phone, rewritten)": 1184,
+      "delegation": 321,
+      "rewrite": 243,
+      "evidence": 355,
+      "approval": 587,
+      "receipt": 176,
+      "head": 211,
+      "repair": 121,
+      "binding": 142,
+      "contract-template": 1478,
+      "binding (split form)": 326,
+      "binding (split form, threshold override)": 359,
+      "attestation": 173
+    },
+    "messages": {
+      "CAPABILITIES": 841,
+      "STATE": 420,
+      "DEMAND": 212,
+      "OFFER": 3310,
+      "OFFER (split, template inline)": 3325,
+      "OFFER (split, template cached)": 1838,
+      "ACCEPT": 112,
+      "REJECT": 135,
+      "WORKTREE_PAYLOAD": 848,
+      "RESULT": 356,
+      "REPAIR": 199,
+      "SUPERSEDE": 233,
+      "CANCEL": 88,
+      "VALIDATION_APPROVAL": 771,
+      "EVIDENCE": 1204,
+      "COMMIT_RECEIPT": 354
+    },
+    "worktree_envelope_overhead": 195,
+    "signed_approval": 680,
+    "signed_receipt": 268,
+    "evidence_record": 355,
+    "full_update_control": {
+      "OFFER (binding + inline 7-node plan)": 1633,
+      "ACCEPT": 112,
+      "WORKTREE_PAYLOAD envelope": 195,
+      "RESULT (validated)": 356,
+      "VALIDATION_APPROVAL": 771,
+      "COMMIT_RECEIPT": 354
+    },
+    "pose_fast_path": {
+      "OFFER (1-node plan)": 888,
+      "WORKTREE_PAYLOAD envelope": 191,
+      "payload": 70
+    },
+    "payloads": {
+      "latent fairing": 653,
+      "literal fairing": 1026
+    },
+    "binding_envelope": 253,
+    "evidence_signing_overhead": 112,
+    "offer_with_inline_target_and_contract": 3310,
+    "contract_split": {
+      "contract (whole, one revision)": 1648,
+      "contract-template (once per session)": 1478,
+      "binding envelope, whole form": 253,
+      "binding envelope, split form": 438,
+      "OFFER, whole contract inline": 3310,
+      "OFFER, split, template inline (first use)": 3325,
+      "OFFER, split, template cached": 1838,
+      "OFFER, split, template cached, plan by id": 707
+    },
+    "full_update_control_total": 3421,
+    "pose_fast_path_overhead": 1079
+  },
+  "measures": {
+    "eps_publisher_mm": "0.275",
+    "bound_workstation_mm": "0.425",
+    "true_workstation_mm": "0.271",
+    "eps_repeater_mm": "0.274",
+    "clearance_workstation_mm": "2.909",
+    "eps_fast_mm": "0.318",
+    "bound_fast_mm": "0.568",
+    "c09_clearance_decoded_mm": "1.829",
+    "c09_clearance_reference_mm": "2.1",
+    "c25_additive_mm": "0.6",
+    "c25_true_mm": "0.6",
+    "work_key_geo_A_shared": true,
+    "receipt_ws_status": "committed",
+    "binding_matches_published_vector": true,
+    "split_materializes_to_whole_contract": true
+  },
+  "digests": {
+    "contract": "sha256:3089acac6915",
+    "plan_ws": "sha256:bff6ad1fa7d9",
+    "output_ws": "sha256:24a7cec15050",
+    "output_ph": "sha256:09c4a2aea47a",
+    "head_ws": "sha256:7148c1fb73cb"
+  }
+}
