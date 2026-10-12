@@ -1,8 +1,8 @@
 # ARFP v0.1 object-level check report
 
-Schema fixtures valid: 38/38
-Malformed objects rejected: 11/11
-Semantic cases passing: 95/95
+Schema fixtures valid: 42/42
+Malformed objects rejected: 13/13
+Semantic cases passing: 132/132
 
 | Fixture | Valid | Bytes |
 | --- | --- | --- |
@@ -44,6 +44,10 @@ Semantic cases passing: 95/95
 | attestation | True | 173 |
 | msg EVIDENCE | True | 1204 |
 | msg COMMIT_RECEIPT | True | 354 |
+| demand (receiver acceptance, subscription) | True | 206 |
+| speculation | True | 282 |
+| evidence (proof) | True | 439 |
+| msg PUSH | True | 2622 |
 
 | Malformed object | Result |
 | --- | --- |
@@ -58,6 +62,8 @@ Semantic cases passing: 95/95
 | Threshold as a binary float (0.5) | refused by the encoder; rejected by the contract rule |
 | Binding naming both a whole contract and a template | rejected by the binding rule |
 | Split binding with expected digests as a list instead of a map | rejected by the binding rule (the arfp-object union accepted it) |
+| Demand whose acceptance bounds are a list instead of a map | rejected by the demand rule (the arfp-object union accepted it) |
+| PUSH with no base | rejected by the message rule |
 
 | ID | Case | Expected | Observed | Pass |
 | --- | --- | --- | --- | --- |
@@ -84,9 +90,9 @@ Semantic cases passing: 95/95
 | C24c | Children that partition the budget and narrow the scope | accepted | accepted; 8 000 + 12 000 ms of a 20 000 ms parent | True |
 | C25 | Two repeaters each pass 0.5 mm locally | end-to-end bound enforced | per-hop 0.3 + 0.3 mm each pass locally (naive accept: True); additive bound 0.6 mm rejects; true end-to-end 0.6 mm | True |
 | C26 | Repeaters forward a request around a loop | bounded; no unbounded work | 3 forwards, then drop-duplicate | True |
-| C28 | Canonical encoding across independent implementations | identical bytes; deviations detected | 38/38 fixtures byte-identical in both encoders; unsorted map canonical: False; non-shortest int canonical: False; num('0.50') == num('0.5'): True | True |
-| C28b | Map mixing integer and text keys | orders differ; no ARFP map mixes key types | RFC 8949 and RFC 7049 orders agree on the mixed map: False; fixtures with uniform key types: 38/38 | True |
-| C28c | Decimals 4([-2, 50]) (0.5) and 4([1, 1]) (10) | both rejected; all fixtures normalized | flagged: ['$.measured', '$.measured']; fixtures clean: 38/38 | True |
+| C28 | Canonical encoding across independent implementations | identical bytes; deviations detected | 42/42 fixtures byte-identical in both encoders; unsorted map canonical: False; non-shortest int canonical: False; num('0.50') == num('0.5'): True | True |
+| C28b | Map mixing integer and text keys | orders differ; no ARFP map mixes key types | RFC 8949 and RFC 7049 orders agree on the mixed map: False; fixtures with uniform key types: 42/42 | True |
+| C28c | Decimals 4([-2, 50]) (0.5) and 4([1, 1]) (10) | both rejected; all fixtures normalized | flagged: ['$.measured', '$.measured']; fixtures clean: 42/42 | True |
 | R1 | Evidence moves by bound: sender eps + runtime divergence fits the threshold | accepted | 0.275 + 0.15 = 0.425 mm <= 0.5; true distance 0.271 mm (inside the bound) | True |
 | R1b | Sender evidence measured on a different decode (other runtime) | reject validation-failure | rejected validation-failure: sender evidence was measured on different work; it cannot transfer | True |
 | R2 | Non-reproducible (N) decoder on a reference-bound region at the receiver | reject ineligible-plan | rejected ineligible-plan: fairing: fairing.hausdorff.v1 cannot be checked at the receiver and N-class evidence does not transfer | True |
@@ -156,3 +162,40 @@ Semantic cases passing: 95/95
 | T10 | Forged split binding and an ineligible plan together | binding error first; planning never runs | rejected integrity-failure: signature does not verify; eligibility calls 0 | True |
 | T11 | Split-form update commits; the receipt alone rebuilds binding, template and evidence | committed; the chain names the template | receipt committed; chain ['sha256:28d720e6ffa5', 'sha256:0d75d2d04ed3', 'sha256:058119b581ec']; template in chain: True | True |
 | T12 | Template plus binding reproduce the whole assembly contract | identical object and id | identical: True; same id: True; moved to the binding: 2 expected digests, 1 reference | True |
+| F1 | Receiver accepts bounded output within the contract's bound | the latent fairing plan is eligible | accepted; declared error 0.35 mm fits the contract's 0.5 mm | True |
+| F2 | Receiver requires the exact reference geometry (bound 0) | latent plan rejected for it; exact plan chosen | rejected ineligible-plan: fairing: declared error 0.35 mm exceeds the bound for this receiver, 0; the literal reference plan is eligible instead (1,026 B vs 653 B latent) | True |
+| F3 | Demand tries to loosen the contract's bound (0.6 mm vs 0.5 mm) | reject permission-denied | rejected permission-denied: fairing.hausdorff.v1: a demand may tighten the contract's bound, not loosen it | True |
+| F4 | Receiver tightens the bound to 0.4 mm | eligible, then fails validation for it only | plan eligible; composed bound 0.425 mm passes the contract's 0.5 for others; rejected validation-failure: fairing.hausdorff.v1: 0.425 exceeds this receiver's bound 0.4 | True |
+| F5 | Receiver refuses generated content even where the contract allows it | reject ineligible-plan | rejected ineligible-plan: skin: generated content in ['skin-texture']; this receiver accepts none | True |
+| F6 | Receiver accepts only reproducible (E) copies | local T decode rejected; upstream decode accepted | local decode rejected ineligible-plan: fairing: T-class copy; this receiver accepts ['E']; the same decode run at the repeater arrives as exact bytes and is eligible (classes set reproducibility; bounds set fidelity, F2 and F4) | True |
+| F7 | Demand sets 1 mm on the 2 mm clearance minimum (smaller would loosen a minimum) | reject permission-denied (only metric bounds can be tightened) | rejected permission-denied: clearance.min.v1 is not a metric bound in this contract; a receiver can tighten only metric bounds | True |
+| F8 | Latent plan that declares no error, for a receiver with its own bound | reject ineligible-plan | rejected ineligible-plan: fairing: declares no error for fairing.hausdorff.v1; this receiver requires 0.45 mm | True |
+| P1 | Draft on the coarse state, checked once the exact state arrives | commits; identical output | kept 9 of 48 drafted tokens, exact token at the first mismatch, rest decoded exactly; committed as E; output identical to decoding on the exact state: True | True |
+| P2 | Provisional output committed with no check by a receiver that did not opt in (coarse bound in range) | reject validation-failure | rejected validation-failure: output drafted on provisional state needs a check against the exact state before commit | True |
+| P3 | Speculation record checked against a different exact state | reject integrity-failure | rejected integrity-failure: draft was checked against a different exact state | True |
+| P4 | Speculation record claims more verified tokens than the check keeps | reject validation-failure | rejected validation-failure: record claims 14 verified tokens; checking against the exact state keeps 9 | True |
+| P5 | Receiver that opts in uses the provisional draft, within a declared bound | commits, labeled T | accepted; coarse layer declares 0.3 mm within 0.5 mm; committed as class T without waiting | True |
+| P6 | Receiver opts in, but the coarse layer declares no bound within the contract | reject validation-failure (a receiver cannot loosen the contract) | rejected validation-failure: the provisional layer declares no bound within the contract; it cannot be used unchecked | True |
+| P7 | Receiver opts in, bound in range, but the contract accepts no T-class evidence | reject validation-failure | rejected validation-failure: the contract does not accept bounded (T-class) output by bound | True |
+| P8 | Speculation record that misnames the plan, provisional state or draft, or a committed output it does not verify | each rejected | [1] another plan: rejected integrity-failure: speculation record is for a different plan [2] another provisional state: rejected integrity-failure: speculation record names a different provisional state [3] another draft: rejected integrity-failure: speculation record names a different draft [4] committed output differs from the verified one: rejected validation-failure: committed output is not the verified output | True |
+| V1 | Untrusted worker's output with a valid proof | accepted with one recomputation pass | accepted after 1 recomputation pass with hardware noise; proof 55 B; the worker's generation was not repeated | True |
+| V2 | Worker ran a different model but claims the contracted one | reject validation-failure | rejected validation-failure: proof does not match one recomputation of the claimed run | True |
+| V3 | Proof made for a different input | reject validation-failure before any recomputation | rejected validation-failure: proof is for a different input; recomputation passes spent: 0 | True |
+| V4 | Contract does not accept proof evidence | reject validation-failure | rejected validation-failure: the contract does not accept proof evidence | True |
+| V5 | Proof bytes edited after signing | reject integrity-failure | rejected integrity-failure: signature does not verify | True |
+| V6 | Proof states a runtime other than the one the plan names | reject validation-failure before any recomputation | rejected validation-failure: proof was made with a different runtime than the plan names; recomputation passes spent: 0 | True |
+| V7 | Proof evidence older than the contract's max-age | reject validation-failure before any recomputation | rejected validation-failure: evidence is for another contract, scope or output, or is too old; recomputation passes spent: 0 | True |
+| V8 | Proof evidence that names another checker, reports a failed check, or uses an unsupported scheme | each rejected before any recomputation | [1] checker is not the signer: rejected integrity-failure: evidence names a checker other than its signer; recomputation passes spent: 0 [2] reports a failed check: rejected validation-failure: evidence reports a failed check; recomputation passes spent: 0 [3] unsupported scheme: rejected validation-failure: no proof in a supported scheme; recomputation passes spent: 0 | True |
+| U1 | Revision 29 pushed on a standing subscription | applied without OFFER/ACCEPT | applied: the revision's binding passed gate zero against the cached template, the plan is a same-shape child of the subscribed plan, and the pushed bytes match it | True |
+| U2 | Push assumes a base the receiver does not hold | reject baseline-mismatch (receiver sends REPAIR) | rejected baseline-mismatch: push assumes a base this receiver does not hold; send REPAIR | True |
+| U3 | Push to a receiver with no subscription | reject permission-denied | rejected permission-denied: no standing subscription for this stream; negotiate with OFFER/ACCEPT | True |
+| U4 | Push carries a binding with a forged signature | reject integrity-failure (gate zero) | rejected integrity-failure: signature does not verify | True |
+| U5 | Push on the required-transition stream, which the contract gives no fast path | reject ineligible-plan | rejected ineligible-plan: stream edits has no fast path; full OFFER/ACCEPT required | True |
+| U6 | Push whose plan changes shape | reject ineligible-plan (full OFFER/ACCEPT required) | rejected ineligible-plan: plan shape changed; full OFFER/ACCEPT required | True |
+| U7 | Older push arrives after a newer one on a replaceable stream | reject canceled (superseded) | rejected canceled: push seq 4 is superseded; latest applied is 5 | True |
+| U8 | Pushed bytes do not match the digest they carry | reject integrity-failure | rejected integrity-failure: pushed bytes for fairing do not match the plan | True |
+| U9 | Push binding names a different target than the one pushed | reject integrity-failure (gate zero) | rejected integrity-failure: binding names a different target | True |
+| U10 | Gap on a required-transition stream whose contract grants a fast path | reject missing-dependency | rejected missing-dependency: push seq 9 on a required-transition stream; expected 8 | True |
+| U11 | Pushed bytes match the digest they carry, but not the plan's payload | reject integrity-failure | rejected integrity-failure: pushed bytes for fairing do not match the plan | True |
+| U12 | Push that the subscriber's own acceptance rules out | each rejected ineligible-plan, as F6 and F2 are | [1] subscriber accepts only E copies; the plan decodes a latent locally (T): rejected ineligible-plan: fairing: T-class copy; this receiver accepts ['E'] [2] subscriber's own bound is 0.3 mm; the plan declares 0.35 mm: rejected ineligible-plan: fairing: declared error 0.35 mm exceeds the bound for this receiver, 0.3 | True |
+| U13 | Push that does not match the subscription's contract | each rejected | [1] binding under a template outside the subscription: rejected integrity-failure: push binding names a template outside this subscription [2] plan bound to the previous revision's contract: rejected ineligible-plan: plan is bound to a different contract [3] stream the revision's contract does not define: rejected ineligible-plan: this revision's contract defines no stream pose | True |

@@ -13,6 +13,11 @@
       "import": 2,
       "date": "2026-10-11",
       "contents": "Schema kit, working analysis, speed review and research notes, contract-split handoff and implementation notes; editorial guides updated"
+    },
+    {
+      "import": 3,
+      "date": "2026-10-12",
+      "contents": "Speed mechanisms: design note, kit rules and cases for four mechanisms, a model of all six, and a small-model run; editorial guides updated"
     }
   ],
   "source_files": [
@@ -67,9 +72,9 @@
       "path": "docs/analysis/ARFP-analysis-2026-10-11.md",
       "purpose": "Working analysis and engineering record: schema map, identity and encoding rules, design choices, Stage-1 results, contract split, next work, full CDDL",
       "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
-      "import_treatment": "working record; edited to point at repository paths and to correct claims found by the pre-publication check",
-      "bytes": 75209,
-      "sha256": "f87b6c7769cba216e3db2949f5829cc4ce23f8693b0d772a0c64dbecaa40c1f3",
+      "import_treatment": "working record; edited to point at repository paths, to correct the claims the pre-publication check found, and to note the 2026-10-12 speed-mechanism additions",
+      "bytes": 75770,
+      "sha256": "fd3c40ec5ad18bc31a83b3b573582620e7a80de4dc69a99d25e6d070c32fddf6",
       "import": 2
     },
     {
@@ -129,21 +134,24 @@
   ],
   "kit": {
     "path": "kit/",
-    "purpose": "Executable object-level conformance kit: CDDL schema, reference checker, 95 cases, 38 CBOR vectors, mutation check, delta benchmark and speed model",
+    "purpose": "Executable object-level conformance kit: CDDL schema, reference checker, 132 cases, 42 CBOR vectors, mutation check, delta benchmark, speed models, and a small-model speculative-start run",
     "source": "Produced in the 2026-10-11 ARFP working session (Claude, with the project owner)",
     "import": 2,
-    "files": 62,
+    "files": 75,
     "checksums": "kit/SHA256SUMS",
-    "checksums_sha256": "e1aff9a191b533405e015fe04bf80d74b607a8e0531481936ad7ecc6e4c0303a",
+    "checksums_sha256": "81f892da6e3a468e4e4a3955d395f381fca54e730138eaa8eccc9ea670b6e9d1",
     "deterministic_outputs": [
       "kit/report.json",
       "kit/report.md",
       "kit/vectors/*.cbor",
       "kit/bench/speed_model.md",
-      "kit/bench/speed_model.json"
+      "kit/bench/speed_model.json",
+      "kit/bench/ideas_model.md",
+      "kit/bench/ideas_model.json"
     ],
     "machine_dependent_outputs": [
-      "kit/bench/delta_results.json (timings vary by machine; sizes are deterministic)"
+      "kit/bench/delta_results.json (timings vary by machine; sizes are deterministic)",
+      "kit/bench/spec_start_toy.md and .json (trained on a CPU; timings and exact figures may vary by machine and library version)"
     ],
     "excluded": [
       "kit/bench/.cache/ (npm release tarballs, third-party code, downloaded on first run)",
@@ -160,7 +168,8 @@
     ".gitignore",
     "docs/proposals/ARFP-ai-state-handoff-network-test.md",
     "docs/proposals/ARFP-data-center-use-cases.md",
-    "docs/research/use-cases/data_center_use_case_sources.md"
+    "docs/research/use-cases/data_center_use_case_sources.md",
+    "docs/proposals/ARFP-speed-mechanisms.md"
   ],
   "referenced_but_not_supplied": [
     "External X pitch",

@@ -1,0 +1,194 @@
+{
+  "config": {
+    "d": 128,
+    "layers": 4,
+    "heads": 4,
+    "ctx": 160,
+    "mlp": 4,
+    "vocab": 256,
+    "steps": 1500,
+    "batch": 32,
+    "lr": 0.002,
+    "warmup": 100,
+    "seed": 0
+  },
+  "prefix": 96,
+  "draft": 48,
+  "samples": 200,
+  "held_out_fraction": 0.2,
+  "params": 841984,
+  "train_bytes": 130417,
+  "corpus_bytes": 163022,
+  "corpus_sha256": "b0ba86a9d7eacb46b2586360ae2888c6fddcf51a2c7dfe324cce0b9f99f82ce3",
+  "corpus_files": [
+    "docs/architecture/ARFP_Concept_Handoff_v0.1_2026-10-11.md",
+    "docs/specification/Adaptive_Reconstruction_Protocol_v0.1.md",
+    "docs/reviews/2026-10-11_external_review.md",
+    "docs/sources/conversation_concept_notes.md",
+    "docs/handoffs/ARFP-contract-split-handoff.md"
+  ],
+  "corpus_files_changed_since_manifest": [],
+  "train_seconds": 888.2,
+  "measure_seconds": 137.2,
+  "training_log": [
+    {
+      "step": 0,
+      "loss_nats": 5.536783218383789,
+      "seconds": 2.4
+    },
+    {
+      "step": 100,
+      "loss_nats": 2.694373846054077,
+      "seconds": 58.8
+    },
+    {
+      "step": 200,
+      "loss_nats": 2.396470785140991,
+      "seconds": 114.4
+    },
+    {
+      "step": 300,
+      "loss_nats": 2.0572423934936523,
+      "seconds": 171.9
+    },
+    {
+      "step": 400,
+      "loss_nats": 1.783205270767212,
+      "seconds": 230.8
+    },
+    {
+      "step": 500,
+      "loss_nats": 1.444322943687439,
+      "seconds": 290.4
+    },
+    {
+      "step": 600,
+      "loss_nats": 1.3323224782943726,
+      "seconds": 368.2
+    },
+    {
+      "step": 700,
+      "loss_nats": 1.1791819334030151,
+      "seconds": 424.9
+    },
+    {
+      "step": 800,
+      "loss_nats": 1.0123052597045898,
+      "seconds": 481.6
+    },
+    {
+      "step": 900,
+      "loss_nats": 0.9109699130058289,
+      "seconds": 538.5
+    },
+    {
+      "step": 1000,
+      "loss_nats": 0.8535563349723816,
+      "seconds": 596.2
+    },
+    {
+      "step": 1100,
+      "loss_nats": 0.7676478028297424,
+      "seconds": 654.7
+    },
+    {
+      "step": 1200,
+      "loss_nats": 0.7488002181053162,
+      "seconds": 711.7
+    },
+    {
+      "step": 1300,
+      "loss_nats": 0.6761428713798523,
+      "seconds": 768.8
+    },
+    {
+      "step": 1400,
+      "loss_nats": 0.5966154932975769,
+      "seconds": 827.5
+    },
+    {
+      "step": 1499,
+      "loss_nats": 0.5741843581199646,
+      "seconds": 885.8
+    }
+  ],
+  "rounding": {
+    "max_abs_logit_diff": 7.2479248046875e-05,
+    "positions_differing": 9400,
+    "positions": 9400,
+    "argmax_disagreements": 0,
+    "min_top2_gap": 0.0003299713134765625
+  },
+  "results_by_bits": {
+    "8": {
+      "compression_vs_fp16": 2.0,
+      "compression_vs_fp16_incl_scales": 1.92,
+      "mean_accepted_of_draft": 44.98,
+      "median_accepted": 48.0,
+      "p10_accepted": 48.0,
+      "drafts_fully_accepted": 0.905,
+      "per_token_acceptance_estimate": 0.9978921677390725,
+      "samples": 200,
+      "final_output_identical_to_exact": "200/200",
+      "free_running_token_match": 0.9423,
+      "bits_per_byte_exact": 2.5982,
+      "bits_per_byte_quantized": 2.5983
+    },
+    "6": {
+      "compression_vs_fp16": 2.67,
+      "compression_vs_fp16_incl_scales": 2.53,
+      "mean_accepted_of_draft": 36.98,
+      "median_accepted": 48.0,
+      "p10_accepted": 3.900000000000002,
+      "drafts_fully_accepted": 0.685,
+      "per_token_acceptance_estimate": 0.9915538275908299,
+      "samples": 200,
+      "final_output_identical_to_exact": "200/200",
+      "free_running_token_match": 0.7889,
+      "bits_per_byte_exact": 2.5982,
+      "bits_per_byte_quantized": 2.5967
+    },
+    "4": {
+      "compression_vs_fp16": 4.0,
+      "compression_vs_fp16_incl_scales": 3.69,
+      "mean_accepted_of_draft": 13.77,
+      "median_accepted": 4.0,
+      "p10_accepted": 0.0,
+      "drafts_fully_accepted": 0.16,
+      "per_token_acceptance_estimate": 0.9424854501882917,
+      "samples": 200,
+      "final_output_identical_to_exact": "200/200",
+      "free_running_token_match": 0.348,
+      "bits_per_byte_exact": 2.5982,
+      "bits_per_byte_quantized": 2.6196
+    },
+    "3": {
+      "compression_vs_fp16": 5.33,
+      "compression_vs_fp16_incl_scales": 4.8,
+      "mean_accepted_of_draft": 5.2,
+      "median_accepted": 1.0,
+      "p10_accepted": 0.0,
+      "drafts_fully_accepted": 0.03,
+      "per_token_acceptance_estimate": 0.8426601784266018,
+      "samples": 200,
+      "final_output_identical_to_exact": "200/200",
+      "free_running_token_match": 0.1758,
+      "bits_per_byte_exact": 2.5982,
+      "bits_per_byte_quantized": 2.7001
+    },
+    "2": {
+      "compression_vs_fp16": 8.0,
+      "compression_vs_fp16_incl_scales": 6.86,
+      "mean_accepted_of_draft": 0.57,
+      "median_accepted": 0.0,
+      "p10_accepted": 0.0,
+      "drafts_fully_accepted": 0.005,
+      "per_token_acceptance_estimate": 0.36421725239616615,
+      "samples": 200,
+      "final_output_identical_to_exact": "200/200",
+      "free_running_token_match": 0.0872,
+      "bits_per_byte_exact": 2.5982,
+      "bits_per_byte_quantized": 2.9293
+    }
+  }
+}

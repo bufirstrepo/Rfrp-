@@ -30,7 +30,8 @@ NOW = 1791698400000          # 2026-10-11T06:00:00Z, epoch milliseconds
 CDDL = open("arfp-v0.1.cddl").read()
 SCHEMA = pycddl.Schema(CDDL)                                   # the arfp-object union
 RULES = ("target", "scope", "contract", "contract-template", "binding", "capabilities", "state", "demand", "plan",
-         "evidence", "attestation", "approval", "receipt", "head", "delegation", "rewrite", "repair", "message")
+         "evidence", "attestation", "approval", "receipt", "head", "delegation", "rewrite", "repair", "speculation",
+         "message")
 RULE_SCHEMAS = {}
 
 
@@ -427,6 +428,15 @@ FIXTURES = {
     "msg COMMIT_RECEIPT": msg({"type": "COMMIT_RECEIPT", "signed": signed_receipt_ws}),
 }
 
+# Speed mechanisms (speed_mechanisms.py): per-receiver fidelity, speculative start, proof evidence, push
+import speed_mechanisms                                         # noqa: E402
+
+FIXTURES.update(speed_mechanisms.setup(dict(
+    contract=contract, target=target, plan_ws=plan_ws, plan_for=plan_for, nd=nd, fairing=fairing, rt_surf=rt_surf,
+    R1=R1, fairing_ref=fairing_ref, latent_bytes=latent_bytes, RT_WS=RT_WS, WS=WS, PH=PH, PUB=PUB, KEYS=KEYS,
+    NOW=NOW, scope_all=scope_all, elig_ws=elig_ws, total_ws=total_ws, out_ws=out_ws, msg=msg,
+    template_obj=template_obj, split_binding_obj=split_binding_obj)))
+
 import os
 import re
 
@@ -502,6 +512,9 @@ NEGATIVE_SCHEMA = [
     ("", "Binding naming both a whole contract and a template", lambda: dict(binding_obj, template=oid(template_obj))),
     ("", "Split binding with expected digests as a list instead of a map",
      lambda: dict(split_binding_obj, expected=list(split_binding_obj["expected"].values()))),
+    ("", "Demand whose acceptance bounds are a list instead of a map",
+     lambda: mutate(FIXTURES["demand (receiver acceptance, subscription)"], ["accept", "bounds"], [num("0.4")])),
+    ("", "PUSH with no base", lambda: mutate(FIXTURES["msg PUSH"], ["body", "base"], delete=True)),
 ]
 negative_rows = []
 for cid, title, fn in NEGATIVE_SCHEMA:
@@ -880,6 +893,16 @@ import contract_split                                           # noqa: E402
 
 results.extend(contract_split.run(target, contract))
 measures["split_materializes_to_whole_contract"] = materialize(template_obj, split_binding_obj) == contract
+
+results.extend(speed_mechanisms.run())
+sizes["speed_mechanisms"] = {
+    "demand with receiver acceptance and subscription": size(FIXTURES["demand (receiver acceptance, subscription)"]),
+    "speculation record": size(FIXTURES["speculation"]),
+    "evidence with proof": size(FIXTURES["evidence (proof)"]),
+    "PUSH message (target, split binding, inline plan, one chunk)": size(FIXTURES["msg PUSH"]),
+    "PUSH overhead beyond the pushed bytes": size(FIXTURES["msg PUSH"]) - len(FIXTURES["msg PUSH"]["body"]["chunks"][0]["data"]),
+}
+measures["speculation_tokens_kept_of_48"] = speed_mechanisms.CTX["kept"]
 
 report = {"schema_fixtures": schema_rows, "schema_negative": negative_rows, "cases": results,
           "sizes": sizes, "measures": measures,

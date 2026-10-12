@@ -7,6 +7,8 @@ This file pulls together everything worked out so far: the concept, the "meta" i
 
 In the repository, the schema kit is [`kit/`](../../kit/), and file paths such as `run_checks.py` or `bench/speed_model.py` are relative to it.
 
+**Later additions (2026-10-12).** The [speed mechanisms](../proposals/ARFP-speed-mechanisms.md) added four fixtures, two malformed objects, 37 cases and 22 mutation targets to the kit, which now reports 42/42, 13/13, 132/132 and 29/29. This record is otherwise unchanged and describes the kit as of 2026-10-11 (commit `8144f93`). All 95 original cases still pass with the same results, and every size is unchanged; only C28, C28b and C28c now count 42 fixtures instead of 38.
+
 ---
 
 ## 0. Claims discipline (read first)
@@ -629,7 +631,7 @@ AI state is the clearest case.
 
 ---
 
-## Appendix A — Full schema (`arfp-v0.1.cddl`, 384 lines, as validated)
+## Appendix A — Full schema (`arfp-v0.1.cddl`, 384 lines, as validated on 2026-10-11; the kit's current schema adds the speed-mechanism fields and objects)
 
 ```cddl
 ; ARFP v0.1 core schema -- design draft, not a registered wire format.

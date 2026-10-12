@@ -227,6 +227,30 @@
       "valid": true,
       "bytes": 354,
       "error": ""
+    },
+    {
+      "fixture": "demand (receiver acceptance, subscription)",
+      "valid": true,
+      "bytes": 206,
+      "error": ""
+    },
+    {
+      "fixture": "speculation",
+      "valid": true,
+      "bytes": 282,
+      "error": ""
+    },
+    {
+      "fixture": "evidence (proof)",
+      "valid": true,
+      "bytes": 439,
+      "error": ""
+    },
+    {
+      "fixture": "msg PUSH",
+      "valid": true,
+      "bytes": 2622,
+      "error": ""
     }
   ],
   "schema_negative": [
@@ -294,6 +318,18 @@
       "id": "",
       "case": "Split binding with expected digests as a list instead of a map",
       "observed": "rejected by the binding rule (the arfp-object union accepted it)",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "Demand whose acceptance bounds are a list instead of a map",
+      "observed": "rejected by the demand rule (the arfp-object union accepted it)",
+      "pass": true
+    },
+    {
+      "id": "",
+      "case": "PUSH with no base",
+      "observed": "rejected by the message rule",
       "pass": true
     }
   ],
@@ -463,21 +499,21 @@
       "id": "C28",
       "case": "Canonical encoding across independent implementations",
       "expected": "identical bytes; deviations detected",
-      "observed": "38/38 fixtures byte-identical in both encoders; unsorted map canonical: False; non-shortest int canonical: False; num('0.50') == num('0.5'): True",
+      "observed": "42/42 fixtures byte-identical in both encoders; unsorted map canonical: False; non-shortest int canonical: False; num('0.50') == num('0.5'): True",
       "pass": true
     },
     {
       "id": "C28b",
       "case": "Map mixing integer and text keys",
       "expected": "orders differ; no ARFP map mixes key types",
-      "observed": "RFC 8949 and RFC 7049 orders agree on the mixed map: False; fixtures with uniform key types: 38/38",
+      "observed": "RFC 8949 and RFC 7049 orders agree on the mixed map: False; fixtures with uniform key types: 42/42",
       "pass": true
     },
     {
       "id": "C28c",
       "case": "Decimals 4([-2, 50]) (0.5) and 4([1, 1]) (10)",
       "expected": "both rejected; all fixtures normalized",
-      "observed": "flagged: ['$.measured', '$.measured']; fixtures clean: 38/38",
+      "observed": "flagged: ['$.measured', '$.measured']; fixtures clean: 42/42",
       "pass": true
     },
     {
@@ -962,6 +998,265 @@
       "expected": "identical object and id",
       "observed": "identical: True; same id: True; moved to the binding: 2 expected digests, 1 reference",
       "pass": true
+    },
+    {
+      "id": "F1",
+      "case": "Receiver accepts bounded output within the contract's bound",
+      "expected": "the latent fairing plan is eligible",
+      "observed": "accepted; declared error 0.35 mm fits the contract's 0.5 mm",
+      "pass": true
+    },
+    {
+      "id": "F2",
+      "case": "Receiver requires the exact reference geometry (bound 0)",
+      "expected": "latent plan rejected for it; exact plan chosen",
+      "observed": "rejected ineligible-plan: fairing: declared error 0.35 mm exceeds the bound for this receiver, 0; the literal reference plan is eligible instead (1,026 B vs 653 B latent)",
+      "pass": true
+    },
+    {
+      "id": "F3",
+      "case": "Demand tries to loosen the contract's bound (0.6 mm vs 0.5 mm)",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: fairing.hausdorff.v1: a demand may tighten the contract's bound, not loosen it",
+      "pass": true
+    },
+    {
+      "id": "F4",
+      "case": "Receiver tightens the bound to 0.4 mm",
+      "expected": "eligible, then fails validation for it only",
+      "observed": "plan eligible; composed bound 0.425 mm passes the contract's 0.5 for others; rejected validation-failure: fairing.hausdorff.v1: 0.425 exceeds this receiver's bound 0.4",
+      "pass": true
+    },
+    {
+      "id": "F5",
+      "case": "Receiver refuses generated content even where the contract allows it",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: skin: generated content in ['skin-texture']; this receiver accepts none",
+      "pass": true
+    },
+    {
+      "id": "F6",
+      "case": "Receiver accepts only reproducible (E) copies",
+      "expected": "local T decode rejected; upstream decode accepted",
+      "observed": "local decode rejected ineligible-plan: fairing: T-class copy; this receiver accepts ['E']; the same decode run at the repeater arrives as exact bytes and is eligible (classes set reproducibility; bounds set fidelity, F2 and F4)",
+      "pass": true
+    },
+    {
+      "id": "F7",
+      "case": "Demand sets 1 mm on the 2 mm clearance minimum (smaller would loosen a minimum)",
+      "expected": "reject permission-denied (only metric bounds can be tightened)",
+      "observed": "rejected permission-denied: clearance.min.v1 is not a metric bound in this contract; a receiver can tighten only metric bounds",
+      "pass": true
+    },
+    {
+      "id": "F8",
+      "case": "Latent plan that declares no error, for a receiver with its own bound",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: fairing: declares no error for fairing.hausdorff.v1; this receiver requires 0.45 mm",
+      "pass": true
+    },
+    {
+      "id": "P1",
+      "case": "Draft on the coarse state, checked once the exact state arrives",
+      "expected": "commits; identical output",
+      "observed": "kept 9 of 48 drafted tokens, exact token at the first mismatch, rest decoded exactly; committed as E; output identical to decoding on the exact state: True",
+      "pass": true
+    },
+    {
+      "id": "P2",
+      "case": "Provisional output committed with no check by a receiver that did not opt in (coarse bound in range)",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: output drafted on provisional state needs a check against the exact state before commit",
+      "pass": true
+    },
+    {
+      "id": "P3",
+      "case": "Speculation record checked against a different exact state",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: draft was checked against a different exact state",
+      "pass": true
+    },
+    {
+      "id": "P4",
+      "case": "Speculation record claims more verified tokens than the check keeps",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: record claims 14 verified tokens; checking against the exact state keeps 9",
+      "pass": true
+    },
+    {
+      "id": "P5",
+      "case": "Receiver that opts in uses the provisional draft, within a declared bound",
+      "expected": "commits, labeled T",
+      "observed": "accepted; coarse layer declares 0.3 mm within 0.5 mm; committed as class T without waiting",
+      "pass": true
+    },
+    {
+      "id": "P6",
+      "case": "Receiver opts in, but the coarse layer declares no bound within the contract",
+      "expected": "reject validation-failure (a receiver cannot loosen the contract)",
+      "observed": "rejected validation-failure: the provisional layer declares no bound within the contract; it cannot be used unchecked",
+      "pass": true
+    },
+    {
+      "id": "P7",
+      "case": "Receiver opts in, bound in range, but the contract accepts no T-class evidence",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: the contract does not accept bounded (T-class) output by bound",
+      "pass": true
+    },
+    {
+      "id": "P8",
+      "case": "Speculation record that misnames the plan, provisional state or draft, or a committed output it does not verify",
+      "expected": "each rejected",
+      "observed": "[1] another plan: rejected integrity-failure: speculation record is for a different plan [2] another provisional state: rejected integrity-failure: speculation record names a different provisional state [3] another draft: rejected integrity-failure: speculation record names a different draft [4] committed output differs from the verified one: rejected validation-failure: committed output is not the verified output",
+      "pass": true
+    },
+    {
+      "id": "V1",
+      "case": "Untrusted worker's output with a valid proof",
+      "expected": "accepted with one recomputation pass",
+      "observed": "accepted after 1 recomputation pass with hardware noise; proof 55 B; the worker's generation was not repeated",
+      "pass": true
+    },
+    {
+      "id": "V2",
+      "case": "Worker ran a different model but claims the contracted one",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: proof does not match one recomputation of the claimed run",
+      "pass": true
+    },
+    {
+      "id": "V3",
+      "case": "Proof made for a different input",
+      "expected": "reject validation-failure before any recomputation",
+      "observed": "rejected validation-failure: proof is for a different input; recomputation passes spent: 0",
+      "pass": true
+    },
+    {
+      "id": "V4",
+      "case": "Contract does not accept proof evidence",
+      "expected": "reject validation-failure",
+      "observed": "rejected validation-failure: the contract does not accept proof evidence",
+      "pass": true
+    },
+    {
+      "id": "V5",
+      "case": "Proof bytes edited after signing",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: signature does not verify",
+      "pass": true
+    },
+    {
+      "id": "V6",
+      "case": "Proof states a runtime other than the one the plan names",
+      "expected": "reject validation-failure before any recomputation",
+      "observed": "rejected validation-failure: proof was made with a different runtime than the plan names; recomputation passes spent: 0",
+      "pass": true
+    },
+    {
+      "id": "V7",
+      "case": "Proof evidence older than the contract's max-age",
+      "expected": "reject validation-failure before any recomputation",
+      "observed": "rejected validation-failure: evidence is for another contract, scope or output, or is too old; recomputation passes spent: 0",
+      "pass": true
+    },
+    {
+      "id": "V8",
+      "case": "Proof evidence that names another checker, reports a failed check, or uses an unsupported scheme",
+      "expected": "each rejected before any recomputation",
+      "observed": "[1] checker is not the signer: rejected integrity-failure: evidence names a checker other than its signer; recomputation passes spent: 0 [2] reports a failed check: rejected validation-failure: evidence reports a failed check; recomputation passes spent: 0 [3] unsupported scheme: rejected validation-failure: no proof in a supported scheme; recomputation passes spent: 0",
+      "pass": true
+    },
+    {
+      "id": "U1",
+      "case": "Revision 29 pushed on a standing subscription",
+      "expected": "applied without OFFER/ACCEPT",
+      "observed": "applied: the revision's binding passed gate zero against the cached template, the plan is a same-shape child of the subscribed plan, and the pushed bytes match it",
+      "pass": true
+    },
+    {
+      "id": "U2",
+      "case": "Push assumes a base the receiver does not hold",
+      "expected": "reject baseline-mismatch (receiver sends REPAIR)",
+      "observed": "rejected baseline-mismatch: push assumes a base this receiver does not hold; send REPAIR",
+      "pass": true
+    },
+    {
+      "id": "U3",
+      "case": "Push to a receiver with no subscription",
+      "expected": "reject permission-denied",
+      "observed": "rejected permission-denied: no standing subscription for this stream; negotiate with OFFER/ACCEPT",
+      "pass": true
+    },
+    {
+      "id": "U4",
+      "case": "Push carries a binding with a forged signature",
+      "expected": "reject integrity-failure (gate zero)",
+      "observed": "rejected integrity-failure: signature does not verify",
+      "pass": true
+    },
+    {
+      "id": "U5",
+      "case": "Push on the required-transition stream, which the contract gives no fast path",
+      "expected": "reject ineligible-plan",
+      "observed": "rejected ineligible-plan: stream edits has no fast path; full OFFER/ACCEPT required",
+      "pass": true
+    },
+    {
+      "id": "U6",
+      "case": "Push whose plan changes shape",
+      "expected": "reject ineligible-plan (full OFFER/ACCEPT required)",
+      "observed": "rejected ineligible-plan: plan shape changed; full OFFER/ACCEPT required",
+      "pass": true
+    },
+    {
+      "id": "U7",
+      "case": "Older push arrives after a newer one on a replaceable stream",
+      "expected": "reject canceled (superseded)",
+      "observed": "rejected canceled: push seq 4 is superseded; latest applied is 5",
+      "pass": true
+    },
+    {
+      "id": "U8",
+      "case": "Pushed bytes do not match the digest they carry",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: pushed bytes for fairing do not match the plan",
+      "pass": true
+    },
+    {
+      "id": "U9",
+      "case": "Push binding names a different target than the one pushed",
+      "expected": "reject integrity-failure (gate zero)",
+      "observed": "rejected integrity-failure: binding names a different target",
+      "pass": true
+    },
+    {
+      "id": "U10",
+      "case": "Gap on a required-transition stream whose contract grants a fast path",
+      "expected": "reject missing-dependency",
+      "observed": "rejected missing-dependency: push seq 9 on a required-transition stream; expected 8",
+      "pass": true
+    },
+    {
+      "id": "U11",
+      "case": "Pushed bytes match the digest they carry, but not the plan's payload",
+      "expected": "reject integrity-failure",
+      "observed": "rejected integrity-failure: pushed bytes for fairing do not match the plan",
+      "pass": true
+    },
+    {
+      "id": "U12",
+      "case": "Push that the subscriber's own acceptance rules out",
+      "expected": "each rejected ineligible-plan, as F6 and F2 are",
+      "observed": "[1] subscriber accepts only E copies; the plan decodes a latent locally (T): rejected ineligible-plan: fairing: T-class copy; this receiver accepts ['E'] [2] subscriber's own bound is 0.3 mm; the plan declares 0.35 mm: rejected ineligible-plan: fairing: declared error 0.35 mm exceeds the bound for this receiver, 0.3",
+      "pass": true
+    },
+    {
+      "id": "U13",
+      "case": "Push that does not match the subscription's contract",
+      "expected": "each rejected",
+      "observed": "[1] binding under a template outside the subscription: rejected integrity-failure: push binding names a template outside this subscription [2] plan bound to the previous revision's contract: rejected ineligible-plan: plan is bound to a different contract [3] stream the revision's contract does not define: rejected ineligible-plan: this revision's contract defines no stream pose",
+      "pass": true
     }
   ],
   "sizes": {
@@ -987,7 +1282,10 @@
       "contract-template": 1478,
       "binding (split form)": 326,
       "binding (split form, threshold override)": 359,
-      "attestation": 173
+      "attestation": 173,
+      "demand (receiver acceptance, subscription)": 206,
+      "speculation": 282,
+      "evidence (proof)": 439
     },
     "messages": {
       "CAPABILITIES": 841,
@@ -1005,7 +1303,8 @@
       "CANCEL": 88,
       "VALIDATION_APPROVAL": 771,
       "EVIDENCE": 1204,
-      "COMMIT_RECEIPT": 354
+      "COMMIT_RECEIPT": 354,
+      "PUSH": 2622
     },
     "worktree_envelope_overhead": 195,
     "signed_approval": 680,
@@ -1042,7 +1341,14 @@
       "OFFER, split, template cached, plan by id": 707
     },
     "full_update_control_total": 3421,
-    "pose_fast_path_overhead": 1079
+    "pose_fast_path_overhead": 1079,
+    "speed_mechanisms": {
+      "demand with receiver acceptance and subscription": 206,
+      "speculation record": 282,
+      "evidence with proof": 439,
+      "PUSH message (target, split binding, inline plan, one chunk)": 2622,
+      "PUSH overhead beyond the pushed bytes": 1969
+    }
   },
   "measures": {
     "eps_publisher_mm": "0.275",
@@ -1059,7 +1365,8 @@
     "work_key_geo_A_shared": true,
     "receipt_ws_status": "committed",
     "binding_matches_published_vector": true,
-    "split_materializes_to_whole_contract": true
+    "split_materializes_to_whole_contract": true,
+    "speculation_tokens_kept_of_48": 9
   },
   "digests": {
     "contract": "sha256:3089acac6915",

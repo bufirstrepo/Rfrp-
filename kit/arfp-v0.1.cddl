@@ -18,6 +18,11 @@
 ;   fractions (tag 4) with a negative exponent and a mantissa not divisible by 10.
 ; Map keys: every ARFP map uses text keys, so RFC 8949 and RFC 7049 canonical orders agree.
 ; Hop-varying envelope fields (ttl, via) are excluded from dedup keys and signatures.
+; Speed mechanisms (docs/proposals/ARFP-speed-mechanisms.md): demand.accept (a receiver's own
+;   requirements: bounds set fidelity and may tighten the contract's metric bounds only; classes set
+;   reproducibility of its copy), demand.subscribe and the PUSH message, the speculation record, and
+;   evidence.proof. Proof evidence is signed by the worker that ran the work, which the evidence
+;   names as its checker.
 ; Tool note: three spellings here are equivalent rewrites for the Rust cddl crate (pycddl 0.6.4):
 ;   "null / x" instead of "x / null"; a quoted "bytes" key; and choices written inline inside
 ;   array types (node-classes, det-classes, evidence-modes, rights), because that crate only tries
@@ -26,7 +31,7 @@
 
 arfp-object = target / scope / contract / contract-template / binding / capabilities / state /
               demand / plan / evidence / attestation / approval / receipt / head / delegation /
-              rewrite / repair / message
+              rewrite / repair / speculation / message
 
 ; ---------- primitives ----------
 digest = [alg: int, value: bstr]        ; alg = COSE hash algorithm id (RFC 9054); -16 = SHA-256
@@ -150,9 +155,9 @@ predicate = {
 }
 
 evidence-mode = "digest-match" / "feature-digest" / "reference-metric" /
-                "checker-attestation" / "spot-reexecution"
+                "checker-attestation" / "spot-reexecution" / "proof"
 evidence-modes = [+ ("digest-match" / "feature-digest" / "reference-metric" /
-                     "checker-attestation" / "spot-reexecution")]
+                     "checker-attestation" / "spot-reexecution" / "proof")]
 
 stream-rule = {
   stream: tstr,
@@ -220,6 +225,14 @@ demand = {
   target: digest,
   scope: digest,
   ? milestone: tstr,
+  ? accept: receiver-accept,            ; this receiver's own requirements: may tighten the contract, never loosen it
+  ? subscribe: bool,                    ; standing subscription: later revisions may arrive as PUSH
+}
+
+receiver-accept = {
+  classes: det-classes,                 ; output classes this receiver accepts outside free regions
+  ? free: bool,                         ; generated content in the contract's free regions (default true)
+  ? bounds: {* name => exact-num},      ; tighter thresholds for metric-bound predicates, by id
 }
 
 plan = {
@@ -284,6 +297,26 @@ evidence = {
   ? bound: exact-num,                   ; a declared bound (a runtime's delta), not a measurement
   ? units: tstr,
   validator: name,
+  checker: party,
+  at: uint,
+  ? proof: inference-proof,             ; mode "proof": stands in for re-running the work
+}
+
+inference-proof = {                     ; compact proof of inference (TOPLOC-style), checked by one parallel pass
+  scheme: name,
+  runtime: digest,                      ; the model and runtime the proof claims
+  input: digest,                        ; the input the proof claims
+  data: bstr,
+}
+
+speculation = {                         ; output drafted on provisional state, then checked against the exact state
+  kind: "speculation",
+  plan: digest,
+  provisional: digest,                  ; the coarse state the draft was produced on
+  exact: digest,                        ; the exact state the draft was checked against
+  drafted: digest,                      ; H(drafted output)
+  accepted: uint,                       ; length of the verified prefix
+  output: digest,                       ; verified prefix plus exact continuation
   checker: party,
   at: uint,
 }
@@ -360,6 +393,9 @@ message = {
 body = { type: "CAPABILITIES", caps: capabilities } /
        { type: "STATE", state: state } /
        { type: "DEMAND", demand: demand } /
+       { type: "PUSH", stream: tstr, seq: uint,                ; on a standing subscription, no OFFER/ACCEPT
+         target: target, binding: cose-sign1,                 ;   this revision's binding passes gate zero
+         plan: plan, base: digest, chunks: [+ chunk] } /      ;   plan: a same-shape child of the subscribed one
        { type: "OFFER", binding: cose-sign1, target: target / digest,
          ? contract: contract / digest,             ; whole form
          ? template: contract-template / digest,    ; split form: inline only when not yet cached

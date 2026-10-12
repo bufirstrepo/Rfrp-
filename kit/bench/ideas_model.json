@@ -1,0 +1,1562 @@
+{
+  "constants": {
+    "H100_HBM_Bps": 3350000000000.0,
+    "HBM_EFF (ASSUMED)": 0.7,
+    "MFU (ASSUMED)": 0.5,
+    "QuantSpec_acceptance_lower_bound": 0.9,
+    "TOPLOC_bytes_per_32_tokens": 258,
+    "RTT_DC (ASSUMED)": 0.0001
+  },
+  "1_per_receiver_fidelity": {
+    "model": "Llama 3.1 8B",
+    "context": 32768,
+    "receivers": [
+      {
+        "id": "R1",
+        "gbps": 400,
+        "requirement": "needs exact"
+      },
+      {
+        "id": "R2",
+        "gbps": 10,
+        "requirement": "accepts bounded (E or T)"
+      },
+      {
+        "id": "R3",
+        "gbps": 1,
+        "requirement": "accepts any class"
+      }
+    ],
+    "rows": {
+      "one policy for all: exact, receivers on different stacks": {
+        "per_receiver_s": {
+          "R1": 0.086,
+          "R2": 3.436,
+          "R3": 34.36
+        },
+        "choices": {
+          "R1": "send KV, BF16 (E)",
+          "R2": "send KV, BF16 (E)",
+          "R3": "send KV, BF16 (E)"
+        },
+        "sum_s": 37.882,
+        "slowest_s": 34.36
+      },
+      "one policy for all: exact, every receiver on the sender's pinned stack": {
+        "per_receiver_s": {
+          "R1": 0.086,
+          "R2": 2.637,
+          "R3": 2.638
+        },
+        "choices": {
+          "R1": "send KV, BF16 (E)",
+          "R2": "send text, recompute, batch-invariant kernels (E only on the sender's exact stack)",
+          "R3": "send text, recompute, batch-invariant kernels (E only on the sender's exact stack)"
+        },
+        "sum_s": 5.362,
+        "slowest_s": 2.638
+      },
+      "per-receiver fidelity (each receiver's own requirement)": {
+        "per_receiver_s": {
+          "R1": 0.086,
+          "R2": 0.859,
+          "R3": 1.634
+        },
+        "choices": {
+          "R1": "send KV, BF16 (E)",
+          "R2": "send KV, ~4x codec (T)",
+          "R3": "send text, recompute, default kernels (N)"
+        },
+        "sum_s": 2.579,
+        "slowest_s": 1.634
+      }
+    }
+  },
+  "2_speculative_start": {
+    "model": "Llama 3.1 8B",
+    "response_tokens": 256,
+    "coarse_ratio": 4,
+    "layered_overhead": 0.0,
+    "rows": [
+      {
+        "context": 8192,
+        "link_gbps": 100,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.086,
+        "coarse_arrives_s": 0.021,
+        "drafted_tokens": 8,
+        "exact_path_s": 1.956,
+        "lossy_path_s (outputs differ)": 1.892,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 5.7,
+            "total_s": 1.922,
+            "saving_vs_exact": 0.0175
+          },
+          "0.95": {
+            "tokens_kept": 6.7,
+            "total_s": 1.915,
+            "saving_vs_exact": 0.0214
+          },
+          "0.99": {
+            "tokens_kept": 7.7,
+            "total_s": 1.907,
+            "saving_vs_exact": 0.0251
+          },
+          "0.999": {
+            "tokens_kept": 8.0,
+            "total_s": 1.905,
+            "saving_vs_exact": 0.026
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 25,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.344,
+        "coarse_arrives_s": 0.086,
+        "drafted_tokens": 35,
+        "exact_path_s": 2.214,
+        "lossy_path_s (outputs differ)": 1.956,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.7,
+            "total_s": 2.15,
+            "saving_vs_exact": 0.0289
+          },
+          "0.95": {
+            "tokens_kept": 16.7,
+            "total_s": 2.1,
+            "saving_vs_exact": 0.0517
+          },
+          "0.99": {
+            "tokens_kept": 29.7,
+            "total_s": 2.005,
+            "saving_vs_exact": 0.0946
+          },
+          "0.999": {
+            "tokens_kept": 34.4,
+            "total_s": 1.97,
+            "saving_vs_exact": 0.1103
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 10,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.859,
+        "coarse_arrives_s": 0.215,
+        "drafted_tokens": 88,
+        "exact_path_s": 2.73,
+        "lossy_path_s (outputs differ)": 2.085,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 2.664,
+            "saving_vs_exact": 0.0241
+          },
+          "0.95": {
+            "tokens_kept": 19.8,
+            "total_s": 2.592,
+            "saving_vs_exact": 0.0503
+          },
+          "0.99": {
+            "tokens_kept": 58.7,
+            "total_s": 2.308,
+            "saving_vs_exact": 0.1545
+          },
+          "0.999": {
+            "tokens_kept": 84.3,
+            "total_s": 2.121,
+            "saving_vs_exact": 0.2229
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 100,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 0.344,
+        "coarse_arrives_s": 0.086,
+        "drafted_tokens": 29,
+        "exact_path_s": 2.566,
+        "lossy_path_s (outputs differ)": 2.308,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.5,
+            "total_s": 2.492,
+            "saving_vs_exact": 0.0289
+          },
+          "0.95": {
+            "tokens_kept": 15.5,
+            "total_s": 2.44,
+            "saving_vs_exact": 0.049
+          },
+          "0.99": {
+            "tokens_kept": 25.3,
+            "total_s": 2.355,
+            "saving_vs_exact": 0.0822
+          },
+          "0.999": {
+            "tokens_kept": 28.6,
+            "total_s": 2.326,
+            "saving_vs_exact": 0.0934
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 25,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 1.374,
+        "coarse_arrives_s": 0.344,
+        "drafted_tokens": 118,
+        "exact_path_s": 3.597,
+        "lossy_path_s (outputs differ)": 2.566,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 3.518,
+            "saving_vs_exact": 0.0217
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 3.432,
+            "saving_vs_exact": 0.0457
+          },
+          "0.99": {
+            "tokens_kept": 69.5,
+            "total_s": 3.002,
+            "saving_vs_exact": 0.1652
+          },
+          "0.999": {
+            "tokens_kept": 111.4,
+            "total_s": 2.639,
+            "saving_vs_exact": 0.2663
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 10,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 3.436,
+        "coarse_arrives_s": 0.859,
+        "drafted_tokens": 256,
+        "exact_path_s": 5.658,
+        "lossy_path_s (outputs differ)": 3.081,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 5.589,
+            "saving_vs_exact": 0.0123
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 5.502,
+            "saving_vs_exact": 0.0276
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 4.874,
+            "saving_vs_exact": 0.1387
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 3.714,
+            "saving_vs_exact": 0.3436
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 100,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 1.374,
+        "coarse_arrives_s": 0.344,
+        "drafted_tokens": 72,
+        "exact_path_s": 5.003,
+        "lossy_path_s (outputs differ)": 3.972,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 4.876,
+            "saving_vs_exact": 0.0255
+          },
+          "0.95": {
+            "tokens_kept": 19.5,
+            "total_s": 4.741,
+            "saving_vs_exact": 0.0524
+          },
+          "0.99": {
+            "tokens_kept": 51.5,
+            "total_s": 4.287,
+            "saving_vs_exact": 0.1431
+          },
+          "0.999": {
+            "tokens_kept": 69.5,
+            "total_s": 4.032,
+            "saving_vs_exact": 0.1941
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 25,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 5.498,
+        "coarse_arrives_s": 1.374,
+        "drafted_tokens": 256,
+        "exact_path_s": 9.126,
+        "lossy_path_s (outputs differ)": 5.003,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 9.029,
+            "saving_vs_exact": 0.0107
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 8.887,
+            "saving_vs_exact": 0.0263
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 7.861,
+            "saving_vs_exact": 0.1387
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 5.967,
+            "saving_vs_exact": 0.3461
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 10,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 13.744,
+        "coarse_arrives_s": 3.436,
+        "drafted_tokens": 256,
+        "exact_path_s": 17.373,
+        "lossy_path_s (outputs differ)": 7.065,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 17.275,
+            "saving_vs_exact": 0.0056
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 17.133,
+            "saving_vs_exact": 0.0138
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 16.107,
+            "saving_vs_exact": 0.0728
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 14.214,
+            "saving_vs_exact": 0.1818
+          }
+        }
+      }
+    ]
+  },
+  "2_speculative_start_layered_overhead_10pct": {
+    "model": "Llama 3.1 8B",
+    "response_tokens": 256,
+    "coarse_ratio": 4,
+    "layered_overhead": 0.1,
+    "rows": [
+      {
+        "context": 8192,
+        "link_gbps": 100,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.094,
+        "coarse_arrives_s": 0.021,
+        "drafted_tokens": 9,
+        "exact_path_s": 1.956,
+        "lossy_path_s (outputs differ)": 1.892,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 6.1,
+            "total_s": 1.928,
+            "saving_vs_exact": 0.0148
+          },
+          "0.95": {
+            "tokens_kept": 7.4,
+            "total_s": 1.918,
+            "saving_vs_exact": 0.0195
+          },
+          "0.99": {
+            "tokens_kept": 8.6,
+            "total_s": 1.909,
+            "saving_vs_exact": 0.0242
+          },
+          "0.999": {
+            "tokens_kept": 9.0,
+            "total_s": 1.907,
+            "saving_vs_exact": 0.0254
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 25,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.378,
+        "coarse_arrives_s": 0.086,
+        "drafted_tokens": 39,
+        "exact_path_s": 2.214,
+        "lossy_path_s (outputs differ)": 1.956,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.8,
+            "total_s": 2.184,
+            "saving_vs_exact": 0.0136
+          },
+          "0.95": {
+            "tokens_kept": 17.3,
+            "total_s": 2.129,
+            "saving_vs_exact": 0.0383
+          },
+          "0.99": {
+            "tokens_kept": 32.4,
+            "total_s": 2.019,
+            "saving_vs_exact": 0.0882
+          },
+          "0.999": {
+            "tokens_kept": 38.3,
+            "total_s": 1.976,
+            "saving_vs_exact": 0.1075
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 10,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.945,
+        "coarse_arrives_s": 0.215,
+        "drafted_tokens": 99,
+        "exact_path_s": 2.73,
+        "lossy_path_s (outputs differ)": 2.085,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 2.75,
+            "saving_vs_exact": -0.0074
+          },
+          "0.95": {
+            "tokens_kept": 19.9,
+            "total_s": 2.677,
+            "saving_vs_exact": 0.0191
+          },
+          "0.99": {
+            "tokens_kept": 63.0,
+            "total_s": 2.362,
+            "saving_vs_exact": 0.1346
+          },
+          "0.999": {
+            "tokens_kept": 94.3,
+            "total_s": 2.134,
+            "saving_vs_exact": 0.2183
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 100,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 0.378,
+        "coarse_arrives_s": 0.086,
+        "drafted_tokens": 33,
+        "exact_path_s": 2.566,
+        "lossy_path_s (outputs differ)": 2.308,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.7,
+            "total_s": 2.525,
+            "saving_vs_exact": 0.016
+          },
+          "0.95": {
+            "tokens_kept": 16.3,
+            "total_s": 2.467,
+            "saving_vs_exact": 0.0384
+          },
+          "0.99": {
+            "tokens_kept": 28.2,
+            "total_s": 2.364,
+            "saving_vs_exact": 0.0787
+          },
+          "0.999": {
+            "tokens_kept": 32.5,
+            "total_s": 2.327,
+            "saving_vs_exact": 0.0931
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 25,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 1.512,
+        "coarse_arrives_s": 0.344,
+        "drafted_tokens": 134,
+        "exact_path_s": 3.597,
+        "lossy_path_s (outputs differ)": 2.566,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 3.656,
+            "saving_vs_exact": -0.0166
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 3.57,
+            "saving_vs_exact": 0.0075
+          },
+          "0.99": {
+            "tokens_kept": 74.0,
+            "total_s": 3.101,
+            "saving_vs_exact": 0.1379
+          },
+          "0.999": {
+            "tokens_kept": 125.5,
+            "total_s": 2.654,
+            "saving_vs_exact": 0.2621
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 10,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 3.78,
+        "coarse_arrives_s": 0.859,
+        "drafted_tokens": 256,
+        "exact_path_s": 5.658,
+        "lossy_path_s (outputs differ)": 3.081,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 5.932,
+            "saving_vs_exact": -0.0484
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 5.845,
+            "saving_vs_exact": -0.0331
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 5.217,
+            "saving_vs_exact": 0.0779
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 4.058,
+            "saving_vs_exact": 0.2829
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 100,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 1.512,
+        "coarse_arrives_s": 0.344,
+        "drafted_tokens": 82,
+        "exact_path_s": 5.003,
+        "lossy_path_s (outputs differ)": 3.972,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 5.013,
+            "saving_vs_exact": -0.002
+          },
+          "0.95": {
+            "tokens_kept": 19.7,
+            "total_s": 4.876,
+            "saving_vs_exact": 0.0255
+          },
+          "0.99": {
+            "tokens_kept": 56.1,
+            "total_s": 4.359,
+            "saving_vs_exact": 0.1287
+          },
+          "0.999": {
+            "tokens_kept": 78.8,
+            "total_s": 4.038,
+            "saving_vs_exact": 0.1929
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 25,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 6.047,
+        "coarse_arrives_s": 1.374,
+        "drafted_tokens": 256,
+        "exact_path_s": 9.126,
+        "lossy_path_s (outputs differ)": 5.003,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 9.578,
+            "saving_vs_exact": -0.0495
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 9.437,
+            "saving_vs_exact": -0.034
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 8.411,
+            "saving_vs_exact": 0.0784
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 6.517,
+            "saving_vs_exact": 0.2859
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 10,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 15.118,
+        "coarse_arrives_s": 3.436,
+        "drafted_tokens": 256,
+        "exact_path_s": 17.373,
+        "lossy_path_s (outputs differ)": 7.065,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 18.649,
+            "saving_vs_exact": -0.0735
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 18.507,
+            "saving_vs_exact": -0.0653
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 17.482,
+            "saving_vs_exact": -0.0063
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 15.588,
+            "saving_vs_exact": 0.1027
+          }
+        }
+      }
+    ]
+  },
+  "2_speculative_start_coarse_half_size": {
+    "model": "Llama 3.1 8B",
+    "response_tokens": 256,
+    "coarse_ratio": 2,
+    "layered_overhead": 0.0,
+    "rows": [
+      {
+        "context": 8192,
+        "link_gbps": 100,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.086,
+        "coarse_arrives_s": 0.043,
+        "drafted_tokens": 5,
+        "exact_path_s": 1.956,
+        "lossy_path_s (outputs differ)": 1.913,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 4.1,
+            "total_s": 1.934,
+            "saving_vs_exact": 0.0116
+          },
+          "0.95": {
+            "tokens_kept": 4.5,
+            "total_s": 1.931,
+            "saving_vs_exact": 0.0132
+          },
+          "0.99": {
+            "tokens_kept": 4.9,
+            "total_s": 1.928,
+            "saving_vs_exact": 0.0146
+          },
+          "0.999": {
+            "tokens_kept": 5.0,
+            "total_s": 1.927,
+            "saving_vs_exact": 0.0149
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 25,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.344,
+        "coarse_arrives_s": 0.172,
+        "drafted_tokens": 23,
+        "exact_path_s": 2.214,
+        "lossy_path_s (outputs differ)": 2.042,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.1,
+            "total_s": 2.155,
+            "saving_vs_exact": 0.0268
+          },
+          "0.95": {
+            "tokens_kept": 13.9,
+            "total_s": 2.12,
+            "saving_vs_exact": 0.0424
+          },
+          "0.99": {
+            "tokens_kept": 20.6,
+            "total_s": 2.071,
+            "saving_vs_exact": 0.0648
+          },
+          "0.999": {
+            "tokens_kept": 22.7,
+            "total_s": 2.055,
+            "saving_vs_exact": 0.0718
+          }
+        }
+      },
+      {
+        "context": 8192,
+        "link_gbps": 10,
+        "decode_step_ms": 7.31,
+        "exact_arrives_s": 0.859,
+        "coarse_arrives_s": 0.429,
+        "drafted_tokens": 58,
+        "exact_path_s": 2.73,
+        "lossy_path_s (outputs differ)": 2.3,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 2.664,
+            "saving_vs_exact": 0.024
+          },
+          "0.95": {
+            "tokens_kept": 19.0,
+            "total_s": 2.598,
+            "saving_vs_exact": 0.0481
+          },
+          "0.99": {
+            "tokens_kept": 44.2,
+            "total_s": 2.414,
+            "saving_vs_exact": 0.1156
+          },
+          "0.999": {
+            "tokens_kept": 56.4,
+            "total_s": 2.325,
+            "saving_vs_exact": 0.1482
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 100,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 0.344,
+        "coarse_arrives_s": 0.172,
+        "drafted_tokens": 19,
+        "exact_path_s": 2.566,
+        "lossy_path_s (outputs differ)": 2.394,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 8.6,
+            "total_s": 2.499,
+            "saving_vs_exact": 0.0259
+          },
+          "0.95": {
+            "tokens_kept": 12.5,
+            "total_s": 2.466,
+            "saving_vs_exact": 0.0387
+          },
+          "0.99": {
+            "tokens_kept": 17.4,
+            "total_s": 2.424,
+            "saving_vs_exact": 0.0554
+          },
+          "0.999": {
+            "tokens_kept": 18.8,
+            "total_s": 2.411,
+            "saving_vs_exact": 0.0603
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 25,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 1.374,
+        "coarse_arrives_s": 0.687,
+        "drafted_tokens": 79,
+        "exact_path_s": 3.597,
+        "lossy_path_s (outputs differ)": 2.909,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 3.518,
+            "saving_vs_exact": 0.0217
+          },
+          "0.95": {
+            "tokens_kept": 19.7,
+            "total_s": 3.435,
+            "saving_vs_exact": 0.045
+          },
+          "0.99": {
+            "tokens_kept": 54.8,
+            "total_s": 3.13,
+            "saving_vs_exact": 0.1298
+          },
+          "0.999": {
+            "tokens_kept": 76.0,
+            "total_s": 2.946,
+            "saving_vs_exact": 0.181
+          }
+        }
+      },
+      {
+        "context": 32768,
+        "link_gbps": 10,
+        "decode_step_ms": 8.68,
+        "exact_arrives_s": 3.436,
+        "coarse_arrives_s": 1.718,
+        "drafted_tokens": 197,
+        "exact_path_s": 5.658,
+        "lossy_path_s (outputs differ)": 3.94,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 5.585,
+            "saving_vs_exact": 0.013
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 5.498,
+            "saving_vs_exact": 0.0283
+          },
+          "0.99": {
+            "tokens_kept": 86.2,
+            "total_s": 4.923,
+            "saving_vs_exact": 0.1299
+          },
+          "0.999": {
+            "tokens_kept": 178.9,
+            "total_s": 4.119,
+            "saving_vs_exact": 0.2721
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 100,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 1.374,
+        "coarse_arrives_s": 0.687,
+        "drafted_tokens": 48,
+        "exact_path_s": 5.003,
+        "lossy_path_s (outputs differ)": 4.316,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 9.9,
+            "total_s": 4.877,
+            "saving_vs_exact": 0.0253
+          },
+          "0.95": {
+            "tokens_kept": 18.3,
+            "total_s": 4.758,
+            "saving_vs_exact": 0.049
+          },
+          "0.99": {
+            "tokens_kept": 38.3,
+            "total_s": 4.475,
+            "saving_vs_exact": 0.1056
+          },
+          "0.999": {
+            "tokens_kept": 46.9,
+            "total_s": 4.353,
+            "saving_vs_exact": 0.13
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 25,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 5.498,
+        "coarse_arrives_s": 2.749,
+        "drafted_tokens": 193,
+        "exact_path_s": 9.126,
+        "lossy_path_s (outputs differ)": 6.378,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 9.018,
+            "saving_vs_exact": 0.0119
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 8.876,
+            "saving_vs_exact": 0.0274
+          },
+          "0.99": {
+            "tokens_kept": 85.6,
+            "total_s": 7.946,
+            "saving_vs_exact": 0.1294
+          },
+          "0.999": {
+            "tokens_kept": 175.6,
+            "total_s": 6.67,
+            "saving_vs_exact": 0.2691
+          }
+        }
+      },
+      {
+        "context": 131072,
+        "link_gbps": 10,
+        "decode_step_ms": 14.18,
+        "exact_arrives_s": 13.744,
+        "coarse_arrives_s": 6.872,
+        "drafted_tokens": 256,
+        "exact_path_s": 17.373,
+        "lossy_path_s (outputs differ)": 10.501,
+        "speculative": {
+          "QuantSpec lower bound (4-bit KV and weights)": {
+            "tokens_kept": 10.0,
+            "total_s": 17.275,
+            "saving_vs_exact": 0.0056
+          },
+          "0.95": {
+            "tokens_kept": 20.0,
+            "total_s": 17.133,
+            "saving_vs_exact": 0.0138
+          },
+          "0.99": {
+            "tokens_kept": 92.4,
+            "total_s": 16.107,
+            "saving_vs_exact": 0.0728
+          },
+          "0.999": {
+            "tokens_kept": 226.0,
+            "total_s": 14.214,
+            "saving_vs_exact": 0.1818
+          }
+        }
+      }
+    ]
+  },
+  "2_worst_case_ideal_code": [
+    {
+      "coarse_ratio": 4,
+      "layered_overhead": 0.0,
+      "worst_saving": -0.0033,
+      "worst_extra_s": 0.03,
+      "at_acceptance": "0",
+      "context": 131072,
+      "link_gbps": 25
+    },
+    {
+      "coarse_ratio": 2,
+      "layered_overhead": 0.0,
+      "worst_saving": -0.0021,
+      "worst_extra_s": 0.019,
+      "at_acceptance": "0",
+      "context": 131072,
+      "link_gbps": 25
+    }
+  ],
+  "2_worst_case_overhead_10pct": [
+    {
+      "coarse_ratio": 4,
+      "layered_overhead": 0.1,
+      "worst_saving": -0.0808,
+      "worst_extra_s": 1.404,
+      "at_acceptance": "0",
+      "context": 131072,
+      "link_gbps": 10
+    },
+    {
+      "coarse_ratio": 2,
+      "layered_overhead": 0.1,
+      "worst_saving": -0.0808,
+      "worst_extra_s": 1.404,
+      "at_acceptance": "0",
+      "context": 131072,
+      "link_gbps": 10
+    }
+  ],
+  "2_toy_measured_acceptance": {
+    "8": 0.9978921677390725,
+    "6": 0.9915538275908299,
+    "4": 0.9424854501882917,
+    "3": 0.8426601784266018,
+    "2": 0.36421725239616615
+  },
+  "2_speculative_start_at_toy_acceptance": {
+    "4-bit coarse layer, overhead 0%": {
+      "acceptance": 0.9425,
+      "coarse_ratio": 4,
+      "layered_overhead": 0.0,
+      "rows": [
+        {
+          "context": 8192,
+          "link_gbps": 100,
+          "exact_path_s": 1.956,
+          "speculative_s": 1.916,
+          "saving_vs_exact": 0.0208
+        },
+        {
+          "context": 8192,
+          "link_gbps": 25,
+          "exact_path_s": 2.214,
+          "speculative_s": 2.11,
+          "saving_vs_exact": 0.0469
+        },
+        {
+          "context": 8192,
+          "link_gbps": 10,
+          "exact_path_s": 2.73,
+          "speculative_s": 2.61,
+          "saving_vs_exact": 0.0436
+        },
+        {
+          "context": 32768,
+          "link_gbps": 100,
+          "exact_path_s": 2.566,
+          "speculative_s": 2.451,
+          "saving_vs_exact": 0.0449
+        },
+        {
+          "context": 32768,
+          "link_gbps": 25,
+          "exact_path_s": 3.597,
+          "speculative_s": 3.454,
+          "saving_vs_exact": 0.0395
+        },
+        {
+          "context": 32768,
+          "link_gbps": 10,
+          "exact_path_s": 5.658,
+          "speculative_s": 5.524,
+          "saving_vs_exact": 0.0236
+        },
+        {
+          "context": 131072,
+          "link_gbps": 100,
+          "exact_path_s": 5.003,
+          "speculative_s": 4.774,
+          "saving_vs_exact": 0.0457
+        },
+        {
+          "context": 131072,
+          "link_gbps": 25,
+          "exact_path_s": 9.126,
+          "speculative_s": 8.924,
+          "saving_vs_exact": 0.0222
+        },
+        {
+          "context": 131072,
+          "link_gbps": 10,
+          "exact_path_s": 17.373,
+          "speculative_s": 17.17,
+          "saving_vs_exact": 0.0117
+        }
+      ]
+    },
+    "4-bit coarse layer, overhead 10%": {
+      "acceptance": 0.9425,
+      "coarse_ratio": 4,
+      "layered_overhead": 0.1,
+      "rows": [
+        {
+          "context": 8192,
+          "link_gbps": 100,
+          "exact_path_s": 1.956,
+          "speculative_s": 1.92,
+          "saving_vs_exact": 0.0187
+        },
+        {
+          "context": 8192,
+          "link_gbps": 25,
+          "exact_path_s": 2.214,
+          "speculative_s": 2.141,
+          "saving_vs_exact": 0.0329
+        },
+        {
+          "context": 8192,
+          "link_gbps": 10,
+          "exact_path_s": 2.73,
+          "speculative_s": 2.696,
+          "saving_vs_exact": 0.0123
+        },
+        {
+          "context": 32768,
+          "link_gbps": 100,
+          "exact_path_s": 2.566,
+          "speculative_s": 2.479,
+          "saving_vs_exact": 0.0337
+        },
+        {
+          "context": 32768,
+          "link_gbps": 25,
+          "exact_path_s": 3.597,
+          "speculative_s": 3.592,
+          "saving_vs_exact": 0.0012
+        },
+        {
+          "context": 32768,
+          "link_gbps": 10,
+          "exact_path_s": 5.658,
+          "speculative_s": 5.868,
+          "saving_vs_exact": -0.0371
+        },
+        {
+          "context": 131072,
+          "link_gbps": 100,
+          "exact_path_s": 5.003,
+          "speculative_s": 4.91,
+          "saving_vs_exact": 0.0186
+        },
+        {
+          "context": 131072,
+          "link_gbps": 25,
+          "exact_path_s": 9.126,
+          "speculative_s": 9.474,
+          "saving_vs_exact": -0.038
+        },
+        {
+          "context": 131072,
+          "link_gbps": 10,
+          "exact_path_s": 17.373,
+          "speculative_s": 18.545,
+          "saving_vs_exact": -0.0675
+        }
+      ]
+    },
+    "8-bit coarse layer, overhead 0%": {
+      "acceptance": 0.9979,
+      "coarse_ratio": 2,
+      "layered_overhead": 0.0,
+      "rows": [
+        {
+          "context": 8192,
+          "link_gbps": 100,
+          "exact_path_s": 1.956,
+          "speculative_s": 1.927,
+          "saving_vs_exact": 0.0149
+        },
+        {
+          "context": 8192,
+          "link_gbps": 25,
+          "exact_path_s": 2.214,
+          "speculative_s": 2.057,
+          "saving_vs_exact": 0.0709
+        },
+        {
+          "context": 8192,
+          "link_gbps": 10,
+          "exact_path_s": 2.73,
+          "speculative_s": 2.338,
+          "saving_vs_exact": 0.1436
+        },
+        {
+          "context": 32768,
+          "link_gbps": 100,
+          "exact_path_s": 2.566,
+          "speculative_s": 2.413,
+          "saving_vs_exact": 0.0597
+        },
+        {
+          "context": 32768,
+          "link_gbps": 25,
+          "exact_path_s": 3.597,
+          "speculative_s": 2.973,
+          "saving_vs_exact": 0.1734
+        },
+        {
+          "context": 32768,
+          "link_gbps": 10,
+          "exact_path_s": 5.658,
+          "speculative_s": 4.271,
+          "saving_vs_exact": 0.2452
+        },
+        {
+          "context": 131072,
+          "link_gbps": 100,
+          "exact_path_s": 5.003,
+          "speculative_s": 4.37,
+          "saving_vs_exact": 0.1266
+        },
+        {
+          "context": 131072,
+          "link_gbps": 25,
+          "exact_path_s": 9.126,
+          "speculative_s": 6.91,
+          "saving_vs_exact": 0.2429
+        },
+        {
+          "context": 131072,
+          "link_gbps": 10,
+          "exact_path_s": 17.373,
+          "speculative_s": 14.61,
+          "saving_vs_exact": 0.159
+        }
+      ]
+    },
+    "8-bit coarse layer, overhead 10%": {
+      "acceptance": 0.9979,
+      "coarse_ratio": 2,
+      "layered_overhead": 0.1,
+      "rows": [
+        {
+          "context": 8192,
+          "link_gbps": 100,
+          "exact_path_s": 1.956,
+          "speculative_s": 1.921,
+          "saving_vs_exact": 0.0179
+        },
+        {
+          "context": 8192,
+          "link_gbps": 25,
+          "exact_path_s": 2.214,
+          "speculative_s": 2.057,
+          "saving_vs_exact": 0.071
+        },
+        {
+          "context": 8192,
+          "link_gbps": 10,
+          "exact_path_s": 2.73,
+          "speculative_s": 2.347,
+          "saving_vs_exact": 0.1402
+        },
+        {
+          "context": 32768,
+          "link_gbps": 100,
+          "exact_path_s": 2.566,
+          "speculative_s": 2.414,
+          "saving_vs_exact": 0.0593
+        },
+        {
+          "context": 32768,
+          "link_gbps": 25,
+          "exact_path_s": 3.597,
+          "speculative_s": 3.002,
+          "saving_vs_exact": 0.1654
+        },
+        {
+          "context": 32768,
+          "link_gbps": 10,
+          "exact_path_s": 5.658,
+          "speculative_s": 4.397,
+          "saving_vs_exact": 0.2229
+        },
+        {
+          "context": 131072,
+          "link_gbps": 100,
+          "exact_path_s": 5.003,
+          "speculative_s": 4.38,
+          "saving_vs_exact": 0.1245
+        },
+        {
+          "context": 131072,
+          "link_gbps": 25,
+          "exact_path_s": 9.126,
+          "speculative_s": 7.113,
+          "saving_vs_exact": 0.2206
+        },
+        {
+          "context": 131072,
+          "link_gbps": 10,
+          "exact_path_s": 17.373,
+          "speculative_s": 15.984,
+          "saving_vs_exact": 0.0799
+        }
+      ]
+    }
+  },
+  "3_fan_out": {
+    "model": "Llama 3.1 8B",
+    "context": 32768,
+    "kv_bytes": 4294967296,
+    "wan_gbps": 10,
+    "lan_gbps": 400,
+    "rows": [
+      {
+        "receivers": 1,
+        "strategies": {
+          "each receiver recomputes": {
+            "last_s": 1.63,
+            "gpu_s": 1.63,
+            "wan_bytes": 131072
+          },
+          "origin sends each copy over the shared WAN": {
+            "last_s": 3.44,
+            "gpu_s": 0,
+            "wan_bytes": 4294967296
+          },
+          "one WAN copy to a site repeater, then LAN fan-out": {
+            "last_s": 3.52,
+            "gpu_s": 0,
+            "wan_bytes": 4294967296
+          },
+          "one recompute at the site, then LAN fan-out": {
+            "last_s": 1.63,
+            "gpu_s": 1.63,
+            "wan_bytes": 131072
+          }
+        }
+      },
+      {
+        "receivers": 8,
+        "strategies": {
+          "each receiver recomputes": {
+            "last_s": 1.63,
+            "gpu_s": 13.06,
+            "wan_bytes": 1048576
+          },
+          "origin sends each copy over the shared WAN": {
+            "last_s": 27.49,
+            "gpu_s": 0,
+            "wan_bytes": 34359738368
+          },
+          "one WAN copy to a site repeater, then LAN fan-out": {
+            "last_s": 3.78,
+            "gpu_s": 0,
+            "wan_bytes": 4294967296
+          },
+          "one recompute at the site, then LAN fan-out": {
+            "last_s": 1.98,
+            "gpu_s": 1.63,
+            "wan_bytes": 131072
+          }
+        }
+      },
+      {
+        "receivers": 64,
+        "strategies": {
+          "each receiver recomputes": {
+            "last_s": 1.63,
+            "gpu_s": 104.49,
+            "wan_bytes": 8388608
+          },
+          "origin sends each copy over the shared WAN": {
+            "last_s": 219.9,
+            "gpu_s": 0,
+            "wan_bytes": 274877906944
+          },
+          "one WAN copy to a site repeater, then LAN fan-out": {
+            "last_s": 4.04,
+            "gpu_s": 0,
+            "wan_bytes": 4294967296
+          },
+          "one recompute at the site, then LAN fan-out": {
+            "last_s": 2.23,
+            "gpu_s": 1.63,
+            "wan_bytes": 131072
+          }
+        }
+      }
+    ]
+  },
+  "4_supersession": {
+    "update_gb": 16.06,
+    "link_gbps": 25,
+    "transfer_s": 5.14,
+    "interval_s": 3.0,
+    "horizon_s": 60.0,
+    "link_load": 1.71,
+    "fifo": {
+      "versions_sent": 21,
+      "last_arrives_at_s": 107.9,
+      "max_delivery_delay_s": 47.9,
+      "max_held_state_age_s": 50.9,
+      "bytes_sent_fraction": 1.0
+    },
+    "skip_to_latest": {
+      "versions_sent": 13,
+      "last_arrives_at_s": 66.8,
+      "max_delivery_delay_s": 8.1,
+      "max_held_state_age_s": 13.3,
+      "bytes_sent_fraction": 0.619
+    }
+  },
+  "4_supersession_link_keeps_up": {
+    "update_gb": 16.06,
+    "link_gbps": 100,
+    "transfer_s": 1.28,
+    "interval_s": 3.0,
+    "horizon_s": 60.0,
+    "link_load": 0.43,
+    "fifo": {
+      "versions_sent": 21,
+      "last_arrives_at_s": 61.3,
+      "max_delivery_delay_s": 1.3,
+      "max_held_state_age_s": 4.3,
+      "bytes_sent_fraction": 1.0
+    },
+    "skip_to_latest": {
+      "versions_sent": 21,
+      "last_arrives_at_s": 61.3,
+      "max_delivery_delay_s": 1.3,
+      "max_held_state_age_s": 4.3,
+      "bytes_sent_fraction": 1.0
+    }
+  },
+  "5_proof_vs_rerun": {
+    "model": "Llama 3.1 8B",
+    "rows": [
+      {
+        "prompt_tokens": 8192,
+        "generated_tokens": 256,
+        "rerun_s": 2.17,
+        "proof_check_s": 0.312,
+        "speedup": 7.0,
+        "proof_bytes": 2064
+      },
+      {
+        "prompt_tokens": 8192,
+        "generated_tokens": 1024,
+        "rerun_s": 7.81,
+        "proof_check_s": 0.344,
+        "speedup": 22.7,
+        "proof_bytes": 8256
+      },
+      {
+        "prompt_tokens": 8192,
+        "generated_tokens": 4096,
+        "rerun_s": 30.7,
+        "proof_check_s": 0.479,
+        "speedup": 64.1,
+        "proof_bytes": 33024
+      }
+    ]
+  },
+  "6_pipeline_push": {
+    "link_gbps": 10,
+    "rows": [
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 100000,
+        "handoffs": 1,
+        "negotiated_s": 0.0003,
+        "push_s": 0.0001,
+        "saved_s": 0.0002,
+        "saving": 0.536
+      },
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 100000,
+        "handoffs": 5,
+        "negotiated_s": 0.0014,
+        "push_s": 0.0007,
+        "saved_s": 0.0008,
+        "saving": 0.536
+      },
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 100000,
+        "handoffs": 20,
+        "negotiated_s": 0.0056,
+        "push_s": 0.0026,
+        "saved_s": 0.003,
+        "saving": 0.536
+      },
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 1,
+        "negotiated_s": 3.4322,
+        "push_s": 3.432,
+        "saved_s": 0.0002,
+        "saving": 0.0
+      },
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 5,
+        "negotiated_s": 17.161,
+        "push_s": 17.1602,
+        "saved_s": 0.0008,
+        "saving": 0.0
+      },
+      {
+        "where": "inside one data center (assumed 0.1 ms RTT)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 20,
+        "negotiated_s": 68.644,
+        "push_s": 68.641,
+        "saved_s": 0.003,
+        "saving": 0.0
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 100000,
+        "handoffs": 1,
+        "negotiated_s": 0.1121,
+        "push_s": 0.0281,
+        "saved_s": 0.084,
+        "saving": 0.749
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 100000,
+        "handoffs": 5,
+        "negotiated_s": 0.5604,
+        "push_s": 0.1404,
+        "saved_s": 0.42,
+        "saving": 0.749
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 100000,
+        "handoffs": 20,
+        "negotiated_s": 2.2416,
+        "push_s": 0.5616,
+        "saved_s": 1.68,
+        "saving": 0.749
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 1,
+        "negotiated_s": 3.544,
+        "push_s": 3.46,
+        "saved_s": 0.084,
+        "saving": 0.024
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 5,
+        "negotiated_s": 17.72,
+        "push_s": 17.3,
+        "saved_s": 0.42,
+        "saving": 0.024
+      },
+      {
+        "where": "between regions (56 ms, New York-London fiber minimum)",
+        "state_bytes": 4290000000.0,
+        "handoffs": 20,
+        "negotiated_s": 70.88,
+        "push_s": 69.2,
+        "saved_s": 1.68,
+        "saving": 0.024
+      }
+    ]
+  }
+}

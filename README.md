@@ -42,16 +42,30 @@ Reviewed in [Candidate data-center use cases](docs/proposals/ARFP-data-center-us
 | Checkpoint and model-delta sync | Weak | Mostly exact bytes that compression and exact deltas already handle |
 | Small state or compute-bound work | Does not fit | The negotiation costs more than it saves |
 
-## Current status (2026-10-11)
+## Speed mechanisms
+
+Six ways the protocol could make AI state handoff faster, worked through in [Speed mechanisms](docs/proposals/ARFP-speed-mechanisms.md). Four are specified and tested at object level in the kit (37 cases) and all six are modeled. The verification step of speculative start was run on a small model trained for the purpose on a CPU, with no transfer or timing. None has been measured on a production model or a network, and none of the six patterns is new on its own; ARFP's part is checking each against the publisher's contract.
+
+| Mechanism | Modeled effect | Loses when |
+|---|---|---|
+| Fidelity chosen per receiver | Three receivers: 2.58 s summed, against 5.36 s if all must be exact on one pinned stack | Every receiver needs exact output |
+| Compute once, fan out | 64 receivers behind one 10 Gb/s link: 4.0 s instead of 220 s when the origin sends each copy; 1.6 GPU-seconds instead of 104.5 when each receiver recomputes | One receiver per site |
+| Trust by proof instead of re-running | Checking is 7–64× faster than re-running, because it is one parallel pass | The verifier lacks the model |
+| Cancel superseded work | On a link that cannot keep up, the receiver's state is never more than 13.3 s old, against 50.9 s and growing | The link keeps up, or every version must arrive |
+| No round trip for steady pipelines | 20 small cross-region handoffs: 2.24 s to 0.56 s | Inside one data center, or large state |
+| Start before the exact state arrives | At most 0.3% slower with an ideal layered code; at the small model's acceptance, 1–25% faster with an 8-bit first layer and 1–5% with a 4-bit one. Lynx (July 2026) already does this for KV transfer | The layered code costs extra bytes and acceptance is low |
+
+## Current status (2026-10-12)
 
 **What exists:**
 - A research architecture and an experimental specification.
 - An **executable object-level conformance kit**:
   - a CDDL schema for deterministic CBOR with COSE signatures;
-  - 95 passing cases, with every one of the C01–C28 scenarios covered by at least one case;
+  - 132 passing cases, with every one of the C01–C28 scenarios covered by at least one case;
   - gate zero (a publisher-signed binding checked before any planning);
   - repair, crash recovery from real process kills, and multi-hop provenance;
-  - the contract split.
+  - the contract split;
+  - four speed mechanisms: fidelity chosen per receiver, speculative start, proof-based evidence, and push on a standing subscription.
 - A byte benchmark on real data, a first-order time model (including KV-cache send versus recompute), and an engineering review of where this approach can and cannot speed up transfers.
 
 **What does not exist:**
@@ -79,8 +93,9 @@ These are documented boundaries, not footnotes. Each is in the [speed review](do
 | [Working analysis](docs/analysis/ARFP-analysis-2026-10-11.md) | Engineering record: schema map, identity and encoding rules, design choices and what each forces, Stage-1 results, contract split, next work, full CDDL | Checked: the kit-derived numbers (§§6, 8, 10, 15) reproduce from `kit/` |
 | [Speed review](docs/analysis/ARFP-internet-speed-review.md) | Where the transfer set can and cannot make transfers faster: AI-state send versus recompute (§6), the push-profile design, ranked domains, pre-registered negative cases, Stage 4/5 hypotheses | Measured, modeled and sourced; checked twice by a separate agent |
 | [AI-state network test](docs/proposals/ARFP-ai-state-handoff-network-test.md) | Proposed next step: KV-cache handoff over real links against LMCache/CacheGen-style transfer, with pre-registered pass and kill criteria | Proposal; not run |
+| [Speed mechanisms](docs/proposals/ARFP-speed-mechanisms.md) | Six ways to make AI state handoff faster: protocol changes, kit cases, modeled gains, and where each loses | Four specified and tested at object level; all modeled |
 | [Data-center use cases](docs/proposals/ARFP-data-center-use-cases.md) and [their sources](docs/research/use-cases/data_center_use_case_sources.md) | Three strong and two weaker candidate uses, each checked against the fit test and against what existing systems already do | Candidates; not demonstrated |
-| [Schema kit](kit/README.md) | `arfp-v0.1.cddl`, the reference checker, 95 cases, mutation check, benchmark and model | Runs: `python3 run_checks.py` |
+| [Schema kit](kit/README.md) | `arfp-v0.1.cddl`, the reference checker, 132 cases, mutation check, benchmark and models | Runs: `python3 run_checks.py` |
 | [Contract split](docs/handoffs/ARFP-contract-split-handoff.md) and [implementation notes](docs/handoffs/ARFP-contract-split-implementation.md) | Session contract template plus per-revision binding; what was built, measured, and changed from the proposal | Built and tested (T1–T14) |
 | [Complete concept handoff](docs/architecture/ARFP_Concept_Handoff_v0.1_2026-10-11.md) | Full architecture, mathematical model, authority and evidence rules, repeater fabric, six-stage plan, C01–C28 | Original, preserved byte for byte |
 | [Experimental draft v0.1](docs/specification/Adaptive_Reconstruction_Protocol_v0.1.md) | Narrow assembly-component profile (`arf-experiment/0.1`, JSON/JCS) with worked transcripts | Original, preserved byte for byte |
@@ -100,10 +115,14 @@ The experimental draft and the kit use different encodings: JSON with RFC 8785 c
 ```
 cd kit
 pip install -r requirements.txt
-python3 run_checks.py        # exit 0: 38/38 fixtures valid, 11/11 malformed objects rejected, 95/95 cases pass
-python3 mutation_check.py    # exit 0: all 7 removed guards caught (six turn their cases red, one crashes the run)
+python3 run_checks.py        # exit 0: 42/42 fixtures valid, 13/13 malformed objects rejected, 132/132 cases pass
+python3 mutation_check.py    # exit 0: all 29 removed guards caught (28 turn their cases red, one crashes the run)
 
 python3 bench/speed_model.py # offline, standard library only: regenerates the speed review's modeled numbers
+python3 bench/ideas_model.py # offline, standard library only: models the six speed mechanisms
+
+pip install -r bench/requirements-toy.txt
+python3 bench/spec_start_toy.py # optional: speculative start on a small transformer trained here (~15 min on 2 cores)
 
 pip install -r bench/requirements.txt
 python3 bench/delta_bench.py # optional: re-measures the deltas (needs the npm CLI and registry the first time)
